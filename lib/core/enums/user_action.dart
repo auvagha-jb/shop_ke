@@ -1,0 +1,1 @@
+enum UserAction { SignUp, Login }

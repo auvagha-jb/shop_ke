@@ -1,0 +1,1 @@
+enum IconType { Primary, Light }
