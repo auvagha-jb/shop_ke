@@ -1,10 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/app_router.dart';
 import 'package:shop_ke/themes/style.dart';
 import 'locator.dart';
 
-void main() {
+void main() async{
+  //Init dependency injector
   setupLocator();
+
+  //Init firebase app
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 

@@ -6,6 +6,7 @@ class Customer {
   String countryCode;
   String _phoneNumber;
   String fullPhoneNumber;
+  String password;
 
   Customer(); //Default Constructor
 

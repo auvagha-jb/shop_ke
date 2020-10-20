@@ -139,17 +139,17 @@ class _SignUpViewState extends State<SignUpView> {
                           SizedBox(height: FormHelper.formFieldSpacing),
 
                           //Password
-//                          TextFormField(
-//                            keyboardType: TextInputType.number,
-//                            controller: passwordController,
-//                            decoration: FormHelper.buildInputDecoration(
-//                                controller: passwordController,
-//                                labelText: 'Password'),
-//                            validator: (value) =>
-//                                model.validate.passwordValidation(value),
-//                            onChanged: (value) => _customer.password = value,
-//                            obscureText: true,
-//                          ),
+                          TextFormField(
+                            keyboardType: TextInputType.number,
+                            controller: passwordController,
+                            decoration: FormHelper.buildInputDecoration(
+                                controller: passwordController,
+                                labelText: 'Password'),
+                            validator: (value) =>
+                                model.validate.passwordValidation(value),
+                            onChanged: (value) => _customer.password = value,
+                            obscureText: true,
+                          ),
                         ],
                       ),
                     ),
@@ -188,12 +188,12 @@ class _SignUpViewState extends State<SignUpView> {
                                     model.isSubmitButtonClicked();
                                     model.signUp(context, _formKey, _customer);
                                   },
-                                  buttonType: ButtonType.Primary,
+                                  buttonType: ButtonType.Accent,
                                 )
 
                               //When busy, show the progress indicator button
                               : AppProgressButton(
-                                  buttonType: ButtonType.Primary,
+                                  buttonType: ButtonType.Accent,
                                 ),
                         ],
                       ),

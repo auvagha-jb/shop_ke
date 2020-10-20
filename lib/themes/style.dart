@@ -8,7 +8,7 @@ ThemeData lightTheme() {
     // the app on. For desktop platforms, the controls will be smaller and
     // closer together (more dense) than on mobile platforms.
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    primaryColor: Color(0xffd9534f),
+    primaryColor: Color(0xffd32f2f),//0xff specifies full opacity
     accentColor: Colors.black,
     backgroundColor: Colors.white,
     canvasColor: Colors.white,//Colors.grey[100]
