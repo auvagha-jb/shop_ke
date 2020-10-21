@@ -29,7 +29,7 @@ class HomeViewModel extends BaseViewModel {
     //If the camera is not read to be used, wait...
     if (!isReady) {
       print('Initializing camera. Please wait...');
-      _errorService.showBasicError(cameraNotReadyResponse);
+      _errorService.showUIResponseError(cameraNotReadyResponse);
       return;
     }
 

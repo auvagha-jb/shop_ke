@@ -93,8 +93,9 @@ class _SignUpViewState extends State<SignUpView> {
                             controller: emailAddressController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: FormHelper.buildInputDecoration(
-                                controller: emailAddressController,
-                                labelText: 'Email Address'),
+                              controller: emailAddressController,
+                              labelText: 'Email Address',
+                            ),
                             validator: (value) =>
                                 model.validate.emailValidation(value),
                             onChanged: (value) => _customer.email = value,
@@ -125,8 +126,9 @@ class _SignUpViewState extends State<SignUpView> {
                                   controller: phoneNumberController,
                                   keyboardType: TextInputType.number,
                                   decoration: FormHelper.buildInputDecoration(
-                                      controller: phoneNumberController,
-                                      labelText: 'Phone Number'),
+                                    controller: phoneNumberController,
+                                    labelText: 'Phone Number',
+                                  ),
                                   validator: (value) =>
                                       model.validate.phoneValidation(value),
                                   onChanged: (value) =>
@@ -140,11 +142,12 @@ class _SignUpViewState extends State<SignUpView> {
 
                           //Password
                           TextFormField(
-                            keyboardType: TextInputType.number,
+                            keyboardType: TextInputType.text,
                             controller: passwordController,
                             decoration: FormHelper.buildInputDecoration(
-                                controller: passwordController,
-                                labelText: 'Password'),
+                              controller: passwordController,
+                              labelText: 'Password',
+                            ),
                             validator: (value) =>
                                 model.validate.passwordValidation(value),
                             onChanged: (value) => _customer.password = value,
@@ -161,7 +164,8 @@ class _SignUpViewState extends State<SignUpView> {
                           //Terms and Conditions
                           SwitchListTile(
                             title: Text(
-                                'I agree to the Terms and Conditions and Privacy Policy'),
+                              'I agree to the Terms and Conditions and Privacy Policy',
+                            ),
                             value: model.termsAndConditions,
                             onChanged: (bool value) {
                               model.setTermsAndConditions(value);
@@ -186,14 +190,14 @@ class _SignUpViewState extends State<SignUpView> {
                                   text: 'CONTINUE',
                                   onPressed: () {
                                     model.isSubmitButtonClicked();
-                                    model.signUp(context, _formKey, _customer);
+                                    model.signUp(_formKey, _customer);
                                   },
-                                  buttonType: ButtonType.Accent,
+                                  buttonType: ButtonType.Secondary,
                                 )
 
                               //When busy, show the progress indicator button
                               : AppProgressButton(
-                                  buttonType: ButtonType.Accent,
+                                  buttonType: ButtonType.Secondary,
                                 ),
                         ],
                       ),

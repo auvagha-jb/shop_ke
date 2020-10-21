@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/app_router.dart';
 import 'package:shop_ke/themes/style.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'locator.dart';
 
 void main() async{
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: 'Project Pay',
       theme: lightTheme(), //Imported from themes/styles
       onGenerateRoute: AppRouter.generateRoute, //Imported from ui/app_router.dart
+      navigatorKey: locator<NavigationService>().navigatorKey,
     );
   }
 }

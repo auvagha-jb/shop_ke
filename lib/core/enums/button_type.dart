@@ -1,1 +1,1 @@
-enum ButtonType { Light, Primary, Accent, Dark }
+enum ButtonType { Light, Primary, Secondary, Accent }

@@ -24,7 +24,7 @@ class WelcomeView extends StatelessWidget {
             Expanded(
               flex: 4,
               child: AppIcon(
-                iconType: IconType.Primary,
+                iconType: IconType.Accent,
               ),
             ),
 
@@ -42,7 +42,13 @@ class WelcomeView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 15.0),
                       child: Column(
                         children: <Widget>[
-                          Text('Welcome to Shop KE', style: lightHeader1),
+                          Row(
+                            children: [
+                              Text('Welcome to ', style: lightHeader1),
+                              Text('Shop ', style: darkHeader1),
+                              Text('KE', style: accentHeader1),
+                            ],
+                          ),
                           SizedBox(height: 8.0),
                           Text(
                             'Your once stop shop for the best local products at prices you\'ll love',
@@ -53,7 +59,7 @@ class WelcomeView extends StatelessWidget {
                     ),
 
                     AppButton(
-                      buttonType: ButtonType.Accent,
+                      buttonType: ButtonType.Secondary,
                       //icon: Image.asset('assets/images/google_logo.png'),
                       text: 'SIGN IN WITH EXISTING ACCOUNT',
                       onPressed: () {

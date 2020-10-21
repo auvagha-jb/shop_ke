@@ -1,25 +1,32 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/user_action.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/error_service.dart';
+import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
+import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
 import 'package:shop_ke/core/services/firebase_services/phone_authentication_service.dart';
+import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
+import 'package:shop_ke/ui/views/choose_action_view.dart';
 import 'package:shop_ke/ui/views/home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../locator.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
-  final PhoneAuthenticationService _phoneAuthService =
-      locator<PhoneAuthenticationService>();
-  final NavigationService _navigationService = locator<NavigationService>();
-  final ErrorService _errorService = locator<ErrorService>();
+  final _phoneAuthService = locator<PhoneAuthenticationService>();
+  final _navigationService = locator<NavigationService>();
+  final _errorService = locator<ErrorService>();
+  final _emailAuthService = locator<EmailAuthenticationService>();
+  final _firestoreService = locator<FirestoreService>();
+  final _sharedPreferences = locator<SharedPreferencesService>();
 
   bool submitButtonClicked = false;
   bool termsAndConditions = false;
@@ -42,6 +49,58 @@ class AuthenticationViewModel extends BaseViewModel {
       submitButtonClicked = true;
       notifyListeners();
     }
+  }
+
+  void signUp(GlobalKey<FormState> formKey, Customer customer) async {
+    final errorTitle = 'Registration error';
+
+    changeState(ViewState.Busy);
+
+    //If the form validation fails, exit function
+    if (!validate.signUpValidation(formKey, termsAndConditions)) {
+      changeState(ViewState.Idle);
+      return;
+    }
+
+    //Initiate email registration process
+    final ServiceResponse serviceResponse =
+        await _emailAuthService.signUpWithEmail(
+      email: customer.email,
+      password: customer.password,
+    );
+
+    //If the sign up fails show an alert with the error message
+    if (!serviceResponse.status) {
+      _errorService.showErrorDialog(errorTitle, serviceResponse.response);
+      changeState(ViewState.Idle);
+      return;
+    }
+
+    //On successful registration add customer to firestore
+    addCustomerToFirestore(serviceResponse, customer);
+  }
+
+  void addCustomerToFirestore(
+      ServiceResponse serviceResponse, Customer customer) async {
+    final errorTitle = 'Registration error';
+
+    User user = serviceResponse.response;
+    bool added = await _firestoreService.addCustomer(customer, user);
+
+    if (!added) {
+      changeState(ViewState.Idle);
+      _errorService.showErrorDialog(
+        errorTitle,
+        'User registration incomplete. Please check your connection and try again',
+      );
+      return;
+    }
+
+    //Save user data locally
+    _sharedPreferences.setCustomer(customer.toMap());
+
+    changeState(ViewState.Idle);
+    _navigationService.replaceWith(ChooseActionView.routeName);
   }
 
   void login({
@@ -113,22 +172,5 @@ class AuthenticationViewModel extends BaseViewModel {
 
     inspect(serviceResponse);
     _navigationService.replaceWith(HomeView.routeName);
-  }
-
-  void signUp(
-      BuildContext context, GlobalKey<FormState> formKey, Customer customer) {
-    _customer = customer;
-
-    //If all the fields have been filled and terms and conditions have
-    // been accepted
-    if (validate.signUpValidation(formKey, termsAndConditions)) {
-      //Initiate phone verification process
-      phoneAuthentication(
-        context: context,
-        phoneNumber: '${customer.fullPhoneNumber}',
-        action: UserAction.SignUp,
-      );
-      print('Customer $customer');
-    }
   }
 }

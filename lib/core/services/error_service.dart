@@ -16,6 +16,16 @@ class ErrorService {
     );
   }
 
+  void showErrorDialog(String title, String message) {
+    final response = UIResponse(title: title, message: message);
+
+    //Show error dialog
+    _dialogService.showDialog(
+      title: response.title,
+      description: response.message,
+    );
+  }
+
   void showServiceResponseError(ServiceResponse serviceResponse) {
     final UIResponse response = serviceResponse.response as UIResponse;
 
@@ -26,7 +36,7 @@ class ErrorService {
     );
   }
 
-  void showBasicError(UIResponse response) {
+  void showUIResponseError(UIResponse response) {
     //Show error dialog
     _dialogService.showDialog(
       title: response.title,

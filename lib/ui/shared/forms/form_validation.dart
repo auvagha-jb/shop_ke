@@ -30,17 +30,17 @@ class FormValidation {
   }
 
   dynamic passwordValidation(String value) {
+    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+
     //Ensure it is at least 6 characters long
     if (value.length < 6) {
       return 'Must be at least 6 characters';
     }
 
-//    String pattern =
-//        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
-//    RegExp regExp = new RegExp(pattern);
-//    if (!regExp.hasMatch(value)) {
-//      return 'Must contain one capital letter, number and special character';
-//    }
+    RegExp regExp = new RegExp(pattern);
+    if (!regExp.hasMatch(value)) {
+      return 'Must contain one capital letter, number and special character';
+    }
     return null;
   }
 

@@ -19,7 +19,8 @@ class AppProgressButton extends StatelessWidget {
       child: RaisedButton(
         color: buttonColor.backgroundColor,
         child: CircularProgressIndicator(
-            backgroundColor: Theme.of(context).canvasColor),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
         shape: ButtonDesign.buttonShape,
         onPressed: () {},
       ),

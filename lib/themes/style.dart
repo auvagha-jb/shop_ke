@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_ke/themes/custom_colors.dart';
 
 ThemeData lightTheme() {
   return ThemeData(
@@ -8,9 +9,9 @@ ThemeData lightTheme() {
     // the app on. For desktop platforms, the controls will be smaller and
     // closer together (more dense) than on mobile platforms.
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    primaryColor: Color(0xffd32f2f),//0xff specifies full opacity
-    accentColor: Colors.black,
-    backgroundColor: Colors.white,
+    primaryColor: CustomColors.red,//0xff specifies full opacity
+    accentColor: CustomColors.green,
+    backgroundColor: Colors.black,
     canvasColor: Colors.white,//Colors.grey[100]
   );
 }

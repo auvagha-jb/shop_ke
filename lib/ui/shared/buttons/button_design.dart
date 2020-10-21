@@ -27,7 +27,7 @@ class ButtonDesign {
             ButtonColor(backgroundColor: primaryColor, textColor: Colors.white);
         break;
 
-      case ButtonType.Dark:
+      case ButtonType.Secondary:
         buttonColor =
             ButtonColor(backgroundColor: Colors.black, textColor: Colors.white);
         break;
