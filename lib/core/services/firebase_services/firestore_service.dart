@@ -2,13 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/customer.dart';
+import 'package:shop_ke/core/models/service_response.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  FirestoreService() {
-    print('Hello from Firestore');
-  }
 
   //The collections
   String _customerCollection = 'Customers';
@@ -54,20 +51,36 @@ class FirestoreService {
     return status;
   }
 
-  Future getById(String collection, String id) async {
+  Future<ServiceResponse> getById({
+    @required String collection,
+    @required String id,
+    @required dynamic dataModel,
+  }) async {
+    bool status = false;
+    dynamic response;
+
     try {
       CollectionReference ref = _db.collection(collection);
 
-      final customerData = await ref.doc(id).get();
-      final customer = Customer.fromMap(customerData.data());
-      print('Customer from firebase customer');
-      assert(customer != null);
+      final firestoreData = await ref.doc(id).get();
+      final model = dataModel.fromMap(firestoreData.data());
 
-      return customer;
+      if(model == null) {
+        throw new Exception('Item was not found. Create it and try again');
+      }
+
+      response = model;
+      status = true;
+
     } catch (e) {
       print('getById exception $e');
-      return e.toString();
+      response = e.toString();
     }
+
+    return ServiceResponse(
+      status: status,
+      response: response
+    );
   }
 
   Future update(String collection, dynamic collectionModel) async {

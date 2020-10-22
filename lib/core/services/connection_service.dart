@@ -1,10 +1,9 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:stacked_services/stacked_services.dart';
 
-class CheckConnection {
-  final String alertTitle = "No internet connection";
-  final String alertBody =
-      "This action requires internet connection. Please connect to wifi or mobile data and try again";
-  final String alertButton = "Continue";
+import '../../locator.dart';
+
+class ConnectionService {
 
   Future<bool> isConnected() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -14,9 +13,19 @@ class CheckConnection {
     if (connectivityResult == ConnectivityResult.none) {
       // Mobile is not Connected to Internet
       connected = false;
+      connectionFailureAlert();
     }
+
     print("Connection status: $connected");
     return connected;
+  }
+
+  void connectionFailureAlert() {
+    final _dialogService = locator<DialogService>();
+    _dialogService.showDialog(
+      title: 'Connection failure',
+      description: 'Please check yor internet connection and try again'
+    );
   }
 
 }

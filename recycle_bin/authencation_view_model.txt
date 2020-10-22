@@ -1,0 +1,155 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:shop_ke/core/enums/view_state.dart';
+import 'package:shop_ke/core/models/customer.dart';
+import 'package:shop_ke/core/models/service_response.dart';
+import 'package:shop_ke/core/services/check_connection.dart';
+import 'package:shop_ke/core/services/error_service.dart';
+import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
+import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
+import 'package:shop_ke/core/services/shared_preferences_service.dart';
+import 'package:shop_ke/core/view_models/base_view_model.dart';
+import 'package:shop_ke/ui/shared/forms/form_validation.dart';
+import 'package:shop_ke/ui/views/choose_action_view.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+import '../../locator.dart';
+
+class AuthenticationViewModel extends BaseViewModel {
+  final _navigationService = locator<NavigationService>();
+  final _errorService = locator<ErrorService>();
+  final _emailAuthService = locator<EmailAuthenticationService>();
+  final _firestoreService = locator<FirestoreService>();
+  final _sharedPreferences = locator<SharedPreferencesService>();
+  final _dialogService = locator<DialogService>();
+
+  bool submitButtonClicked = false;
+  bool termsAndConditions = false;
+  final validate = FormValidation();
+  final codeController = TextEditingController();
+
+  final loginErrorTitle = 'Login failed';
+  final signUpErrorTitle = 'Registration failed';
+
+  void setTermsAndConditions(bool value) {
+    termsAndConditions = value;
+    notifyListeners();
+  }
+
+  void isSubmitButtonClicked() {
+    //Logic that assists in showing validation message for terms and conditions
+    //When the form shows in the beginning, the warning for terms and conditions is always hidden
+    //Once the user attempts to submit the form, the state changes and it can be validated whether the
+    //terms and conditions were clicked or not
+    if (submitButtonClicked == false) {
+      submitButtonClicked = true;
+      notifyListeners();
+    }
+  }
+
+  void signUp(GlobalKey<FormState> formKey, Customer customer) async {
+    try {
+      changeState(ViewState.Busy);
+      final bool isConnected = await CheckConnection().isConnected();
+
+      //If the form validation fails, exit function
+      if (!validate.signUpValidation(formKey, termsAndConditions) || !isConnected) {
+        changeState(ViewState.Idle);
+        return;
+      }
+
+
+      //Initiate email registration process
+      final ServiceResponse serviceResponse =
+      await _emailAuthService.signUpWithEmail(
+        email: customer.email,
+        password: customer.password,
+      );
+
+      //If the sign up fails show an alert with the error message
+      if (!serviceResponse.status) {
+        throw new Exception(serviceResponse.response);
+      }
+
+      //On successful registration add customer to firestore
+      User user = serviceResponse.response;
+      bool added = await _firestoreService.addCustomer(customer, user);
+
+      if (!added) {
+        throw new Exception('User registration incomplete. Please check your connection and try again');
+      }
+
+      //Once the user is store user data locally on shared preferences
+      final bool customerIsSet = await _sharedPreferences.setCustomer(customer.toMap());
+
+      if(!customerIsSet) {
+        throw new Exception('Trouble saving user data locally');
+      }
+
+      _navigationService.replaceWith(ChooseActionView.routeName);
+
+    } catch(e) {
+      print('Sign up exception $e');
+      changeState(ViewState.Idle);
+      _errorService.showErrorDialog(signUpErrorTitle, e.toString());
+    }
+
+  }
+
+
+  void addCustomerToFirestore(ServiceResponse serviceResponse, Customer customer) async {
+
+  }
+
+  void setCustomerSharedPreferences(Customer customer) async {
+    final bool customerIsSet = await _sharedPreferences.setCustomer(customer.toMap());
+
+    if(!customerIsSet) {
+      throw new Exception('Trouble saving user data locally');
+    }
+  }
+
+  void login(GlobalKey<FormState> formKey, Customer customer) async {
+    changeState(ViewState.Busy);
+
+    //If form validation fails exit function
+    if (!validate.formValidation(formKey)) {
+      changeState(ViewState.Idle);
+      return;
+    }
+
+    final ServiceResponse serviceResponse = await _emailAuthService
+        .loginWithEmail(email: customer.email, password: customer.password);
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      return;
+    }
+
+    //Get the user from firestore
+    String uid = serviceResponse.response;
+    getCustomerFromFirestore(uid);
+  }
+
+  void getCustomerFromFirestore(String uid) async {
+    final ServiceResponse serviceResponse = await _firestoreService.getById(
+      collection: _firestoreService.customerCollection,
+      id: uid,
+      dataModel: Customer,
+    );
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _errorService.showErrorDialog(loginErrorTitle, serviceResponse.response);
+      return;
+    }
+
+    Customer customer = serviceResponse.response;
+
+    _sharedPreferences.setCustomer(customer.toMap());
+
+    changeState(ViewState.Idle);
+  }
+}

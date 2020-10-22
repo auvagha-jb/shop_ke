@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/models/ui_response.dart';
@@ -17,12 +18,10 @@ class ErrorService {
   }
 
   void showErrorDialog(String title, String message) {
-    final response = UIResponse(title: title, message: message);
-
     //Show error dialog
     _dialogService.showDialog(
-      title: response.title,
-      description: response.message,
+      title: title,
+      description: message,
     );
   }
 
@@ -43,4 +42,31 @@ class ErrorService {
       description: response.message,
     );
   }
+
+  String getFirebaseAuthException(FirebaseAuthException e) {
+    String response;
+    switch (e.code) {
+      case 'weak-password':
+        response = 'The password provided is too weak.';
+        break;
+
+      case 'email-already-in-use':
+        response = 'The account already exists for that email.';
+        break;
+
+      case 'email-already-in-use':
+        response = 'The account already exists for that email.';
+        break;
+
+      case 'network-request-failed':
+        response = 'Network connection timed out. Please check your connection and try again';
+        break;
+
+      default:
+        response = e.toString();
+        break;
+    }
+    return response;
+  }
+
 }

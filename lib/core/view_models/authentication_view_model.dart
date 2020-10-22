@@ -1,39 +1,34 @@
-import 'dart:async';
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/enums/user_action.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
+import 'package:shop_ke/core/services/connection_service.dart';
 import 'package:shop_ke/core/services/error_service.dart';
 import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
-import 'package:shop_ke/core/services/firebase_services/phone_authentication_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
 import 'package:shop_ke/ui/views/choose_action_view.dart';
-import 'package:shop_ke/ui/views/home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../locator.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
-  final _phoneAuthService = locator<PhoneAuthenticationService>();
   final _navigationService = locator<NavigationService>();
   final _errorService = locator<ErrorService>();
   final _emailAuthService = locator<EmailAuthenticationService>();
   final _firestoreService = locator<FirestoreService>();
   final _sharedPreferences = locator<SharedPreferencesService>();
+  final connectionService = locator<ConnectionService>();
 
   bool submitButtonClicked = false;
   bool termsAndConditions = false;
   final validate = FormValidation();
   final codeController = TextEditingController();
 
-  Customer _customer;
+  final errorTitle = 'Registration error';
 
   void setTermsAndConditions(bool value) {
     termsAndConditions = value;
@@ -52,7 +47,6 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   void signUp(GlobalKey<FormState> formKey, Customer customer) async {
-    final errorTitle = 'Registration error';
 
     changeState(ViewState.Busy);
 
@@ -82,7 +76,6 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void addCustomerToFirestore(
       ServiceResponse serviceResponse, Customer customer) async {
-    final errorTitle = 'Registration error';
 
     User user = serviceResponse.response;
     bool added = await _firestoreService.addCustomer(customer, user);
@@ -96,81 +89,27 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
 
-    //Save user data locally
-    _sharedPreferences.setCustomer(customer.toMap());
-
-    changeState(ViewState.Idle);
-    _navigationService.replaceWith(ChooseActionView.routeName);
+    setSharedPreferencesForCustomer(customer);
   }
 
-  void login({
-    @required BuildContext context,
-    @required GlobalKey<FormState> formKey,
-    @required String phoneNumber,
-  }) {
+  void login(GlobalKey<FormState> formKey, Customer customer,) {
     //If verification passes, proceed to phone verification phase
     if (!validate.formValidation(formKey)) {
       return;
     }
-
-    //Initiate phone verification process
-    phoneAuthentication(
-      phoneNumber: phoneNumber,
-      context: context,
-      action: UserAction.Login,
-    );
   }
 
-  void phoneAuthentication({
-    @required BuildContext context,
-    @required String phoneNumber,
-    @required UserAction action,
-  }) async {
-    changeState(ViewState.Busy);
+  void setSharedPreferencesForCustomer(Customer customer) async {
+    //Save user data locally
+    final ServiceResponse serviceResponse = await _sharedPreferences.setCustomer(customer.toMap());
 
-    //Invoke the phone authentication from the auth service
-    _phoneAuthService.initPhoneAuth(
-      phoneNumber: phoneNumber,
-      context: context,
-      action: action,
-      customer: _customer,
-    );
-
-    //After x seconds change the view state to idle
-//    delayedChangeState(ViewState.Idle);
-  }
-
-  Future<void> manualPhoneAuthentication({
-    @required GlobalKey<FormState> formKey,
-    @required String verificationId,
-    @required BuildContext context,
-    @required UserAction action,
-    Customer customer,
-  }) async {
-    //If no code is entered
-    if (!validate.formValidation(formKey)) {
+    if(!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _errorService.showErrorDialog(errorTitle, serviceResponse.response);
       return;
     }
 
-    changeState(ViewState.Busy);
-
-    //Check whether the code matches
-    final ServiceResponse serviceResponse =
-        await _phoneAuthService.manualPhoneVerification(
-      context: context,
-      code: codeController.text.trim(),
-      verificationId: verificationId,
-      action: action,
-    );
-
-    //Check for errors in response
-    if (!serviceResponse.status) {
-      delayedChangeState(ViewState.Idle);
-      _errorService.showServiceResponseError(serviceResponse);
-      return;
-    }
-
-    inspect(serviceResponse);
-    _navigationService.replaceWith(HomeView.routeName);
+    changeState(ViewState.Idle);
+    _navigationService.replaceWith(ChooseActionView.routeName);
   }
 }

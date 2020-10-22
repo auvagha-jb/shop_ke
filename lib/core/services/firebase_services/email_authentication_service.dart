@@ -1,23 +1,39 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/service_response.dart';
+import 'package:shop_ke/core/services/error_service.dart';
+
+import '../../../locator.dart';
 
 class EmailAuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _errorService = locator<ErrorService>();
 
-  Future loginWithEmail({
+  Future<ServiceResponse> loginWithEmail({
     @required String email,
     @required String password,
   }) async {
+    bool status = false;
+    dynamic response;
+
     try {
-      var user = await _auth.signInWithEmailAndPassword(
+      final result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return user != null;
+
+      if (result.user == null) {
+        throw new Exception('Null user was returned');
+      }
+
+      status = true;
+      response = result.user.uid;
     } catch (e) {
-      return e.message;
+      print('$e');
+      response = e.toString();
     }
+
+    return ServiceResponse(status: status, response: response);
   }
 
   Future<ServiceResponse> signUpWithEmail({
@@ -33,7 +49,7 @@ class EmailAuthenticationService {
         password: password,
       );
 
-      if(result.user == null) {
+      if (result.user == null) {
         throw new Exception('Null user was returned');
       }
 
@@ -41,19 +57,13 @@ class EmailAuthenticationService {
       response = result.user;
 
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        response = 'The password provided is too weak.';
-      } else if (e.code == 'email-already-in-use') {
-        response = 'The account already exists for that email.';
-      }
+      response = _errorService.getFirebaseAuthException(e);
+
     } catch (e) {
       response = e.toString();
       print("[signUpWithEmail] : $e");
     }
 
-    return ServiceResponse(
-      status: status,
-      response: response
-    );
+    return ServiceResponse(status: status, response: response);
   }
 }

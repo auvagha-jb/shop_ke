@@ -23,104 +23,90 @@ class _LoginViewState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   final _customer = Customer();
 
-  final phoneNumberController = TextEditingController();
-  final countryCodeController = TextEditingController();
+  final emailAddressController = TextEditingController();
+  final passwordController = TextEditingController();
 
   final textFieldSpacing = 15.0;
   final appBar = AppBar(
     title: Text('Sign in'),
   );
 
-  @override
-  void initState() {
-    super.initState();
-    countryCodeController.text = "+254";
-    _customer.countryCode = countryCodeController.text;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final viewPortHeight = MediaQuery.of(context).size.height;
+    final verticalPadding = (viewPortHeight) / 4.5;
+
     return BaseView<AuthenticationViewModel>(
       builder: (context, model, child) {
         return Scaffold(
           appBar: appBar,
           body: SingleChildScrollView(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
 
             //The master column holding both halves of the screen
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   //The top half of the form
 
-                  ResponsiveContainer(
-                    appBar: appBar,
-                    height: 0.6,
-                    //margin: EdgeInsets.only(bottom: 100),
-                    child: //Phone number row
-                        Row(
-                      children: <Widget>[
-                        //Country Code
-                        Expanded(
-                          flex: 2,
-                          child: TextFormField(
-                            enabled: false,
-                            controller: countryCodeController,
-                            decoration: InputDecoration(
-                              labelText: 'Code',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
+                  Column(
+                    children: [
+                      //Email Address
+                      TextFormField(
+                        controller: emailAddressController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: FormHelper.buildInputDecoration(
+                          controller: emailAddressController,
+                          labelText: 'Email Address',
                         ),
+                        validator: (value) =>
+                            model.validate.emailValidation(value),
+                        onChanged: (value) => _customer.email = value,
+                      ),
 
-                        //Phone number input field
-                        Expanded(
-                          flex: 8,
-                          child: TextFormField(
-                            controller: phoneNumberController,
-                            keyboardType: TextInputType.phone,
-                            decoration: FormHelper.buildInputDecoration(
-                              controller: phoneNumberController,
-                              labelText: 'Phone Number',
-                            ),
-                            validator: (value) =>
-                                model.validate.phoneValidation(value),
-                            onChanged: (value) =>
-                                _customer.phoneNumber = value.trim(),
-                          ),
+                      SizedBox(height: FormHelper.formFieldSpacing),
+
+                      //Password
+                      TextFormField(
+                        keyboardType: TextInputType.text,
+                        controller: passwordController,
+                        decoration: FormHelper.buildInputDecoration(
+                          controller: passwordController,
+                          labelText: 'Password',
                         ),
-                      ],
-                    ),
+                        validator: (value) =>
+                            model.validate.passwordValidation(value),
+                        onChanged: (value) => _customer.password = value,
+                        obscureText: true,
+                      ),
+                    ],
                   ),
+
+                  SizedBox(height: FormHelper.formFieldSpacing * 5),
 
                   /* The bottom half of the login page */
                   //Submit button and register link section
                   ResponsiveContainer(
                     appBar: appBar,
-                    height: 0.4,
+                    height: 0.3,
                     child: Column(
                       children: <Widget>[
                         model.state == ViewState.Idle
                             ?
                             //Submit button
-                            //TODO: Show when the password is incorrect or the number is not registered
                             AppButton(
                                 text: 'LOG IN',
-                                buttonType: ButtonType.Primary,
+                                buttonType: ButtonType.Secondary,
                                 onPressed: () {
-                                  model.login(
-                                    context: context,
-                                    formKey: _formKey,
-                                    phoneNumber: '${_customer.fullPhoneNumber}',
-                                  );
+                                  model.login(_formKey, _customer);
                                 },
                               )
 
                             //While the login process is ongoing
                             : AppProgressButton(
-                                buttonType: ButtonType.Primary,
+                                buttonType: ButtonType.Secondary,
                               ),
 
                         SizedBox(height: textFieldSpacing),

@@ -1,9 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:shop_ke/core/services/api_service.dart';
+import 'package:shop_ke/core/services/connection_service.dart';
 import 'package:shop_ke/core/services/error_service.dart';
 import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
-import 'package:shop_ke/core/services/firebase_services/phone_authentication_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/services/sockets_service.dart';
 import 'package:shop_ke/core/view_models/app_drawer_view_model.dart';
@@ -23,11 +23,11 @@ void setupLocator() {
   //Services
   locator.registerLazySingleton(() => ApiService());
   locator.registerLazySingleton(() => SharedPreferencesService());
-  locator.registerLazySingleton(() => PhoneAuthenticationService());
   locator.registerLazySingleton(() => EmailAuthenticationService());
   locator.registerLazySingleton(() => FirestoreService());
   locator.registerLazySingleton(() => ErrorService());
   locator.registerLazySingleton(() => SocketsService());
+  locator.registerLazySingleton(() => ConnectionService());
 
   //Stacked Services
   locator.registerLazySingleton(() => NavigationService());

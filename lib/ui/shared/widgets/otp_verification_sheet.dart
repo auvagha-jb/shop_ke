@@ -62,12 +62,7 @@ class _OTPVerificationSheetState extends State<OTPVerificationSheet> {
                     //Button in idle state
                     AppButton(
                         onPressed: () {
-                          model.manualPhoneAuthentication(
-                            formKey: _formKey,
-                            verificationId: widget.verificationId,
-                            context: context,
-                            action: widget.action,
-                          );
+                          //Manual Phone Auth
                         },
                         buttonType: ButtonType.Primary,
                         text: 'VERIFY',

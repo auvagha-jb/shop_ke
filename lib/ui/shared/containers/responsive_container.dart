@@ -15,15 +15,9 @@ class ResponsiveContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewPortHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final viewPortHeight = MediaQuery.of(context).size.height;
     final appBarHeight = appBar != null ? appBar.preferredSize.height : 0;
-    final topPadding = MediaQuery
-        .of(context)
-        .padding
-        .top;
+    final topPadding = MediaQuery.of(context).padding.top;
 
     return Container(
       height: (viewPortHeight - appBarHeight - topPadding) * height,

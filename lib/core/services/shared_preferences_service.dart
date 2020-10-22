@@ -9,12 +9,14 @@ class SharedPreferencesService {
     return prefs.containsKey('id');
   }
 
-  Future setCustomer(Map<String, dynamic> customerMap) async {
+  Future<ServiceResponse> setCustomer(Map<String, dynamic> customerMap) async {
+    bool status = false;
+    dynamic response;
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       //Remember the id needs to be set
-
       customerMap.forEach((attribute, value) async {
         await prefs.setString(attribute, value);
       });
@@ -23,11 +25,15 @@ class SharedPreferencesService {
         print("$attribute => ${prefs.getString(attribute)}");
       });
 
-      return true;
+      status = true;
+      response = 'Customer set';
+
     } catch (e) {
-      print(e);
-      return e.toString();
+      print('setCustomer $e');
+      response = e.toString();
     }
+
+    return ServiceResponse(status: status, response: response);
   }
 
   Future<ServiceResponse> getCustomer() async {

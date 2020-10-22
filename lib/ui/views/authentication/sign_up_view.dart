@@ -188,9 +188,13 @@ class _SignUpViewState extends State<SignUpView> {
                           model.state == ViewState.Idle
                               ? AppButton(
                                   text: 'CONTINUE',
-                                  onPressed: () {
-                                    model.isSubmitButtonClicked();
-                                    model.signUp(_formKey, _customer);
+                                  onPressed: () async {
+                                    final bool isConnected = await model.connectionService.isConnected();
+
+                                    if(isConnected) {
+                                      model.isSubmitButtonClicked();
+                                      model.signUp(_formKey, _customer);
+                                    }
                                   },
                                   buttonType: ButtonType.Secondary,
                                 )
