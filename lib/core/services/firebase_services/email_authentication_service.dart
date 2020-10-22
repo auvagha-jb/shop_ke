@@ -28,8 +28,12 @@ class EmailAuthenticationService {
 
       status = true;
       response = result.user.uid;
+
+    } on FirebaseAuthException catch (e) {
+      response = _errorService.getFirebaseLoginException(e);
+
     } catch (e) {
-      print('$e');
+      print('[loginWithEmailException] $e');
       response = e.toString();
     }
 
@@ -57,7 +61,7 @@ class EmailAuthenticationService {
       response = result.user;
 
     } on FirebaseAuthException catch (e) {
-      response = _errorService.getFirebaseAuthException(e);
+      response = _errorService.getFirebaseSignUpException(e);
 
     } catch (e) {
       response = e.toString();

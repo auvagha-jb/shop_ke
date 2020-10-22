@@ -3,10 +3,11 @@ class Customer {
   String firstName;
   String lastName;
   String email;
-  String countryCode;
+  String countryCode = '+254';
   String _phoneNumber;
   String fullPhoneNumber;
   String password;
+  bool isShopOwner = false;
 
   Customer(); //Default Constructor
 
@@ -34,6 +35,7 @@ class Customer {
     countryCode = map['countryCode'];
     phoneNumber = map['phoneNumber'];
     fullPhoneNumber = map['fullPhoneNumber'];
+    isShopOwner = map['isShopOwner'];
   }
 
   Map<String, dynamic> toMap() {
@@ -46,6 +48,7 @@ class Customer {
       'countryCode': countryCode,
       'phoneNumber': phoneNumber,
       'fullPhoneNumber': fullPhoneNumber,
+      'isShopOwner': isShopOwner,
     };
   }
 }

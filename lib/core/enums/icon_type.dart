@@ -1,1 +1,1 @@
-enum IconType { Primary, Accent, Light }
+enum IconType { Primary, Secondary, Accent, Light }

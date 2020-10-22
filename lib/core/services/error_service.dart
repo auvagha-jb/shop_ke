@@ -43,7 +43,7 @@ class ErrorService {
     );
   }
 
-  String getFirebaseAuthException(FirebaseAuthException e) {
+  String getFirebaseSignUpException(FirebaseAuthException e) {
     String response;
     switch (e.code) {
       case 'weak-password':
@@ -54,8 +54,26 @@ class ErrorService {
         response = 'The account already exists for that email.';
         break;
 
-      case 'email-already-in-use':
-        response = 'The account already exists for that email.';
+      case 'network-request-failed':
+        response = 'Network connection timed out. Please check your connection and try again';
+        break;
+
+      default:
+        response = e.toString();
+        break;
+    }
+    return response;
+  }
+
+  String getFirebaseLoginException(FirebaseAuthException e) {
+    String response;
+    switch (e.code) {
+      case 'user-not-found':
+        response = 'Account for the given email not found. Ensure you login with a registered account';
+        break;
+
+        case 'wrong-password':
+        response = 'Incorrect password for the given account. Forgot password? Reset it below';
         break;
 
       case 'network-request-failed':

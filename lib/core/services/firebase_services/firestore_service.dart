@@ -33,6 +33,34 @@ class FirestoreService {
   }
 
 
+  Future<ServiceResponse> getCustomerById(String id) async {
+    bool status = false;
+    dynamic response;
+
+    try {
+      CollectionReference ref = _db.collection(customerCollection);
+
+      final documentSnapshot = await ref.doc(id).get();
+      final customer = Customer.fromMap(documentSnapshot.data());
+
+      if(customer == null) {
+        throw new Exception('Your data could not be found. It may have been deleted');
+      }
+
+      response = customer;
+      status = true;
+
+    } catch (e) {
+      print('getById exception $e');
+      response = e.toString();
+    }
+
+    return ServiceResponse(
+        status: status,
+        response: response
+    );
+  }
+
   Future<bool> add(
       String collection, String uid, dynamic collectionModel) async {
     bool status = false;
@@ -51,37 +79,6 @@ class FirestoreService {
     return status;
   }
 
-  Future<ServiceResponse> getById({
-    @required String collection,
-    @required String id,
-    @required dynamic dataModel,
-  }) async {
-    bool status = false;
-    dynamic response;
-
-    try {
-      CollectionReference ref = _db.collection(collection);
-
-      final firestoreData = await ref.doc(id).get();
-      final model = dataModel.fromMap(firestoreData.data());
-
-      if(model == null) {
-        throw new Exception('Item was not found. Create it and try again');
-      }
-
-      response = model;
-      status = true;
-
-    } catch (e) {
-      print('getById exception $e');
-      response = e.toString();
-    }
-
-    return ServiceResponse(
-      status: status,
-      response: response
-    );
-  }
 
   Future update(String collection, dynamic collectionModel) async {
     try {

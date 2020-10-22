@@ -22,7 +22,7 @@ class LoadingView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             AppIcon(
-              iconType: IconType.Light,
+              iconType: IconType.Secondary,
               icon: icon,
             ),
 

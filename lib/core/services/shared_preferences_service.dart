@@ -9,25 +9,48 @@ class SharedPreferencesService {
     return prefs.containsKey('id');
   }
 
+  void setSharedPreference(String attribute, dynamic value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    switch (value.runtimeType) {
+      case String:
+        await prefs.setString(attribute, value);
+        break;
+      case bool:
+        await prefs.setBool(attribute, value);
+        break;
+    }
+  }
+
+  void getSharedPreference(String attribute, dynamic value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    switch (value.runtimeType) {
+      case String:
+        print('$attribute => ${prefs.getString(attribute)}');
+        break;
+      case bool:
+        print('$attribute => ${prefs.getBool(attribute)}');
+        break;
+    }
+  }
+
   Future<ServiceResponse> setCustomer(Map<String, dynamic> customerMap) async {
     bool status = false;
     dynamic response;
 
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
       //Remember the id needs to be set
       customerMap.forEach((attribute, value) async {
-        await prefs.setString(attribute, value);
+        setSharedPreference(attribute, value);
       });
 
       customerMap.forEach((attribute, value) async {
-        print("$attribute => ${prefs.getString(attribute)}");
+        getSharedPreference(attribute, value);
       });
 
       status = true;
       response = 'Customer set';
-
     } catch (e) {
       print('setCustomer $e');
       response = e.toString();
@@ -69,8 +92,9 @@ class SharedPreferencesService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       final keys = prefs.getKeys();
       if (keys == null) {
-        return "No shared preferences";
+        throw new Exception('No shared preferences');
       }
+
       keys.forEach((element) {
         print(prefs.getString(element));
       });

@@ -42,6 +42,9 @@ class AppIcon extends StatelessWidget {
       case IconType.Accent:
         color = Theme.of(context).accentColor;
         break;
+      case IconType.Secondary:
+        color = Theme.of(context).backgroundColor;
+        break;
     }
     return color;
   }

@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
-import 'package:shop_ke/ui/views/choose_action_view.dart';
+import 'package:shop_ke/ui/views/home_view.dart';
+import 'package:shop_ke/ui/views/startup_view.dart';
 import 'package:shop_ke/ui/views/welcome_view.dart';
-
-const String initialRoute = "login";
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case StartupView.routeName: //Initial Route
+        return MaterialPageRoute(builder: (_) => StartupView());
+
       case WelcomeView.routeName:
         return MaterialPageRoute(builder: (_) => WelcomeView());
 
@@ -19,8 +21,8 @@ class AppRouter {
       case SignUpView.routeName:
         return MaterialPageRoute(builder: (_) => SignUpView());
 
-      case ChooseActionView.routeName:
-        return MaterialPageRoute(builder: (_) => ChooseActionView());
+      case HomeView.routeName:
+        return MaterialPageRoute(builder: (_) => HomeView());
       // case 'post':
       //   var post = settings.arguments as Post;
       //   return MaterialPageRoute(builder: (_) => PostView(post: post));

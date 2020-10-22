@@ -34,8 +34,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   @override
   void initState() {
-    countryCodeController.text = '+254';
-    _customer.countryCode = countryCodeController.text;
+    countryCodeController.text = _customer.countryCode;//Set the default country code
     super.initState();
   }
 
@@ -58,7 +57,7 @@ class _SignUpViewState extends State<SignUpView> {
                   children: <Widget>[
                     //Top half of the screen
                     ResponsiveContainer(
-                      height: 0.6,
+                      height: 0.7,
                       appBar: appBar,
                       child: Column(
                         children: <Widget>[
@@ -79,8 +78,9 @@ class _SignUpViewState extends State<SignUpView> {
                           TextFormField(
                             controller: lastNameController,
                             decoration: FormHelper.buildInputDecoration(
-                                controller: lastNameController,
-                                labelText: 'Last Name'),
+                              controller: lastNameController,
+                              labelText: 'Last Name',
+                            ),
                             validator: (value) =>
                                 model.validate.defaultValidation(value),
                             onChanged: (value) => _customer.lastName = value,
@@ -153,6 +153,18 @@ class _SignUpViewState extends State<SignUpView> {
                             onChanged: (value) => _customer.password = value,
                             obscureText: true,
                           ),
+
+                          SwitchListTile(
+                            title: Text(
+                              'I would like to register my store on the app',
+                            ),
+                            value: model.isShopOwner,
+                            onChanged: (bool value) {
+                              model.setCustomerIsShopOwner(value);
+                              _customer.isShopOwner = value;
+                            },
+
+                          ),
                         ],
                       ),
                     ),
@@ -169,7 +181,6 @@ class _SignUpViewState extends State<SignUpView> {
                             value: model.termsAndConditions,
                             onChanged: (bool value) {
                               model.setTermsAndConditions(value);
-//                              _customer.termsAndConditions = value;
                             },
                           ),
 
@@ -189,9 +200,11 @@ class _SignUpViewState extends State<SignUpView> {
                               ? AppButton(
                                   text: 'CONTINUE',
                                   onPressed: () async {
-                                    final bool isConnected = await model.connectionService.isConnected();
+                                    final bool isConnected = await model
+                                        .connectionService
+                                        .isConnected();
 
-                                    if(isConnected) {
+                                    if (isConnected) {
                                       model.isSubmitButtonClicked();
                                       model.signUp(_formKey, _customer);
                                     }

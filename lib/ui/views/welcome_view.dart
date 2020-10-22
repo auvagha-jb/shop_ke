@@ -12,7 +12,7 @@ import 'base_view.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({Key key}) : super(key: key);
-  static const routeName = '/';
+  static const routeName = '/welcome';
 
   @override
   Widget build(BuildContext context) {

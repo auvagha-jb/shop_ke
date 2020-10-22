@@ -10,12 +10,15 @@ import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
-import 'package:shop_ke/ui/views/choose_action_view.dart';
+import 'package:shop_ke/ui/views/home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../locator.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
+  Customer customer = Customer();
+  bool isShopOwner = false;
+
   final _navigationService = locator<NavigationService>();
   final _errorService = locator<ErrorService>();
   final _emailAuthService = locator<EmailAuthenticationService>();
@@ -23,17 +26,25 @@ class AuthenticationViewModel extends BaseViewModel {
   final _sharedPreferences = locator<SharedPreferencesService>();
   final connectionService = locator<ConnectionService>();
 
+
   bool submitButtonClicked = false;
   bool termsAndConditions = false;
   final validate = FormValidation();
   final codeController = TextEditingController();
 
-  final errorTitle = 'Registration error';
+  final signUpErrorTitle = 'Registration error';
+  String loginErrorTitle = 'Login error';
 
   void setTermsAndConditions(bool value) {
     termsAndConditions = value;
     notifyListeners();
   }
+
+  void setCustomerIsShopOwner(bool value) {
+    isShopOwner = value;
+    notifyListeners();
+  }
+
 
   void isSubmitButtonClicked() {
     //Logic that assists in showing validation message for terms and conditions
@@ -65,7 +76,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //If the sign up fails show an alert with the error message
     if (!serviceResponse.status) {
-      _errorService.showErrorDialog(errorTitle, serviceResponse.response);
+      _errorService.showErrorDialog(signUpErrorTitle, serviceResponse.response);
       changeState(ViewState.Idle);
       return;
     }
@@ -83,7 +94,7 @@ class AuthenticationViewModel extends BaseViewModel {
     if (!added) {
       changeState(ViewState.Idle);
       _errorService.showErrorDialog(
-        errorTitle,
+        signUpErrorTitle,
         'User registration incomplete. Please check your connection and try again',
       );
       return;
@@ -92,11 +103,40 @@ class AuthenticationViewModel extends BaseViewModel {
     setSharedPreferencesForCustomer(customer);
   }
 
-  void login(GlobalKey<FormState> formKey, Customer customer,) {
+  void login(GlobalKey<FormState> formKey, Customer customer) async {
+    changeState(ViewState.Busy);
+
     //If verification passes, proceed to phone verification phase
     if (!validate.formValidation(formKey)) {
+      changeState(ViewState.Idle);
       return;
     }
+
+    final ServiceResponse serviceResponse = await _emailAuthService
+        .loginWithEmail(email: customer.email, password: customer.password);
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _errorService.showErrorDialog(loginErrorTitle, serviceResponse.response);
+      return;
+    }
+
+    //Get the user from firestore
+    String uid = serviceResponse.response;
+    getCustomerFromFirestore(uid);
+  }
+
+  void getCustomerFromFirestore(String uid) async {
+    final ServiceResponse serviceResponse = await _firestoreService.getCustomerById(uid);
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _errorService.showErrorDialog(loginErrorTitle, serviceResponse.response);
+      return;
+    }
+
+    Customer customer = serviceResponse.response;
+    setSharedPreferencesForCustomer(customer);
   }
 
   void setSharedPreferencesForCustomer(Customer customer) async {
@@ -105,11 +145,11 @@ class AuthenticationViewModel extends BaseViewModel {
 
     if(!serviceResponse.status) {
       changeState(ViewState.Idle);
-      _errorService.showErrorDialog(errorTitle, serviceResponse.response);
+      _errorService.showErrorDialog(signUpErrorTitle, serviceResponse.response);
       return;
     }
 
     changeState(ViewState.Idle);
-    _navigationService.replaceWith(ChooseActionView.routeName);
+    _navigationService.replaceWith(HomeView.routeName);
   }
 }
