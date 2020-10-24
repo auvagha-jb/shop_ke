@@ -11,3 +11,4 @@ const lightSubHeader =
     TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: Colors.white);
 
 const accentHeader1 = TextStyle(fontSize: 35, fontWeight: FontWeight.w900, color: CustomColors.green);
+const primaryHeader1 = TextStyle(fontSize: 35, fontWeight: FontWeight.w900, color: CustomColors.red);

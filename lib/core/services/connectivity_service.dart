@@ -1,9 +1,21 @@
+import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../locator.dart';
 
-class ConnectionService {
+class ConnectivityService {
+
+  ConnectivityService() {
+//    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+//      //Convert the connectivityResult to our own connectivity enum
+//      final connectionStatus = _getStatusFromResult(result);
+//      _connectionStatusController.add(connectionStatus);
+//    });
+  }
+
+  Stream get stream => Connectivity().onConnectivityChanged;
 
   Future<bool> isConnected() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -26,6 +38,10 @@ class ConnectionService {
       title: 'Connection failure',
       description: 'Please check yor internet connection and try again'
     );
+  }
+
+  void onChange() {
+//    Connectivity().onConnectivityChanged
   }
 
 }

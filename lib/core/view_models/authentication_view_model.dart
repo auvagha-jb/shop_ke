@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/services/connection_service.dart';
+import 'package:shop_ke/core/services/connectivity_service.dart';
 import 'package:shop_ke/core/services/error_service.dart';
 import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
@@ -24,7 +24,7 @@ class AuthenticationViewModel extends BaseViewModel {
   final _emailAuthService = locator<EmailAuthenticationService>();
   final _firestoreService = locator<FirestoreService>();
   final _sharedPreferences = locator<SharedPreferencesService>();
-  final connectionService = locator<ConnectionService>();
+  final connectionService = locator<ConnectivityService>();
 
 
   bool submitButtonClicked = false;
