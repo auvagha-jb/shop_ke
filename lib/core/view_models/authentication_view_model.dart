@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/customer.dart';
+import 'package:shop_ke/core/models/firestore_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
+import 'package:shop_ke/core/services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/error_service.dart';
-import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
-import 'package:shop_ke/core/services/firebase_services/firestore_service.dart';
+import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
+import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
 import 'package:shop_ke/ui/views/home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../locator.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
   Customer customer = Customer();
@@ -22,7 +22,7 @@ class AuthenticationViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _errorService = locator<ErrorService>();
   final _emailAuthService = locator<EmailAuthenticationService>();
-  final _firestoreService = locator<FirestoreService>();
+  final _customerCollection = locator<CustomersCollection>();
   final _sharedPreferences = locator<SharedPreferencesService>();
   final connectionService = locator<ConnectivityService>();
 
@@ -89,7 +89,7 @@ class AuthenticationViewModel extends BaseViewModel {
       ServiceResponse serviceResponse, Customer customer) async {
 
     User user = serviceResponse.response;
-    bool added = await _firestoreService.addCustomer(customer, user);
+    bool added = await _customerCollection.addCustomer(customer, user);
 
     if (!added) {
       changeState(ViewState.Idle);
@@ -127,7 +127,7 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   void getCustomerFromFirestore(String uid) async {
-    final ServiceResponse serviceResponse = await _firestoreService.getCustomerById(uid);
+    final ServiceResponse serviceResponse = await _customerCollection.getCustomerById(uid);
 
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);

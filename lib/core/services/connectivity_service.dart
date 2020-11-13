@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:shop_ke/locator.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../../locator.dart';
 
 class ConnectivityService {
 

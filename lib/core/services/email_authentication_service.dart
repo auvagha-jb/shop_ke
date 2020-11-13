@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/error_service.dart';
+import 'package:shop_ke/locator.dart';
 
-import '../../../locator.dart';
 
 class EmailAuthenticationService {
   final FirebaseAuth _auth = FirebaseAuth.instance;

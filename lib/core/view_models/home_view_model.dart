@@ -1,15 +1,17 @@
 import 'package:shop_ke/core/services/error_service.dart';
+import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
 import 'package:shop_ke/core/services/sockets_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
+import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 
-import '../../locator.dart';
 
 class HomeViewModel extends BaseViewModel {
   bool cartOccupiesFullScreen = false;
   bool cameraIsReady = false;
   final ErrorService _errorService = locator<ErrorService>();
   final SocketsService _socketsService = locator<SocketsService>();
+  final CustomersCollection customersCollection = locator<CustomersCollection>();
 
   SocketsService get socketsService => _socketsService;
 

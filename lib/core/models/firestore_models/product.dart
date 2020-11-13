@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
   final String id;
-  final String name;
+  final String productName;
   final String brand;
   final double price;
   int quantity;
@@ -11,7 +11,7 @@ class Product with ChangeNotifier {
 
   Product({
     this.id,
-    this.name,
+    this.productName,
     this.brand,
     this.price,
     this.quantity = 1,
@@ -37,13 +37,21 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  factory Product.fromJson(Map<String, dynamic> parsedJson) {
+  factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: parsedJson['id'] as String,
-      name: parsedJson['name'] as String,
-      brand: parsedJson['brand'] as String,
-      price: parsedJson['price'] as double,
-      imageUrl: parsedJson['imageUrl'] as String,
+      id: map['id'] as String,
+      productName: map['productName'] as String,
+      brand: map['brand'] as String,
+      price: map['price'] as double,
+      imageUrl: map['imageUrl'] as String,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+
+    };
+  }
+
 }

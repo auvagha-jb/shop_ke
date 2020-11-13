@@ -1,4 +1,4 @@
-import 'package:shop_ke/core/models/customer.dart';
+import 'package:shop_ke/core/models/firestore_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 import 'package:shared_preferences/shared_preferences.dart';

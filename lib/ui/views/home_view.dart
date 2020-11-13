@@ -75,22 +75,9 @@ class _HomeViewState extends State<HomeView> {
 
                         AppButton(
                           buttonType: ButtonType.Primary,
-//                          text: model.cameraIsReady ? 'SCAN' : 'START CAMERA',
                           text: 'START SCAN',
-                          //TODO: Scan functionality
                           onPressed: () async {
-//                            scanBarcodeOnce();
-                            model.socketsService.sendData('Hello world');
-
-//                          Navigator.of(context).pushNamed(TestSocket.routeName);
-
-//                            final phoneNumber = '+254700013635';
-//                            final Ticket ticket = await locator<ApiService>()
-//                                .getTicket(phoneNumber);
-//                            print(ticket.username);
-//                            final FirebaseUser user = await locator<
-//                                ApiService>().getFireBaseUser(phoneNumber);
-//                            print(user.token);
+//                          model.customersCollection.getAllCustomers();
                           },
                         ),
                       ],

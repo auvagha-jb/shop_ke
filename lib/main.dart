@@ -9,7 +9,7 @@ import 'package:shop_ke/themes/style.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'core/models/cart.dart';
-import 'core/models/product.dart';
+import 'core/models/firestore_models/product.dart';
 import 'locator.dart';
 
 void main() async {

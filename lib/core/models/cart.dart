@@ -6,7 +6,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/product.dart';
+import 'package:shop_ke/core/models/firestore_models/product.dart';
 import 'package:shop_ke/ui/shared/notifications/app_flushbar.dart';
 import 'package:shop_ke/ui/widgets/home/undo_delete_button.dart';
 
@@ -136,7 +136,7 @@ class Cart with ChangeNotifier {
       context,
       mainButton: UndoDeleteButton(index: index, product: product),
       title: 'Item Deleted',
-      message: '${product.name} deleted',
+      message: '${product.productName} deleted',
       icon: Icon(Icons.restore_from_trash),
     );
 

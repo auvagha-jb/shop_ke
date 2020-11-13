@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/models/cart.dart';
-import 'package:shop_ke/core/models/product.dart';
+import 'package:shop_ke/core/models/firestore_models/product.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class _CartCardState extends State<CartCard> {
     String productsJson = await DefaultAssetBundle.of(context)
         .loadString('assets/dummy_data/inventory.json');
     final parsed = json.decode(productsJson).cast<Map<String, dynamic>>();
-    _inventory = parsed.map<Product>((json) => Product.fromJson(json)).toList();
+    _inventory = parsed.map<Product>((json) => Product.fromMap(json)).toList();
     print('inventory length: ${_inventory.length}');
   }
 

@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/services/error_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
+import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:shop_ke/ui/views/home_view.dart';
 import 'package:shop_ke/ui/views/welcome_view.dart';
 
-import '../../locator.dart';
 
 class StartupViewModel extends BaseViewModel {
-  final SharedPreferencesService sharedPreferences =
-      locator<SharedPreferencesService>();
+  final SharedPreferencesService sharedPreferences = locator<SharedPreferencesService>();
   final ErrorService _errorService = locator<ErrorService>();
 
   Widget startupFutureBuilder(AsyncSnapshot snapshot) {

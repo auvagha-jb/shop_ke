@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/customer.dart';
 import 'package:shop_ke/core/models/drawer_item.dart';
+import 'package:shop_ke/core/models/firestore_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
+import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/views/profile_view.dart';
 import 'package:shop_ke/ui/views/welcome_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../../locator.dart';
 
 class AppDrawerViewModel extends BaseViewModel {
-  static final SharedPreferencesService _sharedPreferences =
-      locator<SharedPreferencesService>();
-  static final NavigationService _navigationService =
-      locator<NavigationService>();
+  static final _sharedPreferences =locator<SharedPreferencesService>();
+  static final _navigationService = locator<NavigationService>();
   static final DialogService _dialogService = locator<DialogService>();
 
   final drawerItems = [
