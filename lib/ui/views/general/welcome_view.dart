@@ -5,10 +5,10 @@ import 'package:shop_ke/core/view_models/home_view_model.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/utils/text_styles.dart';
 import 'package:shop_ke/ui/shared/widgets/app_icon.dart';
+import 'package:shop_ke/ui/views/authentication/login_view.dart';
+import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
-import 'authentication/login_view.dart';
-import 'authentication/sign_up_view.dart';
-import 'base_view.dart';
 
 class WelcomeView extends StatelessWidget {
   const WelcomeView({Key key}) : super(key: key);

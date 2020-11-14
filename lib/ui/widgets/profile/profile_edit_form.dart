@@ -9,7 +9,7 @@ import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
-import 'package:shop_ke/ui/views/base_view.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
 class ProfileEditForm extends StatefulWidget {
   final Customer customer;

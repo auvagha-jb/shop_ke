@@ -4,12 +4,12 @@ import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/view_models/home_view_model.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
+import 'package:shop_ke/ui/shared/drawers/app_drawer.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
 import 'package:shop_ke/ui/shared/utils/text_styles.dart';
-import 'package:shop_ke/ui/shared/widgets/app_drawer.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 import 'package:shop_ke/ui/widgets/home/home_floating_action_button.dart';
 
-import 'base_view.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home';

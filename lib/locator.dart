@@ -14,6 +14,7 @@ import 'package:shop_ke/core/view_models/camera_view_model.dart';
 import 'package:shop_ke/core/view_models/home_view_model.dart';
 import 'package:shop_ke/core/view_models/profile_view_model.dart';
 import 'package:shop_ke/core/view_models/startup_view_model.dart';
+import 'package:shop_ke/core/view_models/store_owner_view_model.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 
@@ -45,6 +46,7 @@ void setupLocator() {
   locator.registerFactory(() => AuthenticationViewModel());
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => CameraViewModel());
-  locator.registerFactory(() => AppDrawerViewModel());
+  locator.registerFactory(() => DrawerViewModel());
   locator.registerFactory(() => StartupViewModel());
+  locator.registerFactory(() => StoreOwnerViewModel());
 }

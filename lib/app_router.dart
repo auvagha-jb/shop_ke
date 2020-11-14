@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
+import 'package:shop_ke/ui/views/authentication/reset_password_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
-import 'package:shop_ke/ui/views/home_view.dart';
-import 'package:shop_ke/ui/views/reset_password_view.dart';
-import 'package:shop_ke/ui/views/startup_view.dart';
-import 'package:shop_ke/ui/views/welcome_view.dart';
+import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/general/startup_view.dart';
+import 'package:shop_ke/ui/views/general/welcome_view.dart';
+import 'package:shop_ke/ui/views/store_owner/register_store_view.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -28,6 +29,9 @@ class AppRouter {
 
       case HomeView.routeName:
         return MaterialPageRoute(builder: (_) => HomeView());
+
+      case RegisterStoreView.routeName:
+        return MaterialPageRoute(builder: (_) => RegisterStoreView());
       // case 'post':
       //   var post = settings.arguments as Post;
       //   return MaterialPageRoute(builder: (_) => PostView(post: post));

@@ -7,7 +7,7 @@ import 'package:shop_ke/ui/shared/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
-import 'package:shop_ke/ui/views/base_view.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
 class ResetPasswordView extends StatefulWidget {
   static const routeName = '/reset-password';

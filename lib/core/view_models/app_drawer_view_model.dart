@@ -5,17 +5,16 @@ import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
-import 'package:shop_ke/ui/views/profile_view.dart';
-import 'package:shop_ke/ui/views/welcome_view.dart';
+import 'package:shop_ke/ui/views/general/profile_view.dart';
+import 'package:shop_ke/ui/views/general/welcome_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-
-class AppDrawerViewModel extends BaseViewModel {
+class DrawerViewModel extends BaseViewModel {
   static final _sharedPreferences =locator<SharedPreferencesService>();
   static final _navigationService = locator<NavigationService>();
   static final DialogService _dialogService = locator<DialogService>();
 
-  final drawerItems = [
+  final appDrawerItems = [
     DrawerItem(
       icon: Icon(Icons.account_circle),
       title: 'Profile',

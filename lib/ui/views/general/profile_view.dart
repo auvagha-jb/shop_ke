@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/view_models/profile_view_model.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
-import 'base_view.dart';
 
 class ProfileStartupView extends StatefulWidget {
   static const routeName = "/profile";

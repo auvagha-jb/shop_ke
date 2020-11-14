@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/icon_type.dart';
 import 'package:shop_ke/core/view_models/app_drawer_view_model.dart';
 import 'package:shop_ke/ui/shared/utils/text_styles.dart';
-import 'package:shop_ke/ui/shared/utils/ui_helpers.dart';
 import 'package:shop_ke/ui/shared/widgets/app_icon.dart';
-import 'package:shop_ke/ui/views/base_view.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
-class AppDrawer extends StatelessWidget {
+class OwnerDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BaseView<AppDrawerViewModel>(
+    return BaseView<DrawerViewModel>(
       builder: (context, model, child) => SafeArea(
         child: Drawer(
           child: Column(
@@ -17,7 +16,7 @@ class AppDrawer extends StatelessWidget {
               //Drawer Title
               Container(
                 alignment: Alignment.centerLeft,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).backgroundColor,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: Row(
                   children: [
@@ -26,8 +25,8 @@ class AppDrawer extends StatelessWidget {
                       iconSize: 30,
                     ),
                     Text(
-                      UIHelper.appName,
-                      style: lightHeader2,
+                      '[StoreName goes here]',
+                      style: primaryHeader1,
                     ),
                   ],
                 ),
@@ -37,11 +36,11 @@ class AppDrawer extends StatelessWidget {
               ListView.separated(
                 //To make sure it takes up as much space as it needs rather than expanding to fill parent
                 shrinkWrap: true,
-                itemCount: model.drawerItems.length,
+                itemCount: model.appDrawerItems.length,
                 itemBuilder: (BuildContext context, int index) => ListTile(
-                  title: Text(model.drawerItems[index].title),
-                  leading: model.drawerItems[index].icon,
-                  onTap: model.drawerItems[index].onPressed,
+                  title: Text(model.appDrawerItems[index].title),
+                  leading: model.appDrawerItems[index].icon,
+                  onTap: model.appDrawerItems[index].onPressed,
                 ),
                 separatorBuilder: (BuildContext context, int index) =>
                     Divider(),

@@ -5,8 +5,8 @@ import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
-import 'package:shop_ke/ui/views/home_view.dart';
-import 'package:shop_ke/ui/views/welcome_view.dart';
+import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/general/welcome_view.dart';
 
 
 class StartupViewModel extends BaseViewModel {

@@ -28,7 +28,8 @@ class ErrorService {
         break;
 
       case 'network-request-failed':
-        response = 'Network connection timed out. Please check your connection and try again';
+        response =
+            'Network connection timed out. Please check your connection and try again';
         break;
 
       default:
@@ -42,15 +43,18 @@ class ErrorService {
     String response;
     switch (e.code) {
       case 'user-not-found':
-        response = 'Account for the given email not found. Ensure you login with a registered account';
+        response =
+            'Account for the given email not found. Ensure you login with a registered account';
         break;
 
-        case 'wrong-password':
-        response = 'Incorrect password for the given account. Forgot password? Reset it below';
+      case 'wrong-password':
+        response =
+            'Incorrect password for the given account. Forgot password? Reset it below';
         break;
 
       case 'network-request-failed':
-        response = 'Network connection timed out. Please check your connection and try again';
+        response =
+            'Network connection timed out. Please check your connection and try again';
         break;
 
       default:
@@ -59,5 +63,4 @@ class ErrorService {
     }
     return response;
   }
-
 }

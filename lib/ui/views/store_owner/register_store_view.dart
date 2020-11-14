@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/firestore_models/customer.dart';
-import 'package:shop_ke/core/view_models/authentication_view_model.dart';
+import 'package:shop_ke/core/view_models/store_owner_view_model.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
-import '../general/base_view.dart';
-
-class SignUpView extends StatefulWidget {
-  static const routeName = '/sign-up';
+class RegisterStoreView extends StatefulWidget {
+  static const routeName = '/register-store';
 
   @override
-  _SignUpViewState createState() => _SignUpViewState();
+  _RegisterStoreViewState createState() => _RegisterStoreViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
+class _RegisterStoreViewState extends State<RegisterStoreView> {
   final _formKey = GlobalKey<FormState>();
   final _customer = Customer();
 
@@ -34,14 +33,12 @@ class _SignUpViewState extends State<SignUpView> {
 
   @override
   void initState() {
-    countryCodeController.text =
-        _customer.countryCode; //Set the default country code
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<AuthenticationViewModel>(
+    return BaseView<StoreOwnerViewModel>(
       builder: (context, model, child) {
         return Scaffold(
           appBar: appBar,
@@ -156,16 +153,6 @@ class _SignUpViewState extends State<SignUpView> {
                             obscureText: true,
                           ),
 
-                          SwitchListTile(
-                            title: Text(
-                              'I would like to register my store on the app',
-                            ),
-                            value: model.isShopOwner,
-                            onChanged: (bool value) {
-                              model.setCustomerIsShopOwner(value);
-                              _customer.isShopOwner = value;
-                            },
-                          ),
                         ],
                       ),
                     ),
@@ -174,25 +161,6 @@ class _SignUpViewState extends State<SignUpView> {
                     Container(
                       child: Column(
                         children: <Widget>[
-                          //Terms and Conditions
-                          SwitchListTile(
-                            title: Text(
-                              'I agree to the Terms and Conditions and Privacy Policy',
-                            ),
-                            value: model.termsAndConditions,
-                            onChanged: (bool value) {
-                              model.setTermsAndConditions(value);
-                            },
-                          ),
-
-                          //Warning message for
-                          !model.termsAndConditions && model.submitButtonClicked
-                              ? Text(
-                                  'This must be checked',
-                                  style: TextStyle(color: Colors.red[700]),
-                                  textAlign: TextAlign.left,
-                                )
-                              : Text(''),
 
                           SizedBox(height: FormHelper.formFieldSpacing),
 
@@ -201,14 +169,7 @@ class _SignUpViewState extends State<SignUpView> {
                               ? AppButton(
                                   text: 'CONTINUE',
                                   onPressed: () async {
-                                    final bool isConnected = await model
-                                        .connectionService
-                                        .isConnected();
 
-                                    if (isConnected) {
-                                      model.isSubmitButtonClicked();
-                                      model.signUp(_formKey, _customer);
-                                    }
                                   },
                                   buttonType: ButtonType.Secondary,
                                 )

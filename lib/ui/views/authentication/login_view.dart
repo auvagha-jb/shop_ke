@@ -7,13 +7,11 @@ import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
+import 'package:shop_ke/ui/views/authentication/reset_password_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
-import 'package:shop_ke/ui/views/reset_password_view.dart';
-
-import '../base_view.dart';
+import 'package:shop_ke/ui/views/general/base_view.dart';
 
 class LoginView extends StatefulWidget {
-  //final Function addTx;
   static const routeName = '/sign-in';
 
   @override
@@ -88,7 +86,9 @@ class _LoginViewState extends State<LoginView> {
                         children: [
                           FlatButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(ResetPasswordView.routeName, arguments: emailAddressController.text);
+                              Navigator.of(context).pushNamed(
+                                  ResetPasswordView.routeName,
+                                  arguments: emailAddressController.text);
                             },
                             child: Text(
                               'Forgot Password?',
