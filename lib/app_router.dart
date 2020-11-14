@@ -6,6 +6,7 @@ import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
 import 'package:shop_ke/ui/views/general/startup_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
+import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:shop_ke/ui/views/store_owner/register_store_view.dart';
 
 class AppRouter {
@@ -29,6 +30,9 @@ class AppRouter {
 
       case HomeView.routeName:
         return MaterialPageRoute(builder: (_) => HomeView());
+
+      case OwnerHomeView.routeName:
+        return MaterialPageRoute(builder: (_) => OwnerHomeView());
 
       case RegisterStoreView.routeName:
         return MaterialPageRoute(builder: (_) => RegisterStoreView());

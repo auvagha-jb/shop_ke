@@ -19,6 +19,8 @@ class SharedPreferencesService {
       case bool:
         await prefs.setBool(attribute, value);
         break;
+      default:
+        throw Exception('Case for type ${value.runtimeType} not found');
     }
   }
 
@@ -72,6 +74,7 @@ class SharedPreferencesService {
         'countryCode': prefs.getString('countryCode'),
         'phoneNumber': prefs.getString('phoneNumber'),
         'email': prefs.getString('email'),
+        'isShopOwner': prefs.getBool('isShopOwner'),
       });
 
       if (customer == null) {

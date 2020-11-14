@@ -38,7 +38,7 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<StoreOwnerViewModel>(
+    return BaseView<OwnerViewModel>(
       builder: (context, model, child) {
         return Scaffold(
           appBar: appBar,

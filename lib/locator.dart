@@ -48,5 +48,5 @@ void setupLocator() {
   locator.registerFactory(() => CameraViewModel());
   locator.registerFactory(() => DrawerViewModel());
   locator.registerFactory(() => StartupViewModel());
-  locator.registerFactory(() => StoreOwnerViewModel());
+  locator.registerFactory(() => OwnerViewModel());
 }

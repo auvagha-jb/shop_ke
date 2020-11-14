@@ -34,19 +34,24 @@ class AppDrawer extends StatelessWidget {
               ),
 
               //Drawer Items
-              ListView.separated(
-                //To make sure it takes up as much space as it needs rather than expanding to fill parent
-                shrinkWrap: true,
-                itemCount: model.appDrawerItems.length,
-                itemBuilder: (BuildContext context, int index) => ListTile(
-                  title: Text(model.appDrawerItems[index].title),
-                  leading: model.appDrawerItems[index].icon,
-                  onTap: model.appDrawerItems[index].onPressed,
-                ),
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(),
+              FutureBuilder(
+                future: model.getAppDrawerItems(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  Widget widget;
+                  if (snapshot.hasData) {
+                    widget = model.getDrawerListView(snapshot.data);
+                  } else if (snapshot.hasError) {
+                    widget = Container();
+                    print(snapshot.error);
+                  } else {
+                    widget = CircularProgressIndicator();
+                  }
+                  return widget;
+                },
               ),
-              Divider(), //Divider for the last item
+              
+              Divider(),
+              //Divider for the last item
             ],
           ),
         ),
