@@ -60,7 +60,7 @@ class CustomersCollection extends FirestoreService {
 
   Future<List<Customer>> getAllCustomers() async {
     List<Customer> customers = [];
-    QuerySnapshot querySnapshot = await _customersReference.get();
+    final QuerySnapshot querySnapshot = await _customersReference.get();
 
     querySnapshot.docs.forEach((doc) {
       var customer = doc.data();
@@ -69,5 +69,10 @@ class CustomersCollection extends FirestoreService {
     });
 
     return customers;
+  }
+
+  Future<bool> emailAddressExists(String email) async {
+    final QuerySnapshot querySnapshot = await _customersReference.where('email', isEqualTo: email).get();
+    return querySnapshot.size > 0;
   }
 }

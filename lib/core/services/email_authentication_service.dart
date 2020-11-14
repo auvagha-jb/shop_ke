@@ -70,4 +70,21 @@ class EmailAuthenticationService {
 
     return ServiceResponse(status: status, response: response);
   }
+
+  Future<ServiceResponse> resetPassword(String email) async {
+    bool status = false;
+    dynamic response;
+
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      response = 'Password reset link sent to $email. It may take up to two minutes to arrive in your inbox';
+      status = true;
+    } catch(e) {
+      response = e.toString();
+      print('resetPasswordException $e');
+    }
+
+    return ServiceResponse(status: status, response: response);
+  }
+
 }

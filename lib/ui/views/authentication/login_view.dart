@@ -8,6 +8,7 @@ import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
+import 'package:shop_ke/ui/views/reset_password_view.dart';
 
 import '../base_view.dart';
 
@@ -31,7 +32,6 @@ class _LoginViewState extends State<LoginView> {
     title: Text('Sign in'),
   );
 
-
   @override
   Widget build(BuildContext context) {
     final viewPortHeight = MediaQuery.of(context).size.height;
@@ -42,7 +42,8 @@ class _LoginViewState extends State<LoginView> {
         return Scaffold(
           appBar: appBar,
           body: SingleChildScrollView(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
+            padding:
+                EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
 
             //The master column holding both halves of the screen
             child: Form(
@@ -80,6 +81,23 @@ class _LoginViewState extends State<LoginView> {
                             model.validate.passwordValidation(value),
                         onChanged: (value) => _customer.password = value,
                         obscureText: true,
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          FlatButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(ResetPasswordView.routeName, arguments: emailAddressController.text);
+                            },
+                            child: Text(
+                              'Forgot Password?',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

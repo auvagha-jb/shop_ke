@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/firestore_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
+import 'package:shop_ke/core/models/ui_response.dart';
 import 'package:shop_ke/core/services/error_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
@@ -11,6 +12,7 @@ import 'package:shop_ke/ui/shared/forms/form_validation.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:shop_ke/ui/widgets/profile/profile_edit_form.dart';
+import 'package:stacked_services/stacked_services.dart';
 import 'base_view_model.dart';
 
 class ProfileViewModel extends BaseViewModel {
@@ -24,6 +26,7 @@ class ProfileViewModel extends BaseViewModel {
   final SharedPreferencesService sharedPreferences =
       locator<SharedPreferencesService>();
   final ErrorService _errorService = locator<ErrorService>();
+  final DialogService _dialogService = locator<DialogService>();
 
   void setCustomerDetails(Customer customer) {
     firstNameController.text = customer.firstName;
@@ -59,7 +62,8 @@ class ProfileViewModel extends BaseViewModel {
 
     //Error check for serviceResponse: returns UIResponse object
     if (!serviceResponse.status) {
-      _errorService.showServiceResponseError(serviceResponse);
+      UIResponse uiResponse = serviceResponse.response;
+      _dialogService.showDialog(title: uiResponse.title, description: uiResponse.message);
       return widget;
     }
 

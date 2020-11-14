@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
 import 'package:shop_ke/ui/views/home_view.dart';
+import 'package:shop_ke/ui/views/reset_password_view.dart';
 import 'package:shop_ke/ui/views/startup_view.dart';
 import 'package:shop_ke/ui/views/welcome_view.dart';
 
@@ -20,6 +21,10 @@ class AppRouter {
 
       case SignUpView.routeName:
         return MaterialPageRoute(builder: (_) => SignUpView());
+
+      case ResetPasswordView.routeName:
+        String email = settings.arguments;
+        return MaterialPageRoute(builder: (_) => ResetPasswordView(email: email));
 
       case HomeView.routeName:
         return MaterialPageRoute(builder: (_) => HomeView());
