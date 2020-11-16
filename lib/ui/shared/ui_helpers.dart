@@ -12,8 +12,10 @@ class UIHelper {
   static const double _HorizontalSpaceMedium = 20.0;
   static const double HorizontalSpaceLarge = 60.0;
 
-  //Form heights
+  //Form dimensions
   static const formFieldSpacing = 10.0;
+  static const double dropdownPadding = 2.5;
+  static const int dropdownElevation = 16;
 
   /// Returns a vertical space with height set to [_VerticalSpaceSmall]
   static Widget verticalSpaceSmall() {

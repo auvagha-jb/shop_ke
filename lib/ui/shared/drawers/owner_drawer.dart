@@ -34,18 +34,7 @@ class OwnerDrawer extends StatelessWidget {
 
               //Drawer Items
               model.getDrawerListView(model.ownerDrawerItems),
-//              ListView.separated(
-//                //To make sure it takes up as much space as it needs rather than expanding to fill parent
-//                shrinkWrap: true,
-//                itemCount: model.appDrawerItems.length,
-//                itemBuilder: (BuildContext context, int index) => ListTile(
-//                  title: Text(model.appDrawerItems[index].title),
-//                  leading: model.appDrawerItems[index].icon,
-//                  onTap: model.appDrawerItems[index].onPressed,
-//                ),
-//                separatorBuilder: (BuildContext context, int index) =>
-//                    Divider(),
-//              ),
+
               Divider(), //Divider for the last item
             ],
           ),

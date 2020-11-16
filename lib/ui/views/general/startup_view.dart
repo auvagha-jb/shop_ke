@@ -15,7 +15,7 @@ class _StartupViewState extends State<StartupView> {
   Widget build(BuildContext context) {
     return BaseView<StartupViewModel>(
       builder: (context, model, child) => FutureBuilder(
-        future: model.sharedPreferences.containsId(),
+        future: model.sharedPreferences.getCustomer(),
         //This has to be fetched beforehand in the initState or an equivalent method
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           return model.startupFutureBuilder(snapshot);

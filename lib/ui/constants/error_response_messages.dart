@@ -36,6 +36,11 @@ const cameraNotReadyResponse = const UIResponse(
   message: 'Camera is setting up. Please wait',
 );
 
+const unexpectedErrorResponse = const UIResponse(
+  title: 'Unexpected Error',
+  message: 'Something unexpected went wrong. Close the app and try again',
+);
+
 UIResponse nullValueException(String nullValue) {
   return UIResponse(
     title: 'Null value',
