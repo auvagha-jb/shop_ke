@@ -30,7 +30,8 @@ class FormValidation {
   }
 
   dynamic passwordValidation(String value) {
-    String pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+    String pattern =
+        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
 
     //Ensure it is at least 6 characters long
     if (value.length < 6) {
@@ -61,6 +62,17 @@ class FormValidation {
   dynamic codeValidation(String value) {
     if (value.length < 6) {
       return 'Enter at least six numbers';
+    }
+    return null;
+  }
+
+  String dropdownValidation({
+    @required String value,
+    @required String defaultValue,
+    @required String errorFeedback,
+  }) {
+    if (value == defaultValue) {
+      return errorFeedback;
     }
     return null;
   }

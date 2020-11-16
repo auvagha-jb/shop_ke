@@ -1,4 +1,7 @@
+import 'package:shop_ke/core/models/firestore_models/store.dart';
+
 const List<String> industryList = [
+  Store.defaultIndustry, //Directive to choose an industry
   'Clothing',
   'Electronics',
   'Furniture',
@@ -8,7 +11,7 @@ const List<String> industryList = [
   'Photography',
   'Restaurants',
   'Groceries',
-  'Other Food & Drink',
+  'Food & Drink',
   'Sports',
   'Toys',
   'Services',

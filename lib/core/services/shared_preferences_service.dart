@@ -108,6 +108,30 @@ class SharedPreferencesService {
     }
   }
 
+  Future<ServiceResponse> setStore(Map<String, dynamic> storeMap) async {
+    bool status = false;
+    dynamic response;
+
+    try {
+      //Remember the id needs to be set
+      storeMap.forEach((attribute, value) async {
+        setSharedPreference(attribute, value);
+      });
+
+      storeMap.forEach((attribute, value) async {
+        getSharedPreference(attribute, value);
+      });
+
+      status = true;
+      response = 'Store set';
+    } catch (e) {
+      print('setStore $e');
+      response = e.toString();
+    }
+
+    return ServiceResponse(status: status, response: response);
+  }
+
   Future<bool> removeAll() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.clear();

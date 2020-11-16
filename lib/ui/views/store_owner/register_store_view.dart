@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
-import 'package:shop_ke/core/view_models/store_owner_view_model.dart';
+import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/view_models/owner_view_models/register_store_view_model.dart';
+import 'package:shop_ke/ui/constants/county_list.dart';
+import 'package:shop_ke/ui/constants/industry_list.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
+import 'package:shop_ke/ui/shared/widgets/app_dropdown.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 
 class RegisterStoreView extends StatefulWidget {
@@ -18,17 +21,14 @@ class RegisterStoreView extends StatefulWidget {
 
 class _RegisterStoreViewState extends State<RegisterStoreView> {
   final _formKey = GlobalKey<FormState>();
-  final _customer = Customer();
+  final Store _store = Store();
 
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final emailAddressController = TextEditingController();
-  final phoneNumberController = TextEditingController();
-  final countryCodeController = TextEditingController();
-  final passwordController = TextEditingController();
+  final storeNameController = TextEditingController();
+  final physicalAddressController = TextEditingController();
+  final logoController = TextEditingController();
 
   final appBar = AppBar(
-    title: Text('New Account'),
+    title: Text('New Store'),
   );
 
   @override
@@ -38,10 +38,12 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<OwnerViewModel>(
+    return BaseView<RegisterStoreViewModel>(
       builder: (context, model, child) {
         return Scaffold(
-          appBar: appBar,
+          appBar: AppBar(
+            title: Text('New Store'),
+          ),
           body: Container(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(
@@ -60,99 +62,77 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
                       appBar: appBar,
                       child: Column(
                         children: <Widget>[
-                          //First name
+                          //Store name
                           TextFormField(
-                            controller: firstNameController,
+                            controller: storeNameController,
                             decoration: FormHelper.buildInputDecoration(
-                                controller: firstNameController,
-                                labelText: 'First Name'),
-                            validator: (value) =>
-                                model.validate.defaultValidation(value),
-                            onChanged: (value) => _customer.firstName = value,
-                          ),
-
-                          SizedBox(height: FormHelper.formFieldSpacing),
-
-                          //Last name
-                          TextFormField(
-                            controller: lastNameController,
-                            decoration: FormHelper.buildInputDecoration(
-                              controller: lastNameController,
-                              labelText: 'Last Name',
+                              controller: storeNameController,
+                              labelText: 'Store Name',
                             ),
                             validator: (value) =>
                                 model.validate.defaultValidation(value),
-                            onChanged: (value) => _customer.lastName = value,
+                            onChanged: (value) => _store.name = value,
                           ),
 
                           SizedBox(height: FormHelper.formFieldSpacing),
 
-                          //Email Address
+                          //Logo
                           TextFormField(
-                            controller: emailAddressController,
-                            keyboardType: TextInputType.emailAddress,
+                            controller: logoController,
                             decoration: FormHelper.buildInputDecoration(
-                              controller: emailAddressController,
-                              labelText: 'Email Address',
+                              controller: logoController,
+                              labelText: 'Logo',
                             ),
                             validator: (value) =>
-                                model.validate.emailValidation(value),
-                            onChanged: (value) => _customer.email = value,
+                                model.validate.defaultValidation(value),
+                            onChanged: (value) => _store.logo = value,
                           ),
 
                           SizedBox(height: FormHelper.formFieldSpacing),
 
-                          //Phone number row
-                          Row(
-                            children: <Widget>[
-                              //Country Code
-                              Expanded(
-                                flex: 2,
-                                child: TextFormField(
-                                  enabled: false,
-                                  controller: countryCodeController,
-                                  decoration: InputDecoration(
-                                    labelText: 'Code',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                ),
-                              ),
-
-                              //Phone number input field
-                              Expanded(
-                                flex: 8,
-                                child: TextFormField(
-                                  controller: phoneNumberController,
-                                  keyboardType: TextInputType.number,
-                                  decoration: FormHelper.buildInputDecoration(
-                                    controller: phoneNumberController,
-                                    labelText: 'Phone Number',
-                                  ),
-                                  validator: (value) =>
-                                      model.validate.phoneValidation(value),
-                                  onChanged: (value) =>
-                                      _customer.phoneNumber = value.trim(),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: FormHelper.formFieldSpacing),
-
-                          //Password
+                          //Physical address
                           TextFormField(
-                            keyboardType: TextInputType.text,
-                            controller: passwordController,
+                            controller: physicalAddressController,
                             decoration: FormHelper.buildInputDecoration(
-                              controller: passwordController,
-                              labelText: 'Password',
+                              controller: physicalAddressController,
+                              labelText: 'Physical Address (Optional)',
                             ),
-                            validator: (value) =>
-                                model.validate.passwordValidation(value),
-                            onChanged: (value) => _customer.password = value,
-                            obscureText: true,
+                            onChanged: (value) =>
+                                _store.physicalAddress = value,
                           ),
 
+                          SizedBox(height: FormHelper.formFieldSpacing),
+
+                          //Industries Dropdown
+                          AppDropdown(
+                            value: _store.industry,
+                            validatorValue: model.validate.dropdownValidation(
+                              value: _store.industry,
+                              defaultValue: Store.defaultIndustry,
+                              errorFeedback: 'Please select your industry',
+                            ),
+                            onChanged: (value) {
+                              model.setIndustry(_store, value);
+                              print('industry: ${_store.industry}');
+                            },
+                            items: industryList,
+                          ),
+
+                          SizedBox(height: FormHelper.formFieldSpacing),
+
+                          AppDropdown(
+                            value: _store.county,
+                            validatorValue: model.validate.dropdownValidation(
+                              value: _store.county,
+                              defaultValue: Store.defaultCounty,
+                              errorFeedback: 'Please select your county',
+                            ),
+                            onChanged: (value) {
+                              model.setCounty(_store, value);
+                              print('county: ${_store.county} ');
+                            },
+                            items: countyList,
+                          ),
                         ],
                       ),
                     ),
@@ -161,15 +141,14 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
                     Container(
                       child: Column(
                         children: <Widget>[
-
                           SizedBox(height: FormHelper.formFieldSpacing),
 
                           //Form submit button
                           model.state == ViewState.Idle
                               ? AppButton(
                                   text: 'CONTINUE',
-                                  onPressed: () async {
-
+                            onPressed: () {
+                              model.registerNewStore(_formKey, _store);
                                   },
                                   buttonType: ButtonType.Secondary,
                                 )

@@ -12,6 +12,7 @@ import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
@@ -141,6 +142,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void setSharedPreferencesForCustomer(Customer customer) async {
     //Save user data locally
+    //TODO: setStore sharedPreferences
     final ServiceResponse serviceResponse =
     await _sharedPreferences.setCustomer(customer.toMap());
 
@@ -152,7 +154,14 @@ class AuthenticationViewModel extends BaseViewModel {
     }
 
     changeState(ViewState.Idle);
-    _navigationService.replaceWith(HomeView.routeName);
+
+    //Navigate to HomeView
+    if (customer.isShopOwner) {
+      //TODO: add store as argument
+      _navigationService.replaceWith(OwnerHomeView.routeName);
+    } else {
+      _navigationService.replaceWith(HomeView.routeName);
+    }
   }
 
   Future<void> resetPassword(GlobalKey<FormState> formKey, String email) async {

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:shop_ke/core/models/comment.dart';
-import 'package:shop_ke/core/models/firebase_user.dart';
 import 'package:shop_ke/core/models/post.dart';
 import 'package:shop_ke/core/models/ticket.dart';
 
@@ -19,14 +18,6 @@ class ApiService {
     final Response response = await client.get(endpoint);
 
     return Ticket.fromMap(json.decode(response.body));
-  }
-
-  Future<FirebaseUser> getFireBaseUser(String phoneNumber) async {
-    final endpoint = "$localhost:8000/firebase/user/$phoneNumber";
-    print(endpoint);
-    final Response response = await client.get(endpoint);
-
-    return FirebaseUser.fromMap(json.decode(response.body));
   }
 
   Future<List<Post>> getPostsForUser(int userId) async {
