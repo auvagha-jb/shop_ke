@@ -36,23 +36,34 @@ class RegisterStoreViewModel extends BaseViewModel {
     }
 
     //Get the userId from sharedPreferences and set
-    ServiceResponse serviceResponse = await _sharedPreferences.getCustomerId();
+    final String errorTitle = 'Error';
+    ServiceResponse serviceResponse;
+    serviceResponse = await _sharedPreferences.getCustomerId();
+
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
-          title: 'Error', description: serviceResponse.response);
+          title: errorTitle, description: serviceResponse.response);
       return;
     } else {
       store.userId = serviceResponse.response;
       print(store.toMap());
     }
 
-    //Add the service to firestore
-    ServiceResponse serviceResponse2 = await _storesCollection.add(store);
-    if (!serviceResponse2.status) {
+    //Add the store to firestore
+    serviceResponse = await _storesCollection.add(store);
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
       _dialogService.showDialog(
-          title: 'Error', description: serviceResponse2.response);
+          title: errorTitle, description: serviceResponse.response);
       return;
+    }
+
+    //Add the store details to shared preferences
+    serviceResponse = await _sharedPreferences.set(store.toMap());
+    if (!serviceResponse.status) {
+      _dialogService.showDialog(
+          title: errorTitle, description: serviceResponse.response);
     } else {
       _navigationService.replaceWith(OwnerHomeView.routeName);
     }

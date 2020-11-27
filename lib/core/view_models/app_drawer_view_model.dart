@@ -13,6 +13,7 @@ import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class DrawerViewModel extends BaseViewModel {
+  final sharedPreferences = locator<SharedPreferencesService>();
   static final _sharedPreferences = locator<SharedPreferencesService>();
   static final _navigationService = locator<NavigationService>();
   static final _dialogService = locator<DialogService>();

@@ -71,7 +71,7 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
                             ),
                             validator: (value) =>
                                 model.validate.defaultValidation(value),
-                            onChanged: (value) => _store.name = value,
+                            onChanged: (value) => _store.storeName = value,
                           ),
 
                           SizedBox(height: FormHelper.formFieldSpacing),

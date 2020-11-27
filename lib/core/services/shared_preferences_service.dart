@@ -1,16 +1,16 @@
 import 'package:shop_ke/core/models/firestore_models/customer.dart';
+import 'package:shop_ke/core/models/firestore_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesService {
-  Future containsId() async {
+  void _setSharedPreference(String attribute, dynamic value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey('id');
-  }
-
-  void setSharedPreference(String attribute, dynamic value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //Null safety
+    if (value == null) {
+      return;
+    }
 
     switch (value.runtimeType) {
       case String:
@@ -24,7 +24,7 @@ class SharedPreferencesService {
     }
   }
 
-  void getSharedPreference(String attribute, dynamic value) async {
+  void _getSharedPreference(String attribute, dynamic value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     switch (value.runtimeType) {
@@ -37,18 +37,36 @@ class SharedPreferencesService {
     }
   }
 
-  Future<ServiceResponse> setCustomer(Map<String, dynamic> customerMap) async {
+  Future getAll() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final keys = prefs.getKeys();
+      if (keys == null) {
+        throw new Exception('No shared preferences');
+      }
+
+      keys.forEach((element) {
+        print(prefs.getString(element));
+      });
+      return keys;
+    } catch (e) {
+      print(e);
+      return e.toString();
+    }
+  }
+
+  Future<ServiceResponse> set(Map<String, dynamic> map) async {
     bool status = false;
     dynamic response;
 
     try {
       //Remember the id needs to be set
-      customerMap.forEach((attribute, value) async {
-        setSharedPreference(attribute, value);
+      map.forEach((attribute, value) async {
+        _setSharedPreference(attribute, value);
       });
 
-      customerMap.forEach((attribute, value) async {
-        getSharedPreference(attribute, value);
+      map.forEach((attribute, value) async {
+        _getSharedPreference(attribute, value);
       });
 
       status = true;
@@ -59,6 +77,11 @@ class SharedPreferencesService {
     }
 
     return ServiceResponse(status: status, response: response);
+  }
+
+  Future<bool> removeAll() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.clear();
   }
 
   Future<ServiceResponse> getCustomerId() async {
@@ -72,7 +95,6 @@ class SharedPreferencesService {
         throw new Exception(
             'Something went wrong. Please log out and sign again');
       }
-
       status = true;
     } catch (e) {
       print(e);
@@ -80,6 +102,11 @@ class SharedPreferencesService {
     }
 
     return ServiceResponse(status: status, response: response);
+  }
+
+  Future containsId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey('id');
   }
 
   Future<ServiceResponse> getCustomer() async {
@@ -108,53 +135,53 @@ class SharedPreferencesService {
       response = generalExceptionResponse;
     }
 
-    return ServiceResponse(status: customer is Customer, response: response);
+    return ServiceResponse(status: response is Customer, response: response);
   }
 
-  Future getAll() async {
+  Future<ServiceResponse> getStore() async {
+    var response;
+    var store;
+
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      final keys = prefs.getKeys();
-      if (keys == null) {
-        throw new Exception('No shared preferences');
-      }
-
-      keys.forEach((element) {
-        print(prefs.getString(element));
+      store = Store.fromMap({
+        'userId': prefs.getString('userId'),
+        'name': prefs.getString('name'),
+        'logo': prefs.getString('logo'),
+        'physicalAddress': prefs.getString('physicalAddress'),
+        'industry': prefs.getString('industry'),
+        'county': prefs.getString('county')
       });
-      return keys;
+
+      if (store == null) {
+        throw new Exception('Something went wrong. Please log out and sign in');
+      } else {
+        response = store;
+      }
     } catch (e) {
       print(e);
-      return e.toString();
+      response = generalExceptionResponse;
     }
+
+    return ServiceResponse(status: response is Store, response: response);
   }
 
-  Future<ServiceResponse> setStore(Map<String, dynamic> storeMap) async {
+  Future<ServiceResponse> getStoreName() async {
+    var response;
     bool status = false;
-    dynamic response;
 
     try {
-      //Remember the id needs to be set
-      storeMap.forEach((attribute, value) async {
-        setSharedPreference(attribute, value);
-      });
-
-      storeMap.forEach((attribute, value) async {
-        getSharedPreference(attribute, value);
-      });
-
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String storeName = prefs.getString('storeName');
       status = true;
-      response = 'Store set';
+      response = storeName ?? 'My Store';
     } catch (e) {
-      print('setStore $e');
-      response = e.toString();
+      print(e);
+      response = generalExceptionResponse;
     }
 
     return ServiceResponse(status: status, response: response);
   }
 
-  Future<bool> removeAll() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.clear();
-  }
+
 }

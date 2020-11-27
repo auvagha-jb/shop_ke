@@ -144,7 +144,7 @@ class AuthenticationViewModel extends BaseViewModel {
     //Save user data locally
     //TODO: setStore sharedPreferences
     final ServiceResponse serviceResponse =
-    await _sharedPreferences.setCustomer(customer.toMap());
+        await _sharedPreferences.set(customer.toMap());
 
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
