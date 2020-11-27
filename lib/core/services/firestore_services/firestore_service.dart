@@ -16,9 +16,11 @@ class FirestoreService {
 
     try {
       //Add new document to collection with the given uid
-      await _collectionRef.add(collectionModel.toMap());
+      final DocumentReference docReference =
+          await _collectionRef.add(collectionModel.toMap());
       status = true;
-      response = 'New item added to $collectionName collection';
+//      response = 'New item added to $collectionName collection';
+      response = docReference.id;
       print(response);
     } catch (e) {
       print('Add $collectionName exception: $e');

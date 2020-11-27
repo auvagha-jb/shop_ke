@@ -147,8 +147,8 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
                           model.state == ViewState.Idle
                               ? AppButton(
                                   text: 'CONTINUE',
-                            onPressed: () {
-                              model.registerNewStore(_formKey, _store);
+                                  onPressed: () {
+                                    model.registerNewStore(_formKey, _store);
                                   },
                                   buttonType: ButtonType.Secondary,
                                 )

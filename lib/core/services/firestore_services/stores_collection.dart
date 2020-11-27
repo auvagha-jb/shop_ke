@@ -7,22 +7,20 @@ import 'package:shop_ke/core/services/firestore_services/firestore_service.dart'
 import 'package:shop_ke/locator.dart';
 
 class StoresCollection extends FirestoreService {
-  static final String _collectionName = 'subscriptions';
+  static final String _collectionName = 'stores';
 
   String get collectionName => _collectionName;
 
-  CollectionReference _subscriptionsReference;
+  CollectionReference _storesReference;
   CustomersCollection _customersCollection = locator<CustomersCollection>();
-//  CustomersCollection _customersCollection = locator<CustomersCollection>();
 
   StoresCollection() : super(_collectionName) {
-    _subscriptionsReference =
-        FirebaseFirestore.instance.collection(_collectionName);
+    _storesReference = FirebaseFirestore.instance.collection(_collectionName);
   }
 
   Future<List<Customer>> getSubscribers(String storeId) async {
     List<Customer> subscribers = [];
-    QuerySnapshot querySnapshot = await _subscriptionsReference
+    QuerySnapshot querySnapshot = await _storesReference
         .where('storeId', isEqualTo: storeId)
         .get();
 

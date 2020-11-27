@@ -17,10 +17,10 @@ class DrawerViewModel extends BaseViewModel {
   static final _navigationService = locator<NavigationService>();
   static final _dialogService = locator<DialogService>();
 
-  final _appDrawerItems = [
+  static final _appDrawerItems = [
     DrawerItem(
       icon: Icon(Icons.account_circle),
-      title: 'Profile',
+      title: 'My Profile',
       onPressed: () =>
           _navigationService.navigateTo(ProfileStartupView.routeName),
     ),
@@ -52,7 +52,10 @@ class DrawerViewModel extends BaseViewModel {
     ),
   ];
 
-  List<DrawerItem> get ownerDrawerItems => _ownerDrawerItems;
+  List<DrawerItem> get ownerDrawerItems {
+    _ownerDrawerItems.addAll(_appDrawerItems);
+    return _ownerDrawerItems;
+  }
 
   Future<List<DrawerItem>> getAppDrawerItems() async {
     ServiceResponse serviceResponse = await _sharedPreferences.getCustomer();

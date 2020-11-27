@@ -13,7 +13,6 @@ class SubscriptionsCollection extends FirestoreService {
 
   CollectionReference _subscriptionsReference;
   CustomersCollection _customersCollection = locator<CustomersCollection>();
-//  CustomersCollection _customersCollection = locator<CustomersCollection>();
 
   SubscriptionsCollection() : super(_collectionName) {
     _subscriptionsReference =

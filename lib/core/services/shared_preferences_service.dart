@@ -61,6 +61,27 @@ class SharedPreferencesService {
     return ServiceResponse(status: status, response: response);
   }
 
+  Future<ServiceResponse> getCustomerId() async {
+    var response;
+    bool status = false;
+
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      response = prefs.getString('id');
+      if (response == null) {
+        throw new Exception(
+            'Something went wrong. Please log out and sign again');
+      }
+
+      status = true;
+    } catch (e) {
+      print(e);
+      response = generalExceptionResponse;
+    }
+
+    return ServiceResponse(status: status, response: response);
+  }
+
   Future<ServiceResponse> getCustomer() async {
     var response;
     var customer;
@@ -78,7 +99,7 @@ class SharedPreferencesService {
       });
 
       if (customer == null) {
-        response = nullValueException('User');
+        throw new Exception('Something went wrong. Please log out and sign in');
       } else {
         response = customer;
       }
