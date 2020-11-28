@@ -6,6 +6,7 @@ import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
 import 'package:shop_ke/core/services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
+import 'package:shop_ke/core/services/firestore_services/stores_collection.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
@@ -22,9 +23,11 @@ class AuthenticationViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _dialogService = locator<DialogService>();
   final _emailAuthService = locator<EmailAuthenticationService>();
-  final _customerCollection = locator<CustomersCollection>();
   final _sharedPreferences = locator<SharedPreferencesService>();
   final connectionService = locator<ConnectivityService>();
+
+  final _customerCollection = locator<CustomersCollection>();
+  final _storesCollection = locator<StoresCollection>();
 
   bool submitButtonClicked = false;
   bool termsAndConditions = false;
@@ -118,11 +121,11 @@ class AuthenticationViewModel extends BaseViewModel {
       _dialogService.showDialog(
           title: loginErrorTitle, description: serviceResponse.response);
       return;
+    } else {
+      //Get the user from firestore
+      String uid = serviceResponse.response;
+      getCustomerFromFirestore(uid);
     }
-
-    //Get the user from firestore
-    String uid = serviceResponse.response;
-    getCustomerFromFirestore(uid);
   }
 
   void getCustomerFromFirestore(String uid) async {
@@ -157,13 +160,18 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //Navigate to HomeView
     if (customer.isShopOwner) {
-      //TODO: add store as argument
+      //TODO: getStoreFromFirestore
       _navigationService.replaceWith(OwnerHomeView.routeName);
     } else {
       _navigationService.replaceWith(HomeView.routeName);
     }
   }
 
+  Future getStoreFromFirestore(String uid) async {
+    //TODO: HELLO
+//    _storesCollection.getSubscribers()
+  }
+  
   Future<void> resetPassword(GlobalKey<FormState> formKey, String email) async {
     changeState(ViewState.Busy);
 

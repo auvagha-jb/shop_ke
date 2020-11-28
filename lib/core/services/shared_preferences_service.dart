@@ -9,6 +9,7 @@ class SharedPreferencesService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     //Null safety
     if (value == null) {
+      print('$attribute is null');
       return;
     }
 

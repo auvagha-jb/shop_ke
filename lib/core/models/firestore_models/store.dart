@@ -3,6 +3,7 @@ import 'package:shop_ke/core/models/firestore_models/customer.dart';
 import 'package:shop_ke/core/models/location_coordinate.dart';
 
 class Store {
+  String storeId;
   String userId;
   String storeName;
   String logo; //TODO: upload photo
@@ -18,6 +19,7 @@ class Store {
   //Default values
   static const String defaultIndustry = 'Choose your industry';
   static const String defaultCounty = 'Choose your county';
+  static const idField = "storeId";
 
   Store() {
     industry = defaultIndustry;
@@ -28,6 +30,7 @@ class Store {
   List<Customer> subscribers;
 
   Store.fromMap(Map<String, dynamic> map) {
+    storeId = map['storeId'];
     userId = map['userId'];
     storeName = map['storeName'];
     logo = map['logo'];
@@ -38,6 +41,7 @@ class Store {
 
   Map<String, dynamic> toMap() {
     return {
+      'storeId': storeId,
       'userId': userId,
       'storeName': storeName,
       'logo': logo,

@@ -47,16 +47,19 @@ class RegisterStoreViewModel extends BaseViewModel {
       return;
     } else {
       store.userId = serviceResponse.response;
-      print(store.toMap());
     }
 
     //Add the store to firestore
-    serviceResponse = await _storesCollection.add(store);
+    serviceResponse =
+        await _storesCollection.add(model: store, idField: Store.idField);
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
           title: errorTitle, description: serviceResponse.response);
       return;
+    } else {
+      store.storeId = serviceResponse.response;
+      print(store.toMap());
     }
 
     //Add the store details to shared preferences
