@@ -56,6 +56,24 @@ class FirestoreService {
     return ServiceResponse(status: status, response: response);
   }
 
+  Future getById(String id) async {
+    bool status = false;
+    dynamic response;
+
+    try {
+      final DocumentSnapshot documentSnapshot =
+      await _collectionRef.doc(id).get();
+      response = documentSnapshot.data();
+      status = response != null;
+    } catch (e) {
+      print('getById exception $e');
+      response = e.toString();
+    }
+
+    return ServiceResponse(status: status, response: response);
+  }
+
+
   Future _updateWithId({
     @required String idField,
     @required String collectionId,
@@ -73,7 +91,6 @@ class FirestoreService {
       print('Update exception $e');
       response = e.toString();
     }
-
     return ServiceResponse(status: status, response: response);
   }
 

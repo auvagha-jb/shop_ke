@@ -18,11 +18,32 @@ class StoresCollection extends FirestoreService {
     _storesReference = FirebaseFirestore.instance.collection(_collectionName);
   }
 
+  Future getStore(String userId) async {
+    bool status = false;
+    var response;
+
+    try {
+      QuerySnapshot querySnapshot =
+          await _storesReference.where('userId', isEqualTo: userId).get();
+      QueryDocumentSnapshot snapshot = querySnapshot.docs.first;
+
+      status = snapshot.exists;
+      if (status) {
+        response = snapshot.data();
+      }
+    } catch (e) {
+      print('getStoreException $e');
+      response = e.toString();
+    }
+
+    print(response);
+    return ServiceResponse(status: status, response: response);
+  }
+
   Future<List<Customer>> getSubscribers(String storeId) async {
     List<Customer> subscribers = [];
-    QuerySnapshot querySnapshot = await _storesReference
-        .where('storeId', isEqualTo: storeId)
-        .get();
+    QuerySnapshot querySnapshot =
+    await _storesReference.where('storeId', isEqualTo: storeId).get();
 
     for (var doc in querySnapshot.docs) {
       String userId = doc.data()['userId'];

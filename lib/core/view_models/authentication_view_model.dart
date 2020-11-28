@@ -145,7 +145,6 @@ class AuthenticationViewModel extends BaseViewModel {
 
   void setSharedPreferencesForCustomer(Customer customer) async {
     //Save user data locally
-    //TODO: setStore sharedPreferences
     final ServiceResponse serviceResponse =
         await _sharedPreferences.set(customer.toMap());
 
@@ -160,16 +159,19 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //Navigate to HomeView
     if (customer.isShopOwner) {
-      //TODO: getStoreFromFirestore
+      setStoreSharedPreferences(customer.id);
       _navigationService.replaceWith(OwnerHomeView.routeName);
     } else {
       _navigationService.replaceWith(HomeView.routeName);
     }
   }
 
-  Future getStoreFromFirestore(String uid) async {
-    //TODO: HELLO
-//    _storesCollection.getSubscribers()
+  Future setStoreSharedPreferences(String storeId) async {
+    ServiceResponse serviceResponse = await _storesCollection.getStore(storeId);
+    if (!serviceResponse.status) {
+      return;
+    }
+    _sharedPreferences.set(serviceResponse.response);
   }
   
   Future<void> resetPassword(GlobalKey<FormState> formKey, String email) async {
