@@ -1,5 +1,5 @@
 import 'package:shop_ke/core/models/color_theme.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/location_coordinate.dart';
 
 class Store {

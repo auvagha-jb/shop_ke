@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/cart.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_ke/core/models/firestore_models/product.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 
 class UndoDeleteButton extends StatefulWidget {
   final int index;

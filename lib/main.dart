@@ -9,7 +9,7 @@ import 'package:shop_ke/themes/style.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'core/models/cart.dart';
-import 'core/models/firestore_models/product.dart';
+import 'core/models/data_models/product.dart';
 import 'locator.dart';
 
 void main() async {
@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
   final waitingForConnectionView = MaterialApp(
     home: LoadingView(
       title: 'Checking your internet connection',
-      description: ' If it takes more than a few seconds, check your network connection',
+      description:
+          ' If it takes more than a few seconds, check your network connection',
       icon: Icon(Icons.hourglass_bottom_outlined),
     ),
     theme: lightTheme(),

@@ -1,4 +1,4 @@
-import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 
 const List<String> countyList = [
   Store.defaultCounty, //Directive to choose a county

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
-import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
 import 'package:shop_ke/core/services/firestore_services/firestore_service.dart';
@@ -43,7 +43,7 @@ class StoresCollection extends FirestoreService {
   Future<List<Customer>> getSubscribers(String storeId) async {
     List<Customer> subscribers = [];
     QuerySnapshot querySnapshot =
-    await _storesReference.where('storeId', isEqualTo: storeId).get();
+        await _storesReference.where('storeId', isEqualTo: storeId).get();
 
     for (var doc in querySnapshot.docs) {
       String userId = doc.data()['userId'];

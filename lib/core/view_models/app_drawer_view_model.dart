@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/drawer_item.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
@@ -32,13 +32,11 @@ class DrawerViewModel extends BaseViewModel {
     ),
   ];
 
-
   final _storeDashboardLink = DrawerItem(
     icon: Icon(Icons.dashboard),
     title: 'Store Dashboard',
     onPressed: () => _navigationService.navigateTo(OwnerHomeView.routeName),
   );
-
 
   final _ownerDrawerItems = [
     DrawerItem(

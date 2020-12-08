@@ -6,7 +6,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/firestore_models/product.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/shared/notifications/app_flushbar.dart';
 import 'package:shop_ke/ui/widgets/home/undo_delete_button.dart';
 

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
-import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
 import 'package:shop_ke/core/services/firestore_services/firestore_service.dart';

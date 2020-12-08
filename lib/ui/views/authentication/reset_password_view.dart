@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/view_models/authentication_view_model.dart';
 import 'package:shop_ke/ui/shared/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
@@ -28,7 +28,6 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
 
   final textFieldSpacing = 15.0;
 
-
   @override
   void initState() {
     super.initState();
@@ -43,10 +42,12 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
     return BaseView<AuthenticationViewModel>(
       builder: (context, model, child) {
         return Scaffold(
-          appBar: AppBar(title: Text('Reset Password'),),
+          appBar: AppBar(
+            title: Text('Reset Password'),
+          ),
           body: SingleChildScrollView(
             padding:
-            EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
+                EdgeInsets.symmetric(horizontal: 15, vertical: verticalPadding),
 
             //The master column holding both halves of the screen
             child: Form(
@@ -69,7 +70,6 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                             model.validate.emailValidation(value),
                         onChanged: (value) => _customer.email = value,
                       ),
-
                     ],
                   ),
 
@@ -78,7 +78,9 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                   /* The bottom half of the login page */
                   //Submit button and register link section
                   ResponsiveContainer(
-                    appBar: AppBar(title: Text('Reset Password'),),
+                    appBar: AppBar(
+                      title: Text('Reset Password'),
+                    ),
                     height: 0.3,
                     child: Column(
                       children: <Widget>[
@@ -89,7 +91,8 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                           text: 'REQUEST PASSWORD RESET',
                           buttonType: ButtonType.Secondary,
                           onPressed: () {
-                            model.resetPassword(_formKey, emailAddressController.text);
+                            model.resetPassword(
+                                _formKey, emailAddressController.text);
                           },
                         )
 
@@ -97,7 +100,6 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                             : AppProgressButton(
                           buttonType: ButtonType.Secondary,
                         ),
-
                         SizedBox(height: textFieldSpacing),
                       ],
                     ),

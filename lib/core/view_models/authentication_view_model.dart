@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
 import 'package:shop_ke/core/services/email_authentication_service.dart';
@@ -69,7 +69,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //Initiate email registration process
     final ServiceResponse serviceResponse =
-    await _emailAuthService.signUpWithEmail(
+        await _emailAuthService.signUpWithEmail(
       email: customer.email,
       password: customer.password,
     );
@@ -159,7 +159,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //Navigate to HomeView
     if (customer.isShopOwner) {
-      setStoreSharedPreferences(customer.id);
+      setStoreSharedPreferences(customer.firebaseId);
       _navigationService.replaceWith(OwnerHomeView.routeName);
     } else {
       _navigationService.replaceWith(HomeView.routeName);
@@ -173,7 +173,7 @@ class AuthenticationViewModel extends BaseViewModel {
     }
     _sharedPreferences.set(serviceResponse.response);
   }
-  
+
   Future<void> resetPassword(GlobalKey<FormState> formKey, String email) async {
     changeState(ViewState.Busy);
 
@@ -187,9 +187,11 @@ class AuthenticationViewModel extends BaseViewModel {
     bool emailExists = await _customerCollection.emailAddressExists(email);
     if (!emailExists) {
       changeState(ViewState.Idle);
-      _dialogService.showDialog(title: 'Unregistered email address',
-        description: 'Please review your email address. Check it does not have a typo and '
-            'that it is the one you registered with');
+      _dialogService.showDialog(
+          title: 'Unregistered email address',
+          description:
+          'Please review your email address. Check it does not have a typo and '
+              'that it is the one you registered with');
       return;
     }
 
@@ -204,9 +206,10 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
 
-    DialogResponse dialogResponse = await _dialogService.showDialog(title: 'Reset Link Sent', description: serviceResponse.response);
+    DialogResponse dialogResponse = await _dialogService.showDialog(
+        title: 'Reset Link Sent', description: serviceResponse.response);
 
-    if(dialogResponse.confirmed) {
+    if (dialogResponse.confirmed) {
       _navigationService.navigateTo(LoginView.routeName);
     }
 

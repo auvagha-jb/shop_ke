@@ -43,8 +43,9 @@ class FirestoreService {
     String response;
 
     try {
-      await _collectionRef.doc(collectionModel.id).update(
-          collectionModel.toMap());
+      await _collectionRef
+          .doc(collectionModel.firebaseId)
+          .update(collectionModel.toMap());
       status = true;
       response = 'Updated item in $collectionName collection';
       print(response);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/cart.dart';
-import 'package:shop_ke/core/models/firestore_models/product.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/shared/cards/card_tile.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/widgets/circle_network_image.dart';
@@ -72,7 +72,8 @@ class CardContent extends StatelessWidget {
           ),
           CircleNetworkImage(product.imageUrl),
           SizedBox(width: 10),
-          Expanded(flex: 4, child: Text('${product.brand} ${product.productName}')),
+          Expanded(
+              flex: 4, child: Text('${product.brand} ${product.productName}')),
           ResponsiveContainer(
             height: 0.12,
             child: Column(

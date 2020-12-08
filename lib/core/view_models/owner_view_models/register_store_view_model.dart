@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/firestore_services/stores_collection.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';

@@ -1,4 +1,4 @@
-import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 
 const List<String> industryList = [
   Store.defaultIndustry, //Directive to choose an industry

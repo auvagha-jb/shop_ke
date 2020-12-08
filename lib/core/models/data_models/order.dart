@@ -1,4 +1,4 @@
-import 'package:shop_ke/core/models/firestore_models/product.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 
 class Order {
   String id;
@@ -26,5 +26,4 @@ class Order {
       'orderItems': '',
     };
   }
-
 }

@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:shop_ke/core/services/api_service.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
 import 'package:shop_ke/core/services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/error_service.dart';
@@ -26,7 +25,7 @@ final locator = GetIt.instance;
 
 void setupLocator() {
   //Services
-  locator.registerLazySingleton(() => ApiService());
+//  locator.registerLazySingleton(() => ApiService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => EmailAuthenticationService());
   locator.registerLazySingleton(() => ErrorService());

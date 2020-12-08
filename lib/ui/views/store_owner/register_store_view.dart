@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/firestore_models/store.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/register_store_view_model.dart';
 import 'package:shop_ke/ui/constants/county_list.dart';
 import 'package:shop_ke/ui/constants/industry_list.dart';

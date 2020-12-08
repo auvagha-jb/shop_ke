@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/firestore_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/models/ui_response.dart';
 import 'package:shop_ke/core/services/error_service.dart';
@@ -63,7 +63,8 @@ class ProfileViewModel extends BaseViewModel {
     //Error check for serviceResponse: returns UIResponse object
     if (!serviceResponse.status) {
       UIResponse uiResponse = serviceResponse.response;
-      _dialogService.showDialog(title: uiResponse.title, description: uiResponse.message);
+      _dialogService.showDialog(
+          title: uiResponse.title, description: uiResponse.message);
       return widget;
     }
 
