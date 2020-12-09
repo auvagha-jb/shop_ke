@@ -4,6 +4,7 @@ import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
+import 'package:shop_ke/core/services/database_services/users.js.dart';
 import 'package:shop_ke/core/services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
 import 'package:shop_ke/core/services/firestore_services/stores_collection.dart';
@@ -68,8 +69,9 @@ class AuthenticationViewModel extends BaseViewModel {
     }
 
     //Initiate email registration process
-    final ServiceResponse serviceResponse =
-        await _emailAuthService.signUpWithEmail(
+    ServiceResponse serviceResponse;
+
+    serviceResponse = await _emailAuthService.signUpWithEmail(
       email: customer.email,
       password: customer.password,
     );
@@ -82,12 +84,29 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
 
-    //On successful registration add customer to firestore
-    addCustomerToFirestore(serviceResponse, customer);
+    //On successful registration add customer to database
+    User user = serviceResponse.response;
+    addCustomerToDatabase(user, customer);
   }
 
-  void addCustomerToFirestore(ServiceResponse serviceResponse,
-      Customer customer) async {
+  void addCustomerToDatabase(User user, Customer customer) async {
+    ServiceResponse serviceResponse = await Users().insert(customer, user);
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _dialogService.showDialog(
+        title: signUpErrorTitle,
+        description:
+        'User registration incomplete. Please check your connection and try again',
+      );
+      return;
+    }
+
+    setSharedPreferencesForCustomer(customer);
+  }
+
+  void addCustomerToFirestore(
+      ServiceResponse serviceResponse, Customer customer) async {
     User user = serviceResponse.response;
     bool added = await _customerCollection.addCustomer(customer, user);
 
@@ -96,7 +115,7 @@ class AuthenticationViewModel extends BaseViewModel {
       _dialogService.showDialog(
         title: signUpErrorTitle,
         description:
-        'User registration incomplete. Please check your connection and try again',
+            'User registration incomplete. Please check your connection and try again',
       );
       return;
     }
