@@ -29,24 +29,26 @@ class Customer {
   String get phoneNumber => _phoneNumber;
 
   Customer.fromMap(Map<String, dynamic> map) {
+    userId = map['userId'];
     firebaseId = map['firebaseId'];
     firstName = map['firstName'];
     lastName = map['lastName'];
     email = map['email'];
     countryCode = map['countryCode'];
     phoneNumber = map['phoneNumber'];
-    isShopOwner = map['isShopOwner'] == 1;
+    isShopOwner = map['isShopOwner'];
   }
 
   Map<String, dynamic> toMap() {
     return {
+      'userId': userId,
       'firebaseId': firebaseId,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
       'countryCode': countryCode,
       'phoneNumber': phoneNumber,
-      'isShopOwner': isShopOwner ? '1' : '0',
+      'isShopOwner': isShopOwner,
     };
   }
 }

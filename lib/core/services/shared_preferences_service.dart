@@ -22,6 +22,7 @@ class SharedPreferencesService {
         break;
       default:
         throw Exception('Case for type ${value.runtimeType} not found');
+        break;
     }
   }
 
@@ -34,6 +35,9 @@ class SharedPreferencesService {
         break;
       case bool:
         print('$attribute => ${prefs.getBool(attribute)}');
+        break;
+      default:
+        print('No type found for $attribute => type ${value.runtimeType}');
         break;
     }
   }
@@ -59,6 +63,8 @@ class SharedPreferencesService {
   Future<ServiceResponse> set(Map<String, dynamic> map) async {
     bool status = false;
     dynamic response;
+
+    print('Map values to be set $map');
 
     try {
       //Remember the id needs to be set
@@ -91,7 +97,7 @@ class SharedPreferencesService {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      response = prefs.getString('id');
+      response = prefs.getString('userId');
       if (response == null) {
         throw new Exception(
             'Something went wrong. Please log out and sign again');
@@ -107,7 +113,7 @@ class SharedPreferencesService {
 
   Future containsId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey('id');
+    return prefs.containsKey('userId');
   }
 
   Future<ServiceResponse> getCustomer() async {
@@ -117,7 +123,7 @@ class SharedPreferencesService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       customer = Customer.fromMap({
-        'id': prefs.getString('id'),
+        'userId': prefs.getString('userId'),
         'firstName': prefs.getString('firstName'),
         'lastName': prefs.getString('lastName'),
         'countryCode': prefs.getString('countryCode'),

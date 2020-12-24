@@ -28,7 +28,7 @@ class Users extends ApiService {
       }
     } catch (e) {
       user.delete();
-      print('Insert error $e');
+      print('[Users.Insert] $e');
     }
     return serviceResponse;
   }

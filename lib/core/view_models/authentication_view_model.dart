@@ -102,6 +102,8 @@ class AuthenticationViewModel extends BaseViewModel {
       return;
     }
 
+    customer.userId = serviceResponse.insertId;
+
     setSharedPreferencesForCustomer(customer);
   }
 
@@ -147,21 +149,6 @@ class AuthenticationViewModel extends BaseViewModel {
     }
   }
 
-  void getCustomerFromFirestore(String uid) async {
-    final ServiceResponse serviceResponse =
-    await _customerCollection.getCustomerById(uid);
-
-    if (!serviceResponse.status) {
-      changeState(ViewState.Idle);
-      _dialogService.showDialog(
-          title: loginErrorTitle, description: serviceResponse.response);
-      return;
-    }
-
-    Customer customer = serviceResponse.response;
-    setSharedPreferencesForCustomer(customer);
-  }
-
   void setSharedPreferencesForCustomer(Customer customer) async {
     //Save user data locally
     final ServiceResponse serviceResponse =
@@ -183,6 +170,21 @@ class AuthenticationViewModel extends BaseViewModel {
     } else {
       _navigationService.replaceWith(HomeView.routeName);
     }
+  }
+
+  void getCustomerFromFirestore(String uid) async {
+    final ServiceResponse serviceResponse =
+        await _customerCollection.getCustomerById(uid);
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _dialogService.showDialog(
+          title: loginErrorTitle, description: serviceResponse.response);
+      return;
+    }
+
+    Customer customer = serviceResponse.response;
+    setSharedPreferencesForCustomer(customer);
   }
 
   Future setStoreSharedPreferences(String storeId) async {
