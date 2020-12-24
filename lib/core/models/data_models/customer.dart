@@ -36,7 +36,7 @@ class Customer {
     email = map['email'];
     countryCode = map['countryCode'];
     phoneNumber = map['phoneNumber'];
-    isShopOwner = map['isShopOwner'];
+    setIsShopOwner(map['isShopOwner']);
   }
 
   Map<String, dynamic> toMap() {
@@ -50,5 +50,19 @@ class Customer {
       'phoneNumber': phoneNumber,
       'isShopOwner': isShopOwner,
     };
+  }
+
+  void setIsShopOwner(value) {
+    switch (value.runtimeType) {
+      case bool:
+        isShopOwner = value;
+        break;
+      case int:
+        isShopOwner = value == 1;
+        break;
+      default:
+        print('isShopOwner error');
+        break;
+    }
   }
 }

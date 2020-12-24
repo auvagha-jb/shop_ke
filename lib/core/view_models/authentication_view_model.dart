@@ -97,30 +97,12 @@ class AuthenticationViewModel extends BaseViewModel {
       _dialogService.showDialog(
         title: signUpErrorTitle,
         description:
-        'User registration incomplete. Please check your connection and try again',
+            'User registration incomplete. Please check your connection and try again',
       );
       return;
     }
 
     customer.userId = serviceResponse.insertId;
-
-    setSharedPreferencesForCustomer(customer);
-  }
-
-  void addCustomerToFirestore(
-      ServiceResponse serviceResponse, Customer customer) async {
-    User user = serviceResponse.response;
-    bool added = await _customerCollection.addCustomer(customer, user);
-
-    if (!added) {
-      changeState(ViewState.Idle);
-      _dialogService.showDialog(
-        title: signUpErrorTitle,
-        description:
-            'User registration incomplete. Please check your connection and try again',
-      );
-      return;
-    }
 
     setSharedPreferencesForCustomer(customer);
   }
@@ -145,8 +127,22 @@ class AuthenticationViewModel extends BaseViewModel {
     } else {
       //Get the user from firestore
       String uid = serviceResponse.response;
-      getCustomerFromFirestore(uid);
+      getCustomerFromDatabase(uid);
     }
+  }
+
+  void getCustomerFromDatabase(String uid) async {
+    final Customer customer = await Users().getUserByFirebaseId(uid);
+
+    if (customer == null) {
+      changeState(ViewState.Idle);
+      _dialogService.showDialog(
+          title: loginErrorTitle,
+          description: 'Your user details were not retrieved. Check your connection and try again.');
+      return;
+    }
+
+    setSharedPreferencesForCustomer(customer);
   }
 
   void setSharedPreferencesForCustomer(Customer customer) async {
@@ -170,21 +166,6 @@ class AuthenticationViewModel extends BaseViewModel {
     } else {
       _navigationService.replaceWith(HomeView.routeName);
     }
-  }
-
-  void getCustomerFromFirestore(String uid) async {
-    final ServiceResponse serviceResponse =
-        await _customerCollection.getCustomerById(uid);
-
-    if (!serviceResponse.status) {
-      changeState(ViewState.Idle);
-      _dialogService.showDialog(
-          title: loginErrorTitle, description: serviceResponse.response);
-      return;
-    }
-
-    Customer customer = serviceResponse.response;
-    setSharedPreferencesForCustomer(customer);
   }
 
   Future setStoreSharedPreferences(String storeId) async {
@@ -235,5 +216,38 @@ class AuthenticationViewModel extends BaseViewModel {
     }
 
     changeState(ViewState.Idle);
+  }
+
+  void addCustomerToFirestore(ServiceResponse serviceResponse,
+      Customer customer) async {
+    User user = serviceResponse.response;
+    bool added = await _customerCollection.addCustomer(customer, user);
+
+    if (!added) {
+      changeState(ViewState.Idle);
+      _dialogService.showDialog(
+        title: signUpErrorTitle,
+        description:
+        'User registration incomplete. Please check your connection and try again',
+      );
+      return;
+    }
+
+    setSharedPreferencesForCustomer(customer);
+  }
+
+  void getCustomerFromFirestore(String uid) async {
+    final ServiceResponse serviceResponse =
+    await _customerCollection.getCustomerById(uid);
+
+    if (!serviceResponse.status) {
+      changeState(ViewState.Idle);
+      _dialogService.showDialog(
+          title: loginErrorTitle, description: serviceResponse.response);
+      return;
+    }
+
+    Customer customer = serviceResponse.response;
+    setSharedPreferencesForCustomer(customer);
   }
 }
