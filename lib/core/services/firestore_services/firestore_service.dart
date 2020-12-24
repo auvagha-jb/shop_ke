@@ -21,7 +21,7 @@ class FirestoreService {
     try {
       //Add new document to collection with the given uid
       final DocumentReference docReference =
-          await _collectionRef.add(model.toMap());
+          await _collectionRef.add(model._toMap());
 
       response = docReference.id;
       status = true;
@@ -45,7 +45,7 @@ class FirestoreService {
     try {
       await _collectionRef
           .doc(collectionModel.firebaseId)
-          .update(collectionModel.toMap());
+          .update(collectionModel._toMap());
       status = true;
       response = 'Updated item in $collectionName collection';
       print(response);

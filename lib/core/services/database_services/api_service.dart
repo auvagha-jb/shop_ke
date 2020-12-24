@@ -11,11 +11,13 @@ class ApiService {
   String _remoteHost;
   String _localhost;
   String _baseUrl;
-  final client = new http.Client();
+  final Client _client = new http.Client();
+
+  Client get client => _client;
 
   ApiService() {
     _remoteHost = 'http://johngachihi.com/shop_ke/';
-    _localhost = 'http://10.0.2.2:5000/';
+    _localhost = 'http://10.0.2.2:6000/';
     _baseUrl = _localhost;
   }
 

@@ -35,12 +35,10 @@ class Customer {
     email = map['email'];
     countryCode = map['countryCode'];
     phoneNumber = map['phoneNumber'];
-//    fullPhoneNumber = map['fullPhoneNumber'];
     isShopOwner = map['isShopOwner'] == 1;
   }
 
   Map<String, dynamic> toMap() {
-//    assert(firebaseId != null);
     return {
       'firebaseId': firebaseId,
       'firstName': firstName,

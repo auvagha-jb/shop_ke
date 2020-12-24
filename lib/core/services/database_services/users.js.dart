@@ -21,29 +21,58 @@ class Users extends ApiService {
         body: jsonEncode(customer.toMap()),
       );
 
-      serviceResponse = ServiceResponse.fromJson(json.decode(response.body));
+      serviceResponse = ServiceResponse.fromJson(response.body);
 
       if (!serviceResponse.status) {
         throw new Exception(serviceResponse.response);
       }
     } catch (e) {
       user.delete();
+      print('Insert error $e');
     }
     return serviceResponse;
   }
 
-  Future<Customer> getUserById(int id) async {
+  Future<ServiceResponse> testInsert(Customer customer) async {
+    ServiceResponse serviceResponse;
+    try {
+      final endpoint = route("user/");
+
+      print(customer.toMap());
+
+      Response response = await client.post(
+        endpoint,
+        headers: jsonHeaders,
+        body: jsonEncode(customer.toMap()),
+      );
+
+      serviceResponse = ServiceResponse.fromJson(response.body);
+
+      if (!serviceResponse.status) {
+        throw new Exception(serviceResponse.response);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return serviceResponse;
+  }
+
+  Future<Customer> getUserById(String id) async {
     final endpoint = route("user/$id");
     final Response response = await client.get(endpoint);
     final ServiceResponse serviceResponse =
-        ServiceResponse.fromJson(json.decode(response.body));
+        ServiceResponse.fromJson(response.body);
     Customer customer;
 
-    if (serviceResponse.status) {
+    if (!serviceResponse.status) {
+      return null;
+    }
+
+    if(serviceResponse.response.length > 0) {
       var customerMap = serviceResponse.response.first;
-      print(customerMap);
       customer = Customer.fromMap(customerMap);
     }
+
     return customer;
   }
 
@@ -51,14 +80,18 @@ class Users extends ApiService {
     final endpoint = route("user/firebase/$id");
     final Response response = await client.get(endpoint);
     final ServiceResponse serviceResponse =
-        ServiceResponse.fromJson(json.decode(response.body));
+        ServiceResponse.fromJson(response.body);
     Customer customer;
 
-    if (serviceResponse.status) {
-      var customerMap = serviceResponse.response.first;
-      print(customerMap);
+    if (!serviceResponse.status) {
+      return null;
+    }
+
+    if(serviceResponse.response.length > 0) {
+      Map<String, dynamic> customerMap = serviceResponse.response.first;
       customer = Customer.fromMap(customerMap);
     }
+
     return customer;
   }
 }
