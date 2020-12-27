@@ -4,7 +4,6 @@ import 'package:shop_ke/core/models/location_coordinate.dart';
 
 class Store {
   String storeId;
-  String userId;
   String storeName;
   String logo; //TODO: upload photo
   String physicalAddress;
@@ -31,7 +30,6 @@ class Store {
 
   Store.fromMap(Map<String, dynamic> map) {
     storeId = map['storeId'];
-    userId = map['userId'];
     storeName = map['storeName'];
     logo = map['logo'];
     physicalAddress = map['physicalAddress'];
@@ -42,7 +40,6 @@ class Store {
   Map<String, dynamic> toMap() {
     return {
       'storeId': storeId,
-      'userId': userId,
       'storeName': storeName,
       'logo': logo,
       'physicalAddress': physicalAddress,

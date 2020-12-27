@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:shop_ke/core/models/comment.dart';
 import 'package:shop_ke/core/models/post.dart';
+import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/models/ticket.dart';
 
 /// The service responsible for networking requests
@@ -29,6 +31,58 @@ class ApiService {
     String endpoint = '$_baseUrl' + path;
     print(endpoint);
     return endpoint;
+  }
+
+  Future<Response> post({
+    @required String endpoint,
+    @required Map<String, dynamic> map,
+  }) async {
+    Response response = await client.post(
+      endpoint,
+      headers: jsonHeaders,
+      body: jsonEncode(map),
+    );
+    return response;
+  }
+
+  Future<ServiceResponse> insert({
+    @required endpoint,
+    @required Map<String, dynamic> map,
+  }) async {
+    ServiceResponse serviceResponse;
+
+    try {
+      Response response = await this.post(endpoint: endpoint, map: map);
+      serviceResponse = ServiceResponse.fromJson(response.body);
+
+      if (!serviceResponse.status) {
+        print('Insert error: ${serviceResponse.response}');
+        throw new Exception('Something went wrong wth the insert');
+      }
+      print('Map to be inserted: $map');
+    } catch (e) {
+      print('[insert] $e');
+      serviceResponse = ServiceResponse(status: false, response: e);
+    }
+
+    return serviceResponse;
+  }
+
+  Future<List<dynamic>> get(String endpoint) async {
+    final Response response = await client.get(endpoint);
+    final ServiceResponse serviceResponse =
+        ServiceResponse.fromJson(response.body);
+    var resultSet = [];
+
+    if (!serviceResponse.status) {
+      return null;
+    }
+
+    if (serviceResponse.response.length > 0) {
+      resultSet = serviceResponse.response;
+    }
+
+    return resultSet;
   }
 
   Future<Ticket> getTicket(String phoneNumber) async {

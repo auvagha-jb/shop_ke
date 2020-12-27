@@ -90,7 +90,7 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   void addCustomerToDatabase(User user, Customer customer) async {
-    ServiceResponse serviceResponse = await Users().insert(customer, user);
+    ServiceResponse serviceResponse = await Users().insertUser(customer, user);
 
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
@@ -138,7 +138,8 @@ class AuthenticationViewModel extends BaseViewModel {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
           title: loginErrorTitle,
-          description: 'Your user details were not retrieved. Check your connection and try again.');
+          description:
+              'Your user details were not retrieved. Check your connection and try again.');
       return;
     }
 
@@ -161,7 +162,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //Navigate to HomeView
     if (customer.isShopOwner) {
-      setStoreSharedPreferences(customer.firebaseId);
+//      setStoreSharedPreferences(customer.firebaseId);
       _navigationService.replaceWith(OwnerHomeView.routeName);
     } else {
       _navigationService.replaceWith(HomeView.routeName);
@@ -190,10 +191,11 @@ class AuthenticationViewModel extends BaseViewModel {
     if (!emailExists) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
-          title: 'Unregistered email address',
-          description:
-          'Please review your email address. Check it does not have a typo and '
-              'that it is the one you registered with');
+        title: 'Unregistered email address',
+        description:
+        'Please review your email address. Check it does not have a typo and '
+            'that it is the one you registered with',
+      );
       return;
     }
 

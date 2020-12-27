@@ -7,29 +7,16 @@ import 'package:shop_ke/core/services/database_services/api_service.dart';
 import 'package:http/http.dart';
 
 class Users extends ApiService {
-  Future<ServiceResponse> insert(Customer customer, User user) async {
-    ServiceResponse serviceResponse;
-    try {
-      final endpoint = route("user/");
+  Future<ServiceResponse> insertUser(Customer customer, User user) async {
+    final endpoint = route("user/");
+    customer.firebaseId = user.uid;
+    ServiceResponse serviceResponse =
+        await super.insert(endpoint: endpoint, map: customer.toMap());
 
-      customer.firebaseId = user.uid;
-      print(customer.toMap());
-
-      Response response = await client.post(
-        endpoint,
-        headers: jsonHeaders,
-        body: jsonEncode(customer.toMap()),
-      );
-
-      serviceResponse = ServiceResponse.fromJson(response.body);
-
-      if (!serviceResponse.status) {
-        throw new Exception(serviceResponse.response);
-      }
-    } catch (e) {
+    if (!serviceResponse.status) {
       user.delete();
-      print('[Users.Insert] $e');
     }
+
     return serviceResponse;
   }
 
@@ -59,18 +46,11 @@ class Users extends ApiService {
 
   Future<Customer> getUserById(String id) async {
     final endpoint = route("user/$id");
-    final Response response = await client.get(endpoint);
-    final ServiceResponse serviceResponse =
-        ServiceResponse.fromJson(response.body);
+    List customers = await super.get(endpoint);
     Customer customer;
 
-    if (!serviceResponse.status) {
-      return null;
-    }
-
-    if(serviceResponse.response.length > 0) {
-      var customerMap = serviceResponse.response.first;
-      customer = Customer.fromMap(customerMap);
+    if (customers.length > 0) {
+      customer = Customer.fromMap(customers.first);
     }
 
     return customer;
@@ -78,18 +58,11 @@ class Users extends ApiService {
 
   Future<Customer> getUserByFirebaseId(String id) async {
     final endpoint = route("user/firebase/$id");
-    final Response response = await client.get(endpoint);
-    final ServiceResponse serviceResponse =
-        ServiceResponse.fromJson(response.body);
+    final List customers = await super.get(endpoint);
     Customer customer;
 
-    if (!serviceResponse.status) {
-      return null;
-    }
-
-    if(serviceResponse.response.length > 0) {
-      Map<String, dynamic> customerMap = serviceResponse.response.first;
-      customer = Customer.fromMap(customerMap);
+    if (customers.length > 0) {
+      customer = Customer.fromMap(customers.first);
     }
 
     return customer;

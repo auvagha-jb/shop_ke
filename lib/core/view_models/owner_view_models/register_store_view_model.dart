@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/services/firestore_services/stores_collection.dart';
+import 'package:shop_ke/core/services/database_services/stores.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
@@ -15,7 +15,6 @@ class RegisterStoreViewModel extends BaseViewModel {
   final _sharedPreferences = locator<SharedPreferencesService>();
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
-  final _storesCollection = locator<StoresCollection>();
 
   void setIndustry(Store store, value) {
     store.industry = value;
@@ -37,36 +36,44 @@ class RegisterStoreViewModel extends BaseViewModel {
 
     //Get the userId from sharedPreferences and set
     final String errorTitle = 'Error';
+
+    //Get the userId from sharedPreferences
     ServiceResponse serviceResponse;
+    String userId;
     serviceResponse = await _sharedPreferences.getCustomerId();
 
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
-          title: errorTitle, description: serviceResponse.response);
+        title: errorTitle,
+        description: serviceResponse.response,
+      );
       return;
     } else {
-      store.userId = serviceResponse.response;
+      userId = serviceResponse.response;
     }
 
-    //Add the store to firestore
-    serviceResponse =
-        await _storesCollection.add(model: store, idField: Store.idField);
+    //Add the store to database
+    serviceResponse = await Stores().insertStore(store, userId);
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
-          title: errorTitle, description: serviceResponse.response);
+        title: errorTitle,
+        description: serviceResponse.response,
+      );
       return;
     } else {
-      store.storeId = serviceResponse.response;
-      print(store.toMap());
+      store.storeId = serviceResponse.insertId;
     }
+
 
     //Add the store details to shared preferences
     serviceResponse = await _sharedPreferences.set(store.toMap());
     if (!serviceResponse.status) {
       _dialogService.showDialog(
-          title: errorTitle, description: serviceResponse.response);
+        title: errorTitle,
+        description: serviceResponse.response,
+      );
     } else {
       _navigationService.replaceWith(OwnerHomeView.routeName);
     }
