@@ -7,7 +7,7 @@ import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
 import 'package:shop_ke/core/services/database_services/stores_table.dart';
 import 'package:shop_ke/core/services/database_services/users_table.js.dart';
-import 'package:shop_ke/core/services/email_authentication_service.dart';
+import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';

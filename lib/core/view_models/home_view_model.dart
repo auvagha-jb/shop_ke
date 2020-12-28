@@ -1,4 +1,3 @@
-import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
 import 'package:shop_ke/core/services/sockets_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
@@ -10,9 +9,6 @@ class HomeViewModel extends BaseViewModel {
   bool cameraIsReady = false;
   final DialogService _dialogService = locator<DialogService>();
   final SocketsService _socketsService = locator<SocketsService>();
-  final CustomersCollection customersCollection =
-      locator<CustomersCollection>();
-
   SocketsService get socketsService => _socketsService;
 
   void retractCart() {
