@@ -11,13 +11,13 @@ class Stores extends ApiService {
     };
 
     ServiceResponse serviceResponse =
-        await super.insert(endpoint: endpoint, map: map);
+        await super.post(endpoint: endpoint, map: map);
     return serviceResponse;
   }
 
   Future<Store> getStoreByUserId(String id) async {
     String endpoint = route('store/user/$id');
-    List stores = await super.get(endpoint);
+    List stores = await super.getList(endpoint);
     Store store;
 
     if (stores.length > 0) {
