@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/cart.dart';
+import 'package:shop_ke/core/models/app_models/cart.dart';
 import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/shared/cards/card_tile.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
-import 'package:shop_ke/core/models/cart.dart';
+import 'package:shop_ke/core/models/app_models/cart.dart';
 import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:provider/provider.dart';

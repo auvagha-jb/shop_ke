@@ -1,5 +1,5 @@
 import 'package:shop_ke/core/models/data_models/store.dart';
-import 'package:shop_ke/core/models/service_response.dart';
+import 'package:shop_ke/core/models/app_models/service_response.dart';
 import 'package:shop_ke/core/services/database_services/api_service.dart';
 
 class StoresTable extends ApiService {

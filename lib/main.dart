@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_ke/app_router.dart';
-import 'package:shop_ke/core/services/connectivity_service.dart';
+import 'package:shop_ke/core/services/app_services/connectivity_service.dart';
 import 'package:shop_ke/themes/style.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'core/models/cart.dart';
+import 'core/models/app_models/cart.dart';
 import 'core/models/data_models/product.dart';
 import 'locator.dart';
 

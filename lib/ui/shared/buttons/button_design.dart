@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
-import 'package:shop_ke/core/models/button_color.dart';
+import 'package:shop_ke/core/models/app_models/button_color.dart';
 
 class ButtonDesign {
   static final buttonTextSize = 15.0;

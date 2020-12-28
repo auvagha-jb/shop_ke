@@ -1,4 +1,4 @@
-import 'package:shop_ke/core/models/ui_response.dart';
+import 'package:shop_ke/core/models/app_models/ui_response.dart';
 
 const generalExceptionResponse = const UIResponse(
   title: 'Unexpected error',

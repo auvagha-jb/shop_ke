@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:shop_ke/core/services/error_service.dart';
-import 'package:shop_ke/core/services/shared_preferences_service.dart';
-import 'package:shop_ke/core/services/sockets_service.dart';
+import 'package:shop_ke/core/services/app_services/error_service.dart';
+import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
+import 'package:shop_ke/core/services/app_services/sockets_service.dart';
 import 'package:shop_ke/core/view_models/app_view_models/app_drawer_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/authentication_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart';

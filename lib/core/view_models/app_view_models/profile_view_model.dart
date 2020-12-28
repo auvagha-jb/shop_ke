@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
-import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/models/ui_response.dart';
-import 'package:shop_ke/core/services/error_service.dart';
-import 'package:shop_ke/core/services/shared_preferences_service.dart';
+import 'package:shop_ke/core/models/app_models/service_response.dart';
+import 'package:shop_ke/core/models/app_models/ui_response.dart';
+import 'package:shop_ke/core/services/app_services/error_service.dart';
+import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
 

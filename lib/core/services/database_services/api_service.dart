@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:shop_ke/core/models/service_response.dart';
+import 'package:shop_ke/core/models/app_models/service_response.dart';
 
 /// The service responsible for networking requests
 class ApiService {

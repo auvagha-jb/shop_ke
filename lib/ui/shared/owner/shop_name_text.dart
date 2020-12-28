@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/services/shared_preferences_service.dart';
+import 'package:shop_ke/core/models/app_models/service_response.dart';
+import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/shared/utils/text_styles.dart';
 
 class StoreNameText extends StatelessWidget {
   final SharedPreferencesService sharedPreferences =
-  locator<SharedPreferencesService>();
+      locator<SharedPreferencesService>();
   final TextStyle style;
 
   StoreNameText({Key key, this.style}) : super(key: key);

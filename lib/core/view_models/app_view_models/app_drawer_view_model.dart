@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/models/drawer_item.dart';
+import 'package:shop_ke/core/models/app_models/drawer_item.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
-import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/services/shared_preferences_service.dart';
+import 'package:shop_ke/core/models/app_models/service_response.dart';
+import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';

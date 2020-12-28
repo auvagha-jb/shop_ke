@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shop_ke/core/models/ui_response.dart';
+import 'package:shop_ke/core/models/app_models/ui_response.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 

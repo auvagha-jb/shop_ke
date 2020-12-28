@@ -1,6 +1,6 @@
-import 'package:shop_ke/core/models/color_theme.dart';
+import 'package:shop_ke/core/models/app_models/color_theme.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
-import 'package:shop_ke/core/models/location_coordinate.dart';
+import 'package:shop_ke/core/models/app_models/location_coordinate.dart';
 
 class Store {
   String storeId;

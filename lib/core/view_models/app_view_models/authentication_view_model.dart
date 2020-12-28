@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/data_models/store.dart';
-import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/services/connectivity_service.dart';
+import 'package:shop_ke/core/models/app_models/service_response.dart';
+import 'package:shop_ke/core/services/app_services/connectivity_service.dart';
 import 'package:shop_ke/core/services/database_services/stores_table.dart';
 import 'package:shop_ke/core/services/database_services/users_table.js.dart';
 import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
-import 'package:shop_ke/core/services/shared_preferences_service.dart';
+import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/shared/forms/form_validation.dart';
@@ -193,7 +193,7 @@ class AuthenticationViewModel extends BaseViewModel {
       _dialogService.showDialog(
         title: 'Unregistered email address',
         description:
-        'Please review your email address. Check it does not have a typo and '
+            'Please review your email address. Check it does not have a typo and '
             'that it is the one you registered with',
       );
       return;
@@ -219,5 +219,4 @@ class AuthenticationViewModel extends BaseViewModel {
 
     changeState(ViewState.Idle);
   }
-
 }
