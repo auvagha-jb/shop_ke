@@ -25,7 +25,7 @@ class OwnerDrawer extends StatelessWidget {
                       iconType: IconType.Light,
                       iconSize: 30,
                     ),
-                    ShopNameText(style: primaryHeader2),
+                    StoreNameText(style: primaryHeader2),
                   ],
                 ),
               ),

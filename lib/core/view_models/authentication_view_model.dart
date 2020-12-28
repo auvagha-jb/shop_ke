@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
+import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/connectivity_service.dart';
-import 'package:shop_ke/core/services/database_services/users.js.dart';
+import 'package:shop_ke/core/services/database_services/stores_table.dart';
+import 'package:shop_ke/core/services/database_services/users_table.js.dart';
 import 'package:shop_ke/core/services/email_authentication_service.dart';
-import 'package:shop_ke/core/services/firestore_services/customers_collection.dart';
-import 'package:shop_ke/core/services/firestore_services/stores_collection.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
@@ -27,8 +27,8 @@ class AuthenticationViewModel extends BaseViewModel {
   final _sharedPreferences = locator<SharedPreferencesService>();
   final connectionService = locator<ConnectivityService>();
 
-  final _customerCollection = locator<CustomersCollection>();
-  final _storesCollection = locator<StoresCollection>();
+  final UsersTable _usersTable = UsersTable();
+  final StoresTable _storesTable = StoresTable();
 
   bool submitButtonClicked = false;
   bool termsAndConditions = false;
@@ -90,7 +90,8 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   void addCustomerToDatabase(User user, Customer customer) async {
-    ServiceResponse serviceResponse = await Users().insertUser(customer, user);
+    ServiceResponse serviceResponse =
+        await _usersTable.insertUser(customer, user);
 
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
@@ -132,7 +133,7 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   void getCustomerFromDatabase(String uid) async {
-    final Customer customer = await Users().getUserByFirebaseId(uid);
+    final Customer customer = await _usersTable.getUserByFirebaseId(uid);
 
     if (customer == null) {
       changeState(ViewState.Idle);
@@ -162,7 +163,7 @@ class AuthenticationViewModel extends BaseViewModel {
 
     //Navigate to HomeView
     if (customer.isShopOwner) {
-//      setStoreSharedPreferences(customer.firebaseId);
+      setStoreSharedPreferences(customer.userId);
       _navigationService.replaceWith(OwnerHomeView.routeName);
     } else {
       _navigationService.replaceWith(HomeView.routeName);
@@ -170,11 +171,10 @@ class AuthenticationViewModel extends BaseViewModel {
   }
 
   Future setStoreSharedPreferences(String storeId) async {
-    ServiceResponse serviceResponse = await _storesCollection.getStore(storeId);
-    if (!serviceResponse.status) {
-      return;
+    Store store = await _storesTable.getStoreByUserId(storeId);
+    if (store != null) {
+      _sharedPreferences.set(store.toMap());
     }
-    _sharedPreferences.set(serviceResponse.response);
   }
 
   Future<void> resetPassword(GlobalKey<FormState> formKey, String email) async {
@@ -187,7 +187,7 @@ class AuthenticationViewModel extends BaseViewModel {
     }
 
     //Check is the user's email address exists
-    bool emailExists = await _customerCollection.emailAddressExists(email);
+    bool emailExists = await _usersTable.emailExists(email);
     if (!emailExists) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
@@ -220,36 +220,4 @@ class AuthenticationViewModel extends BaseViewModel {
     changeState(ViewState.Idle);
   }
 
-  void addCustomerToFirestore(ServiceResponse serviceResponse,
-      Customer customer) async {
-    User user = serviceResponse.response;
-    bool added = await _customerCollection.addCustomer(customer, user);
-
-    if (!added) {
-      changeState(ViewState.Idle);
-      _dialogService.showDialog(
-        title: signUpErrorTitle,
-        description:
-        'User registration incomplete. Please check your connection and try again',
-      );
-      return;
-    }
-
-    setSharedPreferencesForCustomer(customer);
-  }
-
-  void getCustomerFromFirestore(String uid) async {
-    final ServiceResponse serviceResponse =
-    await _customerCollection.getCustomerById(uid);
-
-    if (!serviceResponse.status) {
-      changeState(ViewState.Idle);
-      _dialogService.showDialog(
-          title: loginErrorTitle, description: serviceResponse.response);
-      return;
-    }
-
-    Customer customer = serviceResponse.response;
-    setSharedPreferencesForCustomer(customer);
-  }
 }

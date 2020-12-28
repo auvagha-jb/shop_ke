@@ -3,7 +3,7 @@ import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/service_response.dart';
 import 'package:shop_ke/core/services/database_services/api_service.dart';
 
-class Users extends ApiService {
+class UsersTable extends ApiService {
   Future<ServiceResponse> insertUser(Customer customer, User user) async {
     final endpoint = route("user/");
     customer.firebaseId = user.uid;
@@ -44,12 +44,7 @@ class Users extends ApiService {
   Future<bool> emailExists(String email) async {
     final endpoint = route("user/email-exists/$email");
     final Map responseMap = await super.getItem(endpoint);
-    bool emailExists = false;
-
-    if (responseMap != null) {
-      emailExists = true;
-    }
-
+    bool emailExists = responseMap['emailExists'];
     return emailExists;
   }
 }

@@ -7,15 +7,13 @@ import 'package:shop_ke/core/models/service_response.dart';
 
 /// The service responsible for networking requests
 class ApiService {
-  String _remoteHost;
+//  String _remoteHost;
   String _localhost;
   String _baseUrl;
   final Client _client = new http.Client();
 
-  Client get client => _client;
-
   ApiService() {
-    _remoteHost = 'http://johngachihi.com/shop_ke/';
+//    _remoteHost = 'http://johngachihi.com/shop_ke/';
     _localhost = 'http://10.0.2.2:6000/';
     _baseUrl = _localhost;
   }
@@ -37,7 +35,7 @@ class ApiService {
     ServiceResponse serviceResponse;
 
     try {
-      Response response = await client.post(
+      Response response = await _client.post(
         endpoint,
         headers: jsonHeaders,
         body: jsonEncode(map),
@@ -62,16 +60,22 @@ class ApiService {
   ///@param String endpoint - the route
   ///@returns resultSet - array of result objects
   Future<List> _get(String endpoint) async {
-    final Response response = await client.get(endpoint);
+    List resultSet = [];
+    try {
+      final Response response = await _client.get(endpoint);
 
-    //Converts the json response to an object
-    final ServiceResponse serviceResponse =
-        ServiceResponse.fromJson(response.body);
-    if (!serviceResponse.status) {
-      return null;
+      //Converts the json response to an object
+      final ServiceResponse serviceResponse =
+          ServiceResponse.fromJson(response.body);
+      if (!serviceResponse.status) {
+        return null;
+      }
+
+      resultSet = serviceResponse.response;
+    } catch (e) {
+      print('[_get] $e');
     }
 
-    List resultSet = serviceResponse.response;
     return resultSet;
   }
 
@@ -88,5 +92,4 @@ class ApiService {
     List resultSet = await this._get(endpoint);
     return resultSet;
   }
-
 }

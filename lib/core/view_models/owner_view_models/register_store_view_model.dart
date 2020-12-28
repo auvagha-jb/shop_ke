@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/service_response.dart';
-import 'package:shop_ke/core/services/database_services/stores.dart';
+import 'package:shop_ke/core/services/database_services/stores_table.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
@@ -15,6 +15,7 @@ class RegisterStoreViewModel extends BaseViewModel {
   final _sharedPreferences = locator<SharedPreferencesService>();
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
+  final StoresTable _storesTable = StoresTable();
 
   void setIndustry(Store store, value) {
     store.industry = value;
@@ -54,7 +55,7 @@ class RegisterStoreViewModel extends BaseViewModel {
     }
 
     //Add the store to database
-    serviceResponse = await Stores().insertStore(store, userId);
+    serviceResponse = await _storesTable.insertStore(store, userId);
     if (!serviceResponse.status) {
       changeState(ViewState.Idle);
       _dialogService.showDialog(
