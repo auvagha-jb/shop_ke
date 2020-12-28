@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
-import 'package:shop_ke/core/view_models/authentication_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/authentication_view_model.dart';
 import 'package:shop_ke/ui/shared/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
@@ -86,17 +86,17 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                       children: <Widget>[
                         model.state == ViewState.Idle
                             ?
-                        //Submit button
-                        AppButton(
-                          text: 'REQUEST PASSWORD RESET',
-                          buttonType: ButtonType.Secondary,
-                          onPressed: () {
-                            model.resetPassword(
-                                _formKey, emailAddressController.text);
-                          },
-                        )
+                            //Submit button
+                            AppButton(
+                                text: 'REQUEST PASSWORD RESET',
+                                buttonType: ButtonType.Secondary,
+                                onPressed: () {
+                                  model.resetPassword(
+                                      _formKey, emailAddressController.text);
+                                },
+                              )
 
-                        //While the login process is ongoing
+                            //While the login process is ongoing
                             : AppProgressButton(
                           buttonType: ButtonType.Secondary,
                         ),

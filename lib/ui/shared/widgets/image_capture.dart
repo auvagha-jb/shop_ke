@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/view_models/camera_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 
 class ImageCapture extends StatefulWidget {

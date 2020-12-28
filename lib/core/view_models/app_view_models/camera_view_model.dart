@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shop_ke/core/services/error_service.dart';
-import 'package:shop_ke/core/view_models/base_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/constants/error_response_messages.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';

@@ -2,14 +2,15 @@ import 'package:get_it/get_it.dart';
 import 'package:shop_ke/core/services/error_service.dart';
 import 'package:shop_ke/core/services/shared_preferences_service.dart';
 import 'package:shop_ke/core/services/sockets_service.dart';
-import 'package:shop_ke/core/view_models/app_drawer_view_model.dart';
-import 'package:shop_ke/core/view_models/authentication_view_model.dart';
-import 'package:shop_ke/core/view_models/camera_view_model.dart';
-import 'package:shop_ke/core/view_models/home_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/app_drawer_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/authentication_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/profile_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/startup_view_model.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/owner_home_view_model.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/register_store_view_model.dart';
-import 'package:shop_ke/core/view_models/profile_view_model.dart';
-import 'package:shop_ke/core/view_models/startup_view_model.dart';
+
 import 'package:stacked_services/stacked_services.dart';
 
 import 'core/services/firebase_services/email_authentication_service.dart';

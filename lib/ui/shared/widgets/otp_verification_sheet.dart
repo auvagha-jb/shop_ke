@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/user_action.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/view_models/authentication_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/authentication_view_model.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/curved_sheet_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
 import 'package:shop_ke/ui/shared/utils/text_styles.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
-
 
 class OTPVerificationSheet extends StatefulWidget {
   final String phoneNumber;
