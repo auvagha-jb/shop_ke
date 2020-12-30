@@ -94,6 +94,14 @@ class Cart with ChangeNotifier {
     //Add the new item to the list
     _products.insert(index, product);
 
+    //Show flushbar to confirm item has been added
+    AppFlushbar.show(
+      context,
+      title: 'Item added',
+      message: '${product.productName} added to cart',
+      icon: Icon(Icons.add_shopping_cart),
+    );
+
     notifyListeners();
   }
 
@@ -134,7 +142,7 @@ class Cart with ChangeNotifier {
     decrementNoItemsBy(product.quantity);
     decreaseProductsTotal(product.subtotal);
 
-    //Show the undo snackbar
+    //Show the undo flushbar
     AppFlushbar.show(
       context,
       mainButton: UndoDeleteButton(index: index, product: product),

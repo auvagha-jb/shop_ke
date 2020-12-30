@@ -32,15 +32,15 @@ class _UndoDeleteButtonState extends State<UndoDeleteButton> {
       onPressed: !isClicked
           //Choose action based on whether the button had been clicked or not
           ? () {
-        //If undo had not been clicked already, add the product to the top of the cart
-        cart.undoDelete(
-          context,
-          index: widget.index,
-          product: widget.product,
-        );
+              //If undo had not been clicked already, add the product to the top of the cart
+              cart.undoDelete(
+                context,
+                index: widget.index,
+                product: widget.product,
+              );
 
-        //Disable button onPressed to prevent undo action more than once
-        disableButton();
+              //Disable button onPressed to prevent undo action more than once
+              disableButton();
             }
       //After click, do nothing
           : null,

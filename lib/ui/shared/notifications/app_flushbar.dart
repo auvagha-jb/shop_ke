@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 class AppFlushbar {
   static void show(
     context, {
-    @required String title,
+    String title,
     @required String message,
-      @required Icon icon,
+        @required Icon icon,
     Widget mainButton,
       }) {
-    
     Flushbar(
       title: title,
       message: message,
@@ -20,18 +19,20 @@ class AppFlushbar {
       backgroundColor: Colors.black,
       boxShadows: [
         BoxShadow(
-            color: Colors.blue[800], offset: Offset(0.0, 2.0), blurRadius: 3.0)
+            color: Theme
+                .of(context)
+                .buttonColor,
+            offset: Offset(0.0, 2.0),
+            blurRadius: 3.0)
       ],
-      backgroundGradient:
-          LinearGradient(colors: [Theme.of(context).accentColor, Theme.of(context).primaryColor]),
+//      backgroundGradient:
+//          LinearGradient(colors: [Theme.of(context).accentColor, Theme.of(context).primaryColor]),
       isDismissible: true,
       duration: Duration(seconds: 5),
       icon: icon,
-      mainButton: null,
+      mainButton: mainButton ?? null,
       showProgressIndicator: true,
       progressIndicatorBackgroundColor: Theme.of(context).primaryColor,
     )..show(context);
   }
 }
-
-
