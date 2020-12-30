@@ -6,7 +6,7 @@ class AppFlushbar {
     context, {
     String title,
     @required String message,
-        @required Icon icon,
+    @required Icon icon,
     Widget mainButton,
       }) {
     Flushbar(

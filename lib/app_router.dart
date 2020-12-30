@@ -6,6 +6,8 @@ import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
 import 'package:shop_ke/ui/views/general/startup_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
+import 'package:shop_ke/ui/views/store_owner/add_product_view.dart';
+import 'package:shop_ke/ui/views/store_owner/inventory_view.dart';
 import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:shop_ke/ui/views/store_owner/register_store_view.dart';
 
@@ -26,19 +28,25 @@ class AppRouter {
 
       case ResetPasswordView.routeName:
         String email = settings.arguments;
-        return MaterialPageRoute(builder: (_) => ResetPasswordView(email: email));
+        return MaterialPageRoute(
+            builder: (_) => ResetPasswordView(email: email));
 
       case HomeView.routeName:
         return MaterialPageRoute(builder: (_) => HomeView());
 
+      //Owner Routes
       case OwnerHomeView.routeName:
         return MaterialPageRoute(builder: (_) => OwnerHomeView());
 
       case RegisterStoreView.routeName:
         return MaterialPageRoute(builder: (_) => RegisterStoreView());
-      // case 'post':
-      //   var post = settings.arguments as Post;
-      //   return MaterialPageRoute(builder: (_) => PostView(post: post));
+
+      case InventoryView.routeName:
+        return MaterialPageRoute(builder: (_) => InventoryView());
+
+      case AddProductView.routeName:
+        return MaterialPageRoute(builder: (_) => AddProductView());
+
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

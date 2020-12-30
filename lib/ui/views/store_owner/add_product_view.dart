@@ -2,24 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/models/data_models/store.dart';
-import 'package:shop_ke/core/view_models/owner_view_models/register_store_view_model.dart';
-import 'package:shop_ke/ui/constants/county_list.dart';
-import 'package:shop_ke/ui/constants/industry_list.dart';
+import 'package:shop_ke/core/view_models/owner_view_models/add_product_view_model.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
 import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/forms/form_helper.dart';
-import 'package:shop_ke/ui/shared/widgets/app_dropdown.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 
-class RegisterStoreView extends StatefulWidget {
-  static const routeName = '/register-store';
+class AddProductView extends StatefulWidget {
+  static const routeName = '/add-product';
 
   @override
-  _RegisterStoreViewState createState() => _RegisterStoreViewState();
+  _AddProductViewState createState() => _AddProductViewState();
 }
 
-class _RegisterStoreViewState extends State<RegisterStoreView> {
+class _AddProductViewState extends State<AddProductView> {
   final _formKey = GlobalKey<FormState>();
   final Store _store = Store();
 
@@ -28,7 +25,7 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
   final _logoController = TextEditingController();
 
   final _appBar = AppBar(
-    title: Text('New Store'),
+    title: Text('Add Product'),
   );
 
   @override
@@ -38,7 +35,7 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseView<RegisterStoreViewModel>(
+    return BaseView<AddProductViewModel>(
       builder: (context, model, child) {
         return Scaffold(
           appBar: _appBar,
@@ -100,36 +97,7 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
 
                           SizedBox(height: FormHelper.formFieldSpacing),
 
-                          //Industries Dropdown
-                          AppDropdown(
-                            value: _store.industry,
-                            validatorValue: model.validate.dropdownValidation(
-                              value: _store.industry,
-                              defaultValue: Store.defaultIndustry,
-                              errorFeedback: 'Please select your industry',
-                            ),
-                            onChanged: (value) {
-                              model.setIndustry(_store, value);
-                              print('industry: ${_store.industry}');
-                            },
-                            items: industryList,
-                          ),
-
                           SizedBox(height: FormHelper.formFieldSpacing),
-
-                          AppDropdown(
-                            value: _store.county,
-                            validatorValue: model.validate.dropdownValidation(
-                              value: _store.county,
-                              defaultValue: Store.defaultCounty,
-                              errorFeedback: 'Please select your county',
-                            ),
-                            onChanged: (value) {
-                              model.setCounty(_store, value);
-                              print('county: ${_store.county} ');
-                            },
-                            items: countyList,
-                          ),
                         ],
                       ),
                     ),
@@ -143,9 +111,18 @@ class _RegisterStoreViewState extends State<RegisterStoreView> {
                           //Form submit button
                           model.state == ViewState.Idle
                               ? AppButton(
-                                  text: 'REGISTER STORE',
-                                  onPressed: () {
-                                    model.registerNewStore(_formKey, _store);
+                                  text: 'CONTINUE',
+                                  onPressed: () async {
+//                                    model.registerNewStore(_formKey, _store);
+//                                    var storeMap = {
+//                                      "storeId":
+//                                          "43c250ff-f0c4-4a9a-946e-8695fcd21773",
+//                                      "productName": "Pooh action figure",
+//                                      "description": null,
+//                                      "image": null,
+//                                      "price": "9.99",
+//                                      "numInStock": "5"
+//                                    };
                                   },
                                   buttonType: ButtonType.Secondary,
                                 )

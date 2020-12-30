@@ -6,7 +6,7 @@ import 'package:shop_ke/core/models/data_models/store.dart';
 import 'package:shop_ke/core/models/app_models/service_response.dart';
 import 'package:shop_ke/core/services/app_services/connectivity_service.dart';
 import 'package:shop_ke/core/services/database_services/stores_table.dart';
-import 'package:shop_ke/core/services/database_services/users_table.js.dart';
+import 'package:shop_ke/core/services/database_services/users_table.dart';
 import 'package:shop_ke/core/services/firebase_services/email_authentication_service.dart';
 import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
 import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
@@ -18,7 +18,6 @@ import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AuthenticationViewModel extends BaseViewModel {
-  Customer customer = Customer();
   bool isShopOwner = false;
 
   final _navigationService = locator<NavigationService>();

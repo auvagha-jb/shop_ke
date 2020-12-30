@@ -9,6 +9,8 @@ import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart'
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/profile_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/startup_view_model.dart';
+import 'package:shop_ke/core/view_models/owner_view_models/add_product_view_model.dart';
+import 'package:shop_ke/core/view_models/owner_view_models/inventory_view_model.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/owner_home_view_model.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/register_store_view_model.dart';
 
@@ -44,4 +46,6 @@ void setupLocator() {
   //Owner ViewModels
   locator.registerFactory(() => OwnerHomeViewModel());
   locator.registerFactory(() => RegisterStoreViewModel());
+  locator.registerFactory(() => InventoryViewModel());
+  locator.registerFactory(() => AddProductViewModel());
 }

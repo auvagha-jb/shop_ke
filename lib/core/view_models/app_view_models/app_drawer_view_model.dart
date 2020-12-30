@@ -9,6 +9,7 @@ import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
 import 'package:shop_ke/ui/views/general/profile_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
+import 'package:shop_ke/ui/views/store_owner/inventory_view.dart';
 import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -41,8 +42,13 @@ class DrawerViewModel extends BaseViewModel {
   final _ownerDrawerItems = [
     DrawerItem(
       icon: Icon(Icons.store_mall_directory_outlined),
-      title: 'Store profile',
-      onPressed: () {},
+      title: 'Home',
+      onPressed: () => _navigationService.navigateTo(OwnerHomeView.routeName),
+    ),
+    DrawerItem(
+      icon: Icon(Icons.inventory),
+      title: 'My Inventory',
+      onPressed: () => _navigationService.navigateTo(InventoryView.routeName),
     ),
     DrawerItem(
       icon: Icon(Icons.shopping_cart),
