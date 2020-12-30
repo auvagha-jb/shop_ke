@@ -152,6 +152,7 @@ class SharedPreferencesService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       store = Store.fromMap({
+        'storeId': prefs.getString('storeId'),
         'userId': prefs.getString('userId'),
         'name': prefs.getString('name'),
         'logo': prefs.getString('logo'),
@@ -167,7 +168,7 @@ class SharedPreferencesService {
       }
     } catch (e) {
       print(e);
-      response = generalExceptionResponse;
+      response = e;
     }
 
     return ServiceResponse(status: response is Store, response: response);

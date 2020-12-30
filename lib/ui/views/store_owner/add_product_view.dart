@@ -1,7 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/button_type.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
-import 'package:shop_ke/core/models/data_models/store.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/add_product_view_model.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
@@ -18,11 +19,13 @@ class AddProductView extends StatefulWidget {
 
 class _AddProductViewState extends State<AddProductView> {
   final _formKey = GlobalKey<FormState>();
-  final Store _store = Store();
+  final Product _product = Product();
 
-  final _storeNameController = TextEditingController();
-  final _physicalAddressController = TextEditingController();
-  final _logoController = TextEditingController();
+  final _productNameController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _imageUrlController = TextEditingController();
+  final _priceController = TextEditingController();
+  final _numInStockController = TextEditingController();
 
   final _appBar = AppBar(
     title: Text('Add Product'),
@@ -52,52 +55,78 @@ class _AddProductViewState extends State<AddProductView> {
                   children: <Widget>[
                     //Top half of the screen
                     ResponsiveContainer(
-                      height: 0.7,
+                      height: 0.8,
                       appBar: _appBar,
                       child: Column(
                         children: <Widget>[
-                          //Store name
+
+                          //Product name
                           TextFormField(
-                            controller: _storeNameController,
+                            controller: _productNameController,
                             decoration: FormHelper.buildInputDecoration(
-                              controller: _storeNameController,
-                              labelText: 'Store Name',
+                              controller: _productNameController,
+                              labelText: 'Product Name',
                             ),
                             validator: (value) =>
                                 model.validate.defaultValidation(value),
-                            onChanged: (value) => _store.storeName = value,
+                            onChanged: (value) => _product.productName = value,
                           ),
 
                           SizedBox(height: FormHelper.formFieldSpacing),
 
-                          //Logo
+                          //Description
                           TextFormField(
-                            controller: _logoController,
+                            controller: _descriptionController,
                             decoration: FormHelper.buildInputDecoration(
-                              controller: _logoController,
-                              labelText: 'Logo',
+                              controller: _descriptionController,
+                              labelText: 'Description',
+                            ),
+                            maxLines: 3,
+                            validator: (value) => null,
+                            onChanged: (value) => _product.description = value,
+                          ),
+
+                          SizedBox(height: FormHelper.formFieldSpacing),
+
+                          //Image Url
+                          TextFormField(
+                            controller: _imageUrlController,
+                            decoration: FormHelper.buildInputDecoration(
+                              controller: _imageUrlController,
+                              labelText: 'Image',
+                            ),
+                            validator: (value) => null,
+                            onChanged: (value) => _product.imageUrl = value,
+                          ),
+
+                          SizedBox(height: FormHelper.formFieldSpacing),
+
+                          //Description
+                          TextFormField(
+                            controller: _priceController,
+                            decoration: FormHelper.buildInputDecoration(
+                              controller: _priceController,
+                              labelText: 'Price',
                             ),
                             validator: (value) =>
                                 model.validate.defaultValidation(value),
-                            onChanged: (value) => _store.logo = value,
+                            onChanged: (value) => _product.price = double.parse(value),
                           ),
 
                           SizedBox(height: FormHelper.formFieldSpacing),
 
-                          //Physical address
+                          //Description
                           TextFormField(
-                            controller: _physicalAddressController,
+                            controller: _numInStockController,
                             decoration: FormHelper.buildInputDecoration(
-                              controller: _physicalAddressController,
-                              labelText: 'Physical Address (Optional)',
+                              controller: _numInStockController,
+                              labelText: 'Number in stock',
                             ),
-                            onChanged: (value) =>
-                                _store.physicalAddress = value,
+                            validator: (value) =>
+                                model.validate.integerInputValidation(value, maxLength: 3),
+                            onChanged: (value) => _product.numInStock = int.parse(value),
                           ),
 
-                          SizedBox(height: FormHelper.formFieldSpacing),
-
-                          SizedBox(height: FormHelper.formFieldSpacing),
                         ],
                       ),
                     ),
@@ -111,18 +140,9 @@ class _AddProductViewState extends State<AddProductView> {
                           //Form submit button
                           model.state == ViewState.Idle
                               ? AppButton(
-                                  text: 'CONTINUE',
-                                  onPressed: () async {
-//                                    model.registerNewStore(_formKey, _store);
-//                                    var storeMap = {
-//                                      "storeId":
-//                                          "43c250ff-f0c4-4a9a-946e-8695fcd21773",
-//                                      "productName": "Pooh action figure",
-//                                      "description": null,
-//                                      "image": null,
-//                                      "price": "9.99",
-//                                      "numInStock": "5"
-//                                    };
+                                  text: 'ADD PRODUCT',
+                                  onPressed: () {//
+                                    model.addProduct(_formKey, _product);
                                   },
                                   buttonType: ButtonType.Secondary,
                                 )

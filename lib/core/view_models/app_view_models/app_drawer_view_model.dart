@@ -21,7 +21,7 @@ class DrawerViewModel extends BaseViewModel {
 
   static final _appDrawerItems = [
     DrawerItem(
-      icon: Icon(Icons.account_circle),
+      icon: Icon(Icons.account_circle_outlined),
       title: 'My Profile',
       onPressed: () =>
           _navigationService.navigateTo(ProfileStartupView.routeName),
@@ -34,14 +34,14 @@ class DrawerViewModel extends BaseViewModel {
   ];
 
   final _storeDashboardLink = DrawerItem(
-    icon: Icon(Icons.dashboard),
+    icon: Icon(Icons.store_mall_directory_outlined),
     title: 'Store Dashboard',
     onPressed: () => _navigationService.navigateTo(OwnerHomeView.routeName),
   );
 
   final _ownerDrawerItems = [
     DrawerItem(
-      icon: Icon(Icons.store_mall_directory_outlined),
+      icon: Icon(Icons.home_outlined),
       title: 'Home',
       onPressed: () => _navigationService.navigateTo(OwnerHomeView.routeName),
     ),
@@ -51,7 +51,7 @@ class DrawerViewModel extends BaseViewModel {
       onPressed: () => _navigationService.navigateTo(InventoryView.routeName),
     ),
     DrawerItem(
-      icon: Icon(Icons.shopping_cart),
+      icon: Icon(Icons.shopping_cart_outlined),
       title: 'Shop',
       onPressed: () => _navigationService.navigateTo(HomeView.routeName),
     ),
@@ -62,19 +62,21 @@ class DrawerViewModel extends BaseViewModel {
     return _ownerDrawerItems;
   }
 
-  Future<List<DrawerItem>> getAppDrawerItems() async {
+  Future<List<DrawerItem>> get appDrawerItems async {
     ServiceResponse serviceResponse = await _sharedPreferences.getCustomer();
     if (!serviceResponse.status) {
       _navigationService.navigateTo(LoginView.routeName);
       return null;
     }
 
+    List<DrawerItem> appDrawerItems = [..._appDrawerItems];
+
     Customer customer = serviceResponse.response;
     if (customer.isShopOwner) {
-      _appDrawerItems.add(_storeDashboardLink);
+      appDrawerItems.add(_storeDashboardLink);
     }
 
-    return _appDrawerItems;
+    return appDrawerItems;
   }
 
   ListView getDrawerListView(List<DrawerItem> drawerItems) {

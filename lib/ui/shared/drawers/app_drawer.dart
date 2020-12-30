@@ -35,7 +35,7 @@ class AppDrawer extends StatelessWidget {
 
               //Drawer Items
               FutureBuilder(
-                future: model.getAppDrawerItems(),
+                future: model.appDrawerItems,
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   Widget widget;
                   if (snapshot.hasData) {

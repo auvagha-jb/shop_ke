@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
-  final String productId;
-  final String storeId;
-  final String productName;
-  final String description;
-  final double price;
-  final String imageUrl;
-
-//  String numInStock; --> Future works
+  String productId;
+  String storeId;
+  String productName;
+  String description;
+  double price;
+  String imageUrl;
+  int numInStock;
 
   //When placing the order
   int quantity;
@@ -21,6 +20,7 @@ class Product with ChangeNotifier {
     this.description,
     this.price,
     this.imageUrl,
+    this.numInStock = 0,
     this.subtotal = 0,
     this.quantity = 1,
   });
@@ -44,6 +44,7 @@ class Product with ChangeNotifier {
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
+    print('Product.fromMap $map');
     return Product(
       productId: map['productId'],
       storeId: map['storeId'],
@@ -51,6 +52,7 @@ class Product with ChangeNotifier {
       description: map['description'],
       price: map['price'],
       imageUrl: map['imageUrl'],
+      numInStock: map['numInStock']
     );
   }
 
@@ -61,7 +63,8 @@ class Product with ChangeNotifier {
       'productName': productName,
       'description': description,
       'price': price,
-      'imageUrl': imageUrl
+      'imageUrl': imageUrl,
+      'numInStock': numInStock
     };
   }
 

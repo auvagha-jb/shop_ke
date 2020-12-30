@@ -21,27 +21,50 @@ class FormValidation {
     return null;
   }
 
-  dynamic phoneValidation(String value) {
-    //check that at least 9 or 10 max have been entered
-    if (value.length < 9 || value.length > 10) {
-      return 'Enter a valid mobile number';
+  dynamic integerInputValidation(
+    String value, {
+    int minLength = 1,
+    int maxLength,
+  }) {
+    final numberRegex = RegExp(r"^[0-9]*$");
+    bool isNumeric = numberRegex.hasMatch(value);
+
+    if (!isNumeric) {
+      return 'Should only contain numbers';
     }
+
+    if (value.length < minLength) {
+      String language = minLength == 1 ? 'character' : 'characters';
+      return 'Must be at least $minLength $language';
+    }
+
+    if (maxLength != null) {
+      if (value.length > maxLength) {
+        String language = maxLength == 1 ? 'character' : 'characters';
+        return 'Cannot exceed $maxLength $language';
+      }
+    }
+
     return null;
   }
 
-  dynamic passwordValidation(String value) {
-    String pattern =
-        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+  dynamic phoneValidation(String value) {
+    return integerInputValidation(value, minLength: 9, maxLength: 10);
+  }
 
+  dynamic passwordValidation(String value) {
     //Ensure it is at least 6 characters long
     if (value.length < 6) {
       return 'Must be at least 6 characters';
     }
 
-    RegExp regExp = new RegExp(pattern);
-    if (!regExp.hasMatch(value)) {
+    RegExp passwordRegex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    bool isComplexPassword = passwordRegex.hasMatch(value);
+
+    if (!isComplexPassword) {
       return 'Must contain one capital letter, number and special character';
     }
+
     return null;
   }
 
@@ -52,8 +75,7 @@ class FormValidation {
   }
 
   bool signUpValidation(GlobalKey<FormState> formKey, bool termsAndConditions) {
-    final validated =
-        formKey.currentState.validate() && termsAndConditions == true;
+    final validated = formKey.currentState.validate() && termsAndConditions == true;
     print('Validation status: $validated');
     return validated;
   }

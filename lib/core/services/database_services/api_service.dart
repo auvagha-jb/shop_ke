@@ -11,6 +11,7 @@ class ApiService {
   String _localhost;
   String _baseUrl;
   final Client _client = new http.Client();
+  final _timeoutDuration = Duration(seconds: 20);
 
   ApiService() {
 //    _remoteHost = 'http://johngachihi.com/shop_ke/';
@@ -35,21 +36,27 @@ class ApiService {
     ServiceResponse serviceResponse;
 
     try {
+      print('POST Request');
+
       Response response = await _client.post(
         endpoint,
         headers: jsonHeaders,
         body: jsonEncode(map),
-      );
+      ).timeout(_timeoutDuration);
+
+      print('ApiService.post() ${response.body}');
 
       serviceResponse = ServiceResponse.fromJson(response.body);
 
       if (!serviceResponse.status) {
         print('Insert error: ${serviceResponse.response}');
-        throw new Exception('Something went wrong wth the insert');
+        throw new Exception('Something went wrong wth the post request');
       }
+
       print('Map to be inserted: $map');
+
     } catch (e) {
-      print('[insert] $e');
+      print('[ApiService.insert()] $e');
       serviceResponse = ServiceResponse(status: false, response: e);
     }
 
@@ -62,13 +69,16 @@ class ApiService {
   Future<List> _get(String endpoint) async {
     List resultSet = [];
     try {
-      final Response response = await _client.get(endpoint);
+      print('GET request');
+
+      final Response response = await _client.get(endpoint).timeout(_timeoutDuration);
 
       //Converts the json response to an object
       final ServiceResponse serviceResponse =
           ServiceResponse.fromJson(response.body);
+
       if (!serviceResponse.status) {
-        return null;
+        return [];
       }
 
       resultSet = serviceResponse.response;
