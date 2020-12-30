@@ -1,21 +1,24 @@
-/*
- * This class will:
- * * Manage adding and removing of items from the cart
- * * Manage the items in the cart
- * * Manage the bill total
- */
-
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/shared/notifications/app_flushbar.dart';
-import 'package:shop_ke/ui/widgets/home/undo_delete_button.dart';
+import 'package:shop_ke/ui/widgets/cart/undo_delete_button.dart';
 
+/*
+ * This class:
+ * * Manages adding and removing of items from the cart
+ * * Manages the items in the cart
+ * * Manages the bill total
+ */
 class Cart with ChangeNotifier {
   double productsTotal = 0;
+
   //double _totalSummed;
   int _noItems = 0;
   List<Product> _products = [];
+
   List<Product> get productsList => [..._products];
+
+//  final SnackbarService _snackbarService = locator<SnackbarService>();
 
   //Fail safe to prevent negative number of items
   set noItems(int no) => _noItems = no > -1 ? no : 0;
@@ -60,13 +63,13 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  //Optional parameter is for
-  void addProduct(Product product, {int index = 0}) {
+  //Optional parameter is for adding parameter to a specific index after an undo operation
+  void addProduct(BuildContext context, Product product, {int index = 0}) {
     print('Length of shopping list: ${productsList.length}');
 
     //If the shopping list has at least one item, check if the product exists
     final existingProductAndIndex =
-        getProductIfExists(product.id, productsList.length);
+        getProductIfExists(product.productId, productsList.length);
 
     //Action to take if item exists
     if (existingProductAndIndex != null) {
@@ -114,7 +117,7 @@ class Cart with ChangeNotifier {
   dynamic getProductIfExists(String id, int shoppingListItems) {
     try {
       final int index = shoppingListItems > 0
-          ? productsList.indexWhere((prod) => prod.id == id)
+          ? productsList.indexWhere((prod) => prod.productId == id)
           : null;
 
       return {
@@ -131,7 +134,7 @@ class Cart with ChangeNotifier {
     decrementNoItemsBy(product.quantity);
     decreaseProductsTotal(product.subtotal);
 
-    //Show the undo flushbar
+    //Show the undo snackbar
     AppFlushbar.show(
       context,
       mainButton: UndoDeleteButton(index: index, product: product),
@@ -143,9 +146,9 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void undoDelete(index, Product product) {
+  void undoDelete(BuildContext context, {int index, Product product}) {
     //Return it to the top of the list
-    addProduct(product, index: 0);
+    addProduct(context, product, index: 0);
     notifyListeners();
   }
 

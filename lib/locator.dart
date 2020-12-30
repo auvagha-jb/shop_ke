@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:shop_ke/core/services/app_services/connectivity_service.dart';
 import 'package:shop_ke/core/services/app_services/error_service.dart';
 import 'package:shop_ke/core/services/app_services/shared_preferences_service.dart';
 import 'package:shop_ke/core/services/app_services/sockets_service.dart';
@@ -22,11 +23,11 @@ final locator = GetIt.instance;
 
 void setupLocator() {
   //Services
-//  locator.registerLazySingleton(() => ApiService());
   locator.registerLazySingleton(() => SharedPreferencesService());
   locator.registerLazySingleton(() => EmailAuthenticationService());
   locator.registerLazySingleton(() => ErrorService());
   locator.registerLazySingleton(() => SocketsService());
+  locator.registerLazySingleton(() => ConnectivityService());
 
   //Stacked Services
   locator.registerLazySingleton(() => NavigationService());

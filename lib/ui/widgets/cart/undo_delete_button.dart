@@ -29,11 +29,20 @@ class _UndoDeleteButtonState extends State<UndoDeleteButton> {
     final cart = Provider.of<Cart>(context);
 
     return FlatButton(
-      onPressed: isClicked == false
+      onPressed: !isClicked
+          //Choose action based on whether the button had been clicked or not
           ? () {
-              cart.undoDelete(widget.index, widget.product);
-              disableButton(); //Disable button onPressed to prevent undo action more than once
+        //If undo had not been clicked already, add the product to the top of the cart
+        cart.undoDelete(
+          context,
+          index: widget.index,
+          product: widget.product,
+        );
+
+        //Disable button onPressed to prevent undo action more than once
+        disableButton();
             }
+      //After click, do nothing
           : null,
       child: Text(
         'UNDO',

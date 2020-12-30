@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/app_models/cart.dart';
-import 'package:shop_ke/ui/widgets/home/product_tile.dart';
+import 'package:shop_ke/ui/widgets/cart/product_tile.dart';
 import 'package:provider/provider.dart';
 
 class ProductsListView extends StatelessWidget {
@@ -28,7 +28,7 @@ class ProductsListView extends StatelessWidget {
                 value: product,
                 //The Dismissible wrapper
                 child: Dismissible(
-                  key: Key(product.id),
+                  key: Key(product.productId),
                   background: Container(
                     color: Theme.of(context).accentColor,
                     child: ListTile(

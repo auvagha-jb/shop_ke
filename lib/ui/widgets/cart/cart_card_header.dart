@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
 import 'package:shop_ke/ui/shared/utils/text_styles.dart';
-import 'package:shop_ke/ui/widgets/home/products_list_view.dart';
-
-import 'cart_card.dart';
+import 'package:shop_ke/ui/widgets/cart/cart_card.dart';
+import 'package:shop_ke/ui/widgets/cart/products_list_view.dart';
 
 class CartCardHeader extends StatelessWidget {
   final String title;

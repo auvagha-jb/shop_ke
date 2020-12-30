@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 
 class Product with ChangeNotifier {
-  final String id;
+  final String productId;
+  final String storeId;
   final String productName;
-  final String brand;
+  final String description;
   final double price;
-  int quantity;
-  double subtotal;
   final String imageUrl;
 
+//  String numInStock; --> Future works
+
+  //When placing the order
+  int quantity;
+  double subtotal;
+
   Product({
-    this.id,
+    this.productId,
+    this.storeId,
     this.productName,
-    this.brand,
+    this.description,
     this.price,
-    this.quantity = 1,
-    this.subtotal = 0,
     this.imageUrl,
+    this.subtotal = 0,
+    this.quantity = 1,
   });
 
   void incrementQuantityAndSubtotalForNewProduct(int productQuantity) {
@@ -39,18 +45,23 @@ class Product with ChangeNotifier {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      id: map['id'] as String,
-      productName: map['productName'] as String,
-      brand: map['brand'] as String,
-      price: map['price'] as double,
-      imageUrl: map['imageUrl'] as String,
+      productId: map['productId'],
+      storeId: map['storeId'],
+      productName: map['productName'],
+      description: map['description'],
+      price: map['price'],
+      imageUrl: map['imageUrl'],
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-
+      'productId': productId,
+      'storeId': storeId,
+      'productName': productName,
+      'description': description,
+      'price': price,
+      'imageUrl': imageUrl
     };
   }
 

@@ -92,14 +92,16 @@ class _ResetPasswordViewState extends State<ResetPasswordView> {
                                 buttonType: ButtonType.Secondary,
                                 onPressed: () {
                                   model.resetPassword(
-                                      _formKey, emailAddressController.text);
+                                    _formKey,
+                                    emailAddressController.text,
+                                  );
                                 },
                               )
 
                             //While the login process is ongoing
                             : AppProgressButton(
-                          buttonType: ButtonType.Secondary,
-                        ),
+                                buttonType: ButtonType.Secondary,
+                              ),
                         SizedBox(height: textFieldSpacing),
                       ],
                     ),

@@ -88,7 +88,8 @@ class _CartCardState extends State<CartCard> {
                   ? 'CHECKOUT ${cart.noItems} ITEM(S) FOR KES ${cart.productsTotal.toStringAsFixed(2)}'
                   : 'CART EMPTY',
               buttonType: ButtonType.Primary,
-              onPressed: () => cart.addProduct(_inventory[cart.noItems]),
+              onPressed: () =>
+                  cart.addProduct(context, _inventory[cart.noItems]),
             ),
           ),
         ],

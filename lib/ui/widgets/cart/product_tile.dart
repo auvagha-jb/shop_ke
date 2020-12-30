@@ -72,8 +72,7 @@ class CardContent extends StatelessWidget {
           ),
           CircleNetworkImage(product.imageUrl),
           SizedBox(width: 10),
-          Expanded(
-              flex: 4, child: Text('${product.brand} ${product.productName}')),
+          Expanded(flex: 4, child: Text('${product.productName}')),
           ResponsiveContainer(
             height: 0.12,
             child: Column(
