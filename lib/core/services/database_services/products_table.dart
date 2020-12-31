@@ -6,12 +6,11 @@ class ProductsTable extends ApiService {
   Future<ServiceResponse> insertProduct(Product product) async {
     final endpoint = route("product/");
     ServiceResponse serviceResponse =
-        await super.post(endpoint: endpoint, map: product.toMap());
+    await super.post(endpoint: endpoint, map: product.toMap());
     return serviceResponse;
   }
 
-  Future<List<Product>> getAllProducts() async {
-    final endpoint = route('product/');
+  Future<List<Product>> _getProducts(String endpoint) async {
     final List<dynamic> productsList = await super.getList(endpoint);
     List<Product> products = [];
 
@@ -21,6 +20,18 @@ class ProductsTable extends ApiService {
       }
     }
 
+    return products;
+  }
+
+  Future<List<Product>> getAllProducts() async {
+    final endpoint = route('product/');
+    final List<Product> products = await this._getProducts(endpoint);
+    return products;
+  }
+
+  Future<List<Product>> getProductsByStore(String storeId) async {
+    final endpoint = route('product/store/$storeId');
+    final List<Product> products = await this._getProducts(endpoint);
     return products;
   }
 }

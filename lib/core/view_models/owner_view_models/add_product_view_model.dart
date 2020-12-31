@@ -32,7 +32,7 @@ class AddProductViewModel extends BaseViewModel {
     ServiceResponse serviceResponse = await _sharedPreferencesService.getStore();
 
     if(!serviceResponse.status) {
-      _snackbarService.showSnackbar(message: "Couldn't fetch store details. Logout and try again");
+      _snackbarService.showSnackbar(message: serviceResponse.response);
       return;
     }
 

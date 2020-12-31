@@ -147,11 +147,11 @@ class SharedPreferencesService {
 
   Future<ServiceResponse> getStore() async {
     var response;
-    var store;
+    bool status = false;
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      store = Store.fromMap({
+      Store store = Store.fromMap({
         'storeId': prefs.getString('storeId'),
         'userId': prefs.getString('userId'),
         'name': prefs.getString('name'),
@@ -162,16 +162,18 @@ class SharedPreferencesService {
       });
 
       if (store == null) {
-        throw new Exception('Something went wrong. Please log out and sign in');
+        throw new Exception("Could not find store details. Please log out and sign in");
       } else {
         response = store;
+        status = true;
       }
+
     } catch (e) {
-      print(e);
-      response = e;
+      print('[SharedPreferences.getStore] $e');
+      response = "Could not fetch store details";
     }
 
-    return ServiceResponse(status: response is Store, response: response);
+    return ServiceResponse(status: status, response: response);
   }
 
   Future<ServiceResponse> getStoreName() async {

@@ -5,7 +5,7 @@ class Product with ChangeNotifier {
   String storeId;
   String productName;
   String description;
-  double price;
+  var price; //Avoided an explicit type to avoid int and double conversion problems
   String imageUrl;
   int numInStock;
 

@@ -141,7 +141,7 @@ class _AddProductViewState extends State<AddProductView> {
                           model.state == ViewState.Idle
                               ? AppButton(
                                   text: 'ADD PRODUCT',
-                                  onPressed: () {//
+                                  onPressed: () {
                                     model.addProduct(_formKey, _product);
                                   },
                                   buttonType: ButtonType.Secondary,
