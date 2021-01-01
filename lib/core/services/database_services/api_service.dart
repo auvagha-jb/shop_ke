@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class ApiService {
     _baseUrl = _localhost;
   }
 
-  Map<String, String> jsonHeaders = {
+  Map<String, String> _jsonHeaders = {
     'Content-Type': 'application/json; charset=UTF-8',
   };
 
@@ -40,7 +41,7 @@ class ApiService {
 
       Response response = await _client.post(
         endpoint,
-        headers: jsonHeaders,
+        headers: _jsonHeaders,
         body: jsonEncode(map),
       ).timeout(_timeoutDuration);
 
@@ -82,8 +83,13 @@ class ApiService {
       }
 
       resultSet = serviceResponse.response;
+
     } catch (e) {
       print('[_get] $e');
+
+      if(e is TimeoutException) {
+        throw('Server timed out. Check your internet connection and try again');
+      }
     }
 
     return resultSet;

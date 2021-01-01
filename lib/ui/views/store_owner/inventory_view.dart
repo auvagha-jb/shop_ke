@@ -19,25 +19,30 @@ class InventoryView extends StatelessWidget {
         ),
         body: FutureBuilder(
           future: model.getStoreProducts(),
-          builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
-
-            if(snapshot.hasError) {
+          builder:
+              (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
+            if (snapshot.hasError) {
               print(snapshot.error);
-              return LoadingView(title: 'Error retrieving products');
-
-            } else if(snapshot.hasData) {
+              return LoadingView(
+                  title: snapshot.error, hasProgressIndicator: false);
+            } else if (snapshot.hasData) {
               List<Product> products = snapshot.data;
 
-              if(products.length > 0) {
-                return LoadingView(title: 'Products retrieved', hasProgressIndicator: false);
+              if (products.length > 0) {
+                return LoadingView(
+                    title: 'Products have been retrieved',
+                    hasProgressIndicator: false);
               } else {
-                return LoadingView(title: 'Your inventory is empty. Add products below', hasProgressIndicator: false);
+                return LoadingView(
+                    title: 'Your inventory is empty.',
+                    description:
+                        'No products were found in your store. However, if you had added any, '
+                            'this means something went wrong while retrieving the products.',
+                    hasProgressIndicator: false);
               }
-
-            }else {
+            } else {
               return LoadingView();
             }
-
           },
         ),
         floatingActionButton: FloatingActionButton(

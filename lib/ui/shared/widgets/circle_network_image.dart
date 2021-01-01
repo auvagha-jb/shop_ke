@@ -13,7 +13,7 @@ class CircleNetworkImage extends StatelessWidget {
     final avatarDimensions = (viewPortHeight - topPadding) * 0.12;
 
     return CachedNetworkImage(
-      imageUrl: imageUrl,
+      imageUrl: imageUrl ?? 'http://dummyimage.com/250x250.jpg/2e7d32/ffffff',
       imageBuilder: (context, imageProvider) => Container(
         width: avatarDimensions,
         height: avatarDimensions,
