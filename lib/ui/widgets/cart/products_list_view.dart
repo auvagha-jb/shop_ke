@@ -45,6 +45,6 @@ class ProductsListView extends StatelessWidget {
               );
             },
           )
-        : Center(child: Text('No Products scanned'));
+        : Center(child: Text('No products in cart'));
   }
 }

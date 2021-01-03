@@ -5,6 +5,7 @@ import 'package:shop_ke/ui/shared/drawers/owner_drawer.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 import 'package:shop_ke/ui/views/store_owner/add_product_view.dart';
+import 'package:shop_ke/ui/widgets/products_table/products_table.dart';
 
 class InventoryView extends StatelessWidget {
   static const routeName = '/inventory';
@@ -29,16 +30,15 @@ class InventoryView extends StatelessWidget {
               List<Product> products = snapshot.data;
 
               if (products.length > 0) {
-                return LoadingView(
-                    title: 'Products have been retrieved',
-                    hasProgressIndicator: false);
+                return ProductsTableWidget(products);
               } else {
                 return LoadingView(
-                    title: 'Your inventory is empty.',
-                    description:
-                        'No products were found in your store. However, if you had added any, '
-                            'this means something went wrong while retrieving the products.',
-                    hasProgressIndicator: false);
+                  title: 'Your inventory is empty.',
+                  description:
+                      'No products were found in your store. However, if you had added any, '
+                      'this means something went wrong while retrieving the products.',
+                  hasProgressIndicator: false,
+                );
               }
             } else {
               return LoadingView();
