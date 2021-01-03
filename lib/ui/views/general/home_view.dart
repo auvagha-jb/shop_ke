@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:shop_ke/core/enums/button_type.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
-import 'package:shop_ke/ui/shared/buttons/app_button.dart';
-import 'package:shop_ke/ui/shared/containers/responsive_container.dart';
 import 'package:shop_ke/ui/shared/drawers/app_drawer.dart';
-import 'package:shop_ke/ui/shared/forms/form_helper.dart';
-import 'package:shop_ke/ui/shared/utils/text_styles.dart';
+import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 import 'package:shop_ke/ui/widgets/home/home_floating_action_button.dart';
+import 'package:shop_ke/ui/widgets/products_grid/products_grid_view.dart';
 
 class HomeView extends StatefulWidget {
   static const routeName = '/home';
@@ -29,63 +26,33 @@ class _HomeViewState extends State<HomeView> {
         child: Scaffold(
           appBar: AppBar(title: Text('Home')),
           drawer: AppDrawer(),
-          body: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                //Top half of the screen with the scanner
-                ResponsiveContainer(
-                  height: 0.5,
-                  child: Container(
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
+          body: FutureBuilder(
+            future: model.getAllProducts(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.hasError) {
+                return LoadingView(
+                  title: snapshot.error,
+                  hasProgressIndicator: false,
+                );
+              } else if (snapshot.hasData) {
 
-                //Bottom half of the screen where they can manually enter the code
-                Flexible(
-                  fit: FlexFit.loose,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: FormHelper.sidePadding,
-                        vertical: FormHelper.formFieldSpacing),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        //Top half with the input and label
-                        Container(
-                          child: Column(
-                            children: [
-                              Text('Code won\'t scan?',
-                                  style: darkSubHeader,
-                                  textAlign: TextAlign.left),
-                              SizedBox(height: FormHelper.formFieldSpacing),
-                              TextField(
-                                controller: barCodeController,
-                                keyboardType: TextInputType.number,
-                                decoration: FormHelper.buildInputDecoration(
-                                    controller: barCodeController,
-                                    labelText: 'Enter Code'),
-                              ),
-                            ],
-                          ),
-                        ),
+                List<Product> products = snapshot.data;
 
-                        SizedBox(height: FormHelper.formFieldSpacing * 2),
+                if(products.length > 0) {
+                  return ProductsGridView(products);
 
-                        AppButton(
-                          buttonType: ButtonType.Primary,
-                          text: 'START SCAN',
-                          onPressed: () async {
-//                          model.customersCollection.getAllCustomers();
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                //Removed Expanded widget of flex factor 5 containing the CartCard
-              ],
-            ),
+                } else {
+                  return LoadingView(
+                    title: 'No Products were found',
+                    hasProgressIndicator: false,
+                  );
+                }
+
+
+              } else {
+                return LoadingView();
+              }
+            },
           ),
           floatingActionButton: !model.cartOccupiesFullScreen
               ? HomeFloatingActionButton(model: model)

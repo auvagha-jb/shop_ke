@@ -54,11 +54,6 @@ class _ProductsTableWidgetState extends State<ProductsTableWidget> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-//        Center(
-//            child: Text(
-//          'Store Products',
-//          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-//        )),
         DataTable(
           columns: _buildHeaders(),
           rows: _buildRows(widget.products),

@@ -6,24 +6,19 @@ class Product with ChangeNotifier {
   String productName;
   String description;
   var price; //Avoided an explicit type to avoid int and double conversion problems
-  String imageUrl;
+  String _imageUrl;
   int numInStock;
 
   //When placing the order
-  int quantity;
-  double subtotal;
+  int quantity = 1;
+  double subtotal = 0;
 
-  Product({
-    this.productId,
-    this.storeId,
-    this.productName,
-    this.description,
-    this.price,
-    this.imageUrl,
-    this.numInStock = 0,
-    this.subtotal = 0,
-    this.quantity = 1,
-  });
+  Product();
+
+  String get imageUrl =>
+      _imageUrl ?? 'http://dummyimage.com/250x250.jpg/2e7d32/ffffff';
+
+  set imageUrl(String value) => _imageUrl = imageUrl;
 
   void incrementQuantityAndSubtotalForNewProduct(int productQuantity) {
     quantity = productQuantity;
@@ -43,17 +38,15 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  factory Product.fromMap(Map<String, dynamic> map) {
+  Product.fromMap(Map<String, dynamic> map) {
     print('Product.fromMap $map');
-    return Product(
-      productId: map['productId'],
-      storeId: map['storeId'],
-      productName: map['productName'],
-      description: map['description'],
-      price: map['price'],
-      imageUrl: map['imageUrl'],
-      numInStock: map['numInStock']
-    );
+    productId = map['productId'];
+    storeId = map['storeId'];
+    productName = map['productName'];
+    description = map['description'];
+    price = map['price'];
+    imageUrl = map['imageUrl'];
+    numInStock = map['numInStock'];
   }
 
   Map<String, dynamic> toMap() {
@@ -67,5 +60,4 @@ class Product with ChangeNotifier {
       'numInStock': numInStock
     };
   }
-
 }
