@@ -10,7 +10,7 @@ class Product with ChangeNotifier {
   int numInStock;
 
   //When placing the order
-  int quantity = 1;
+  int quantity = 0;
   double subtotal = 0;
 
   Product();
@@ -21,7 +21,7 @@ class Product with ChangeNotifier {
   set imageUrl(String value) => _imageUrl = imageUrl;
 
   void incrementQuantityAndSubtotalForNewProduct(int productQuantity) {
-    quantity = productQuantity;
+    quantity = productQuantity > 0 ? productQuantity : 1; //Set the quantity to one if the quantity was zero
     subtotal = quantity * price;
     notifyListeners();
   }

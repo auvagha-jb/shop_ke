@@ -4,6 +4,7 @@ import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
 
 class HomeViewModel extends BaseViewModel {
   bool cartOccupiesFullScreen = false;
+  bool isSearchBarActive = false;
   final _productsTable = ProductsTable();
 
   void retractCart() {
@@ -16,9 +17,28 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void showSearchBar() {
+    isSearchBarActive = true;
+    notifyListeners();
+  }
+
+  void hideSearchBar() {
+    isSearchBarActive = false;
+    notifyListeners();
+  }
+
   Future<List<Product>> getAllProducts() async {
     List<Product> products = [];
     products = await _productsTable.getAllProducts();
     return products;
+  }
+
+  void searchProducts(String searchWord) {
+    print(searchWord);
+    //Start by writing search function
+    //Validate
+
+    //If validation passes, send this to search function
+
   }
 }

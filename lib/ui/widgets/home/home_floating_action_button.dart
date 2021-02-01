@@ -15,6 +15,7 @@ class HomeFloatingActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: Theme.of(context).primaryColor,
       child: Icon(Icons.shopping_cart),
       onPressed: () {
         final bottomSheetController = showBottomSheet(

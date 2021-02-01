@@ -80,7 +80,7 @@ class Cart with ChangeNotifier {
 
     //Action to take if item does not exist
     print('Adding new product');
-    //Sets the quantity of the product, by default sets to 1
+    //Sets the quantity of the product, by default it is 0
     //for items that are restored, it is set to the quantity before it was deleted
     product.incrementQuantityAndSubtotalForNewProduct(product.quantity);
 
