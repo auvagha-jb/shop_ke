@@ -15,7 +15,7 @@ class ProductGridTile extends StatelessWidget {
 
     return Card(
       child: Hero(
-          tag: product.productName,
+          tag: product.productId,//Make sure this is unique because duplicate tags will throw an error
           child: Material(
             child: InkWell(
               onTap: () {},
@@ -23,17 +23,17 @@ class ProductGridTile extends StatelessWidget {
                 footer: Container(
                   color: Colors.white70,
                   child: ListTile(
-                      title: Text(
-                        product.productName,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                    title: Text(
+                      product.productName,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      "KES ${product.price}",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.w800,
                       ),
-                      subtitle: Text(
-                        "KES ${product.price}",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
+                    ),
 //                    trailing: Text(
 //                      "KES ${product.price}",
 //                      style: TextStyle(
@@ -41,12 +41,14 @@ class ProductGridTile extends StatelessWidget {
 //                          fontWeight: FontWeight.w800,
 //                          decoration: TextDecoration.lineThrough),
 //                    ),
-                      trailing: FlatButton.icon(
-                          onPressed: () {
-                            cart.addProduct(context, product);
-                          },
-                          icon: Icon(Icons.add_circle_outline),
-                          label: Text(labelText))),
+                    trailing: FlatButton.icon(
+                      onPressed: () {
+                        cart.addProduct(context, product);
+                      },
+                      icon: Icon(Icons.add_circle_outline),
+                      label: Text(labelText),
+                    ),
+                  ),
                 ),
                 child: Image.network(
                   product.imageUrl,

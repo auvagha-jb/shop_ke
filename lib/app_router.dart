@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/authentication/reset_password_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/general/search_products_view.dart';
 import 'package:shop_ke/ui/views/general/startup_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
 import 'package:shop_ke/ui/views/product_details/product_details_view.dart';
@@ -11,8 +13,6 @@ import 'package:shop_ke/ui/views/store_owner/add_product_view.dart';
 import 'package:shop_ke/ui/views/store_owner/inventory_view.dart';
 import 'package:shop_ke/ui/views/store_owner/owner_home_view.dart';
 import 'package:shop_ke/ui/views/store_owner/register_store_view.dart';
-
-import 'core/models/data_models/product.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -40,6 +40,10 @@ class AppRouter {
       case ProductDetailsView.routeName:
         final Product product = settings.arguments;
         return MaterialPageRoute(builder: (_) => ProductDetailsView(product));
+
+      case SearchProductsView.routeName:
+        final List<Product> products = settings.arguments;
+        return MaterialPageRoute(builder: (_) => SearchProductsView(products));
 
       //Owner Routes
       case OwnerHomeView.routeName:

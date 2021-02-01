@@ -9,6 +9,8 @@ import 'package:shop_ke/core/view_models/app_view_models/authentication_view_mod
 import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/profile_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/search_products_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/shopping_app_bar_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/startup_view_model.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/add_product_view_model.dart';
 import 'package:shop_ke/core/view_models/owner_view_models/inventory_view_model.dart';
@@ -37,11 +39,13 @@ void setupLocator() {
   locator.registerLazySingleton(() => SnackbarService());
 
   //ViewModels
+  locator.registerFactory(() => ShoppingAppbarViewModel());
+  locator.registerFactory(() => DrawerViewModel());
   locator.registerFactory(() => HomeViewModel());
+  locator.registerFactory(() => SearchProductViewModel());
   locator.registerFactory(() => AuthenticationViewModel());
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => CameraViewModel());
-  locator.registerFactory(() => DrawerViewModel());
   locator.registerFactory(() => StartupViewModel());
 
   //Owner ViewModels

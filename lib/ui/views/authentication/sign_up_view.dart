@@ -34,8 +34,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   @override
   void initState() {
-    countryCodeController.text =
-        _customer.countryCode; //Set the default country code
+    countryCodeController.text = _customer.countryCode; //Set the default country code
     super.initState();
   }
 
@@ -67,10 +66,10 @@ class _SignUpViewState extends State<SignUpView> {
                           TextFormField(
                             controller: firstNameController,
                             decoration: FormHelper.buildInputDecoration(
-                                controller: firstNameController,
-                                labelText: 'First Name'),
-                            validator: (value) =>
-                                model.validate.defaultValidation(value),
+                              controller: firstNameController,
+                              labelText: 'First Name',
+                            ),
+                            validator: (value) => model.validate.defaultValidation(value),
                             onChanged: (value) => _customer.firstName = value,
                           ),
 
@@ -83,8 +82,7 @@ class _SignUpViewState extends State<SignUpView> {
                               controller: lastNameController,
                               labelText: 'Last Name',
                             ),
-                            validator: (value) =>
-                                model.validate.defaultValidation(value),
+                            validator: (value) => model.validate.defaultValidation(value),
                             onChanged: (value) => _customer.lastName = value,
                           ),
 
@@ -98,8 +96,7 @@ class _SignUpViewState extends State<SignUpView> {
                               controller: emailAddressController,
                               labelText: 'Email Address',
                             ),
-                            validator: (value) =>
-                                model.validate.emailValidation(value),
+                            validator: (value) => model.validate.emailValidation(value),
                             onChanged: (value) => _customer.email = value,
                           ),
 
@@ -131,10 +128,8 @@ class _SignUpViewState extends State<SignUpView> {
                                     controller: phoneNumberController,
                                     labelText: 'Phone Number',
                                   ),
-                                  validator: (value) =>
-                                      model.validate.phoneValidation(value),
-                                  onChanged: (value) =>
-                                      _customer.phoneNumber = value.trim(),
+                                  validator: (value) => model.validate.phoneValidation(value),
+                                  onChanged: (value) => _customer.phoneNumber = value.trim(),
                                 ),
                               ),
                             ],
@@ -150,8 +145,7 @@ class _SignUpViewState extends State<SignUpView> {
                               controller: passwordController,
                               labelText: 'Password',
                             ),
-                            validator: (value) =>
-                                model.validate.passwordValidation(value),
+                            validator: (value) => model.validate.passwordValidation(value),
                             onChanged: (value) => _customer.password = value,
                             obscureText: true,
                           ),
@@ -201,9 +195,7 @@ class _SignUpViewState extends State<SignUpView> {
                               ? AppButton(
                                   text: 'CONTINUE',
                                   onPressed: () async {
-                                    final bool isConnected = await model
-                                        .connectionService
-                                        .isConnected();
+                                    final bool isConnected = await model.connectionService.isConnected();
 
                                     if (isConnected) {
                                       model.isSubmitButtonClicked();

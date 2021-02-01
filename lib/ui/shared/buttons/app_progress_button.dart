@@ -18,12 +18,23 @@ class AppProgressButton extends StatelessWidget {
     return BaseButton(
       child: RaisedButton(
         color: buttonColor.backgroundColor,
-        child: CircularProgressIndicator(
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
+        child: AppCircularProgressIndicator(),
         shape: ButtonDesign.buttonShape,
         onPressed: () {},
       ),
+    );
+  }
+}
+
+class AppCircularProgressIndicator extends StatelessWidget {
+  const AppCircularProgressIndicator({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CircularProgressIndicator(
+      backgroundColor: Theme.of(context).primaryColor,
     );
   }
 }

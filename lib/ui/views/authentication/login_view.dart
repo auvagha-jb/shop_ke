@@ -12,7 +12,7 @@ import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 
 class LoginView extends StatefulWidget {
-  static const routeName = '/sign-in';
+  static const routeName = '/login';
 
   @override
   _LoginViewState createState() => _LoginViewState();

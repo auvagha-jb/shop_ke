@@ -48,6 +48,21 @@ class FormValidation {
     return null;
   }
 
+  dynamic isAlphanumeric(String value, {emptyString = 'This field is required'}) {
+    final RegExp regex = RegExp(r"^[a-zA-Z0-9]*$");
+
+    if(value.isEmpty) {
+      return emptyString;
+    }
+
+    if(!regex.hasMatch(value)) {
+      return 'No special characters allowed';
+    }
+
+    return null;
+
+  }
+
   dynamic phoneValidation(String value) {
     return integerInputValidation(value, minLength: 9, maxLength: 10);
   }

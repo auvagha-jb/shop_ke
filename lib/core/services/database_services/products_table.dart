@@ -34,4 +34,11 @@ class ProductsTable extends ApiService {
     final List<Product> products = await this._getProducts(endpoint);
     return products;
   }
+
+  Future<List<Product>> searchProductsByName(String searchTerm) async {
+    final endpoint = route('product/search/$searchTerm');
+    final List<Product> products = await this._getProducts(endpoint);
+    return products;
+  }
+
 }
