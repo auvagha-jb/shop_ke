@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/enums/view_state.dart';
 import 'package:shop_ke/core/view_models/app_view_models/shopping_app_bar_view_model.dart';
-import 'package:shop_ke/ui/shared/buttons/app_progress_button.dart';
+import 'package:shop_ke/ui/shared/widgets/app_circular_progress_indicator.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 import 'package:shop_ke/ui/widgets/cart/cart_card.dart';
 import 'package:shop_ke/ui/widgets/cart/cart_card_header.dart';

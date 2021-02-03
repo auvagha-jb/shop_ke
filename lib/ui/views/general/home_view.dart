@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
+import 'package:shop_ke/ui/shared/app_bar/shopping_app_bar.dart';
 import 'package:shop_ke/ui/shared/drawers/app_drawer.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
-import 'package:shop_ke/ui/shared/widgets/shopping_app_bar.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 import 'package:shop_ke/ui/widgets/products_grid/products_grid_view.dart';
 
