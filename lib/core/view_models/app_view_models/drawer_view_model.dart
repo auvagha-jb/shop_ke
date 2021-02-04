@@ -7,6 +7,7 @@ import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/general/my_orders_view.dart';
 import 'package:shop_ke/ui/views/general/profile_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
 import 'package:shop_ke/ui/views/store_owner/inventory_view.dart';
@@ -23,8 +24,12 @@ class DrawerViewModel extends BaseViewModel {
     DrawerItem(
       icon: Icon(Icons.account_circle_outlined),
       title: 'My Profile',
-      onPressed: () =>
-          _navigationService.navigateTo(ProfileStartupView.routeName),
+      onPressed: () => _navigationService.navigateTo(ProfileStartupView.routeName),
+    ),
+    DrawerItem(
+      icon: Icon(Icons.format_list_bulleted_outlined),
+      title: 'My Orders',
+      onPressed: () => _navigationService.navigateTo(MyOrdersView.routeName),
     ),
     DrawerItem(
       icon: Icon(Icons.exit_to_app),
@@ -104,8 +109,7 @@ class DrawerViewModel extends BaseViewModel {
   }
 
   static Future<bool> confirmLogout() async {
-    final ServiceResponse serviceResponse =
-        await _sharedPreferences.getCustomer();
+    final ServiceResponse serviceResponse = await _sharedPreferences.getCustomer();
     final customer = serviceResponse.response as Customer;
 
     final DialogResponse response = await _dialogService.showConfirmationDialog(

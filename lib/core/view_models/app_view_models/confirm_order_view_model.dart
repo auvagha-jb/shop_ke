@@ -18,7 +18,8 @@ class ConfirmOrderViewModel extends BaseViewModel {
     try {
       ServiceResponse serviceResponse = await _sharedPreferencesService.getCustomerId();
 
-      Order order = Order(userId: serviceResponse.response, orderTotal: cart.productsTotal);
+      Order order = Order(userId: serviceResponse.response);
+      order.orderTotal = cart.productsTotal;
 
       await _ordersTable.insertOrder(order, cart.productsList);
 

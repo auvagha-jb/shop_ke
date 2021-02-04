@@ -6,6 +6,7 @@ import 'package:shop_ke/ui/views/authentication/reset_password_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
 import 'package:shop_ke/ui/views/general/confirm_order_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/general/my_orders_view.dart';
 import 'package:shop_ke/ui/views/general/search_products_view.dart';
 import 'package:shop_ke/ui/views/general/startup_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
@@ -32,8 +33,7 @@ class AppRouter {
 
       case ResetPasswordView.routeName:
         String email = settings.arguments;
-        return MaterialPageRoute(
-            builder: (_) => ResetPasswordView(email: email));
+        return MaterialPageRoute(builder: (_) => ResetPasswordView(email: email));
 
       case HomeView.routeName:
         return MaterialPageRoute(builder: (_) => HomeView());
@@ -48,6 +48,9 @@ class AppRouter {
 
       case ConfirmOrderView.routeName:
         return MaterialPageRoute(builder: (_) => ConfirmOrderView());
+
+      case MyOrdersView.routeName:
+        return MaterialPageRoute(builder: (_) => MyOrdersView());
 
       //Owner Routes
       case OwnerHomeView.routeName:

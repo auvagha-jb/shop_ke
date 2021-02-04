@@ -14,7 +14,6 @@ class OrdersTable extends ApiService {
       "orderItems": orderItem.orderItemsList(products) //List of products converted to map
     };
 
-    print(orderMap);
     ServiceResponse serviceResponse = await super.post(endpoint: endpoint, map: orderMap);
     if(!serviceResponse.status){
       throw Exception('Error in placing the order. Please try again later');

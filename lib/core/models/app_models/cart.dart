@@ -12,7 +12,6 @@ import 'package:shop_ke/ui/widgets/cart/undo_delete_button.dart';
 class Cart with ChangeNotifier {
   double productsTotal = 0;
 
-  //double _totalSummed;
   int _noItems = 0;
   List<Product> _products = [];
 
@@ -51,15 +50,13 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void decreaseProductsTotal(double amount) {
-    productsTotal -= amount;
-    //setTotalSummed();
+  void increaseProductsTotal(double amount) {
+    productsTotal += amount;
     notifyListeners();
   }
 
-  void increaseProductsTotal(double amount) {
-    productsTotal += amount;
-    //setTotalSummed();
+  void decreaseProductsTotal(double amount) {
+    productsTotal -= amount;
     notifyListeners();
   }
 
@@ -68,8 +65,7 @@ class Cart with ChangeNotifier {
     print('Length of shopping list: ${productsList.length}');
 
     //If the shopping list has at least one item, check if the product exists
-    final existingProductAndIndex =
-        getProductIfExists(product.productId, productsList.length);
+    final existingProductAndIndex = getProductIfExists(product.productId, productsList.length);
 
     //Action to take if item exists
     if (existingProductAndIndex != null) {
@@ -124,9 +120,7 @@ class Cart with ChangeNotifier {
   //If product exists, it returns the product and its index. Else returns null
   dynamic getProductIfExists(String id, int shoppingListItems) {
     try {
-      final int index = shoppingListItems > 0
-          ? productsList.indexWhere((prod) => prod.productId == id)
-          : null;
+      final int index = shoppingListItems > 0 ? productsList.indexWhere((prod) => prod.productId == id) : null;
 
       return {
         'index': index,
