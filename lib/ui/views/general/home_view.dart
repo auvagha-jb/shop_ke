@@ -29,6 +29,7 @@ class _HomeViewState extends State<HomeView> {
             future: model.getAllProducts(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
+                print(snapshot.error);
                 return LoadingView(
                   title: snapshot.error,
                   hasProgressIndicator: false,

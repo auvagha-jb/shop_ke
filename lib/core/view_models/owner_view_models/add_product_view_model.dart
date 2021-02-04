@@ -44,7 +44,7 @@ class AddProductViewModel extends BaseViewModel {
 
     //On failure
     if(!serviceResponse.status) {
-      _snackbarService.showSnackbar(message: 'Something went wrong. Check your connection ad try again');
+      _snackbarService.showSnackbar(message: 'Something went wrong. Check your connection and try again');
       return;
     }
 

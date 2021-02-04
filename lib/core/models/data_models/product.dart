@@ -5,7 +5,7 @@ class Product with ChangeNotifier {
   String storeId;
   String productName;
   String description;
-  var price; //Avoided an explicit type to avoid int and double conversion problems
+  double _price; //Avoided an explicit type to avoid int and double conversion problems
   String _imageUrl;
   int numInStock;
 
@@ -15,8 +15,25 @@ class Product with ChangeNotifier {
 
   Product();
 
-  String get imageUrl =>
-      _imageUrl ?? 'http://dummyimage.com/250x250.jpg/2e7d32/ffffff';
+  set price(var value) {
+    switch (value.runtimeType) {
+      case int:
+        int price = value;
+        _price = price.toDouble();
+        break;
+
+      case String:
+        _price = double.parse(value);
+        break;
+
+      default:
+        _price = value;
+    }
+  }
+
+  double get price => _price;
+
+  String get imageUrl => _imageUrl ?? 'http://dummyimage.com/250x250.jpg/2e7d32/ffffff';
 
   set imageUrl(String value) => _imageUrl = imageUrl;
 

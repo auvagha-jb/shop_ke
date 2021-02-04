@@ -5,8 +5,7 @@ import 'package:shop_ke/core/services/database_services/api_service.dart';
 class ProductsTable extends ApiService {
   Future<ServiceResponse> insertProduct(Product product) async {
     final endpoint = route("product/");
-    ServiceResponse serviceResponse =
-    await super.post(endpoint: endpoint, map: product.toMap());
+    ServiceResponse serviceResponse = await super.post(endpoint: endpoint, map: product.toMap());
     return serviceResponse;
   }
 
@@ -40,5 +39,4 @@ class ProductsTable extends ApiService {
     final List<Product> products = await this._getProducts(endpoint);
     return products;
   }
-
 }

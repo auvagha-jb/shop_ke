@@ -4,6 +4,7 @@ import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/authentication/reset_password_view.dart';
 import 'package:shop_ke/ui/views/authentication/sign_up_view.dart';
+import 'package:shop_ke/ui/views/general/confirm_order_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
 import 'package:shop_ke/ui/views/general/search_products_view.dart';
 import 'package:shop_ke/ui/views/general/startup_view.dart';
@@ -44,6 +45,9 @@ class AppRouter {
       case SearchProductsView.routeName:
         final List<Product> products = settings.arguments;
         return MaterialPageRoute(builder: (_) => SearchProductsView(products));
+
+      case ConfirmOrderView.routeName:
+        return MaterialPageRoute(builder: (_) => ConfirmOrderView());
 
       //Owner Routes
       case OwnerHomeView.routeName:

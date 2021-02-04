@@ -18,7 +18,7 @@ class Cart with ChangeNotifier {
 
   List<Product> get productsList => [..._products];
 
-//  final SnackbarService _snackbarService = locator<SnackbarService>();
+  String get productsTotalRoundedOff => productsTotal.toStringAsFixed(2);
 
   //Fail safe to prevent negative number of items
   set noItems(int no) => _noItems = no > -1 ? no : 0;
@@ -163,5 +163,9 @@ class Cart with ChangeNotifier {
   void moveToTop(int currentIndex, Product product) {
     _products.removeAt(currentIndex);
     _products.insert(0, product);
+  }
+
+  void removeAllItems() {
+    productsList.clear();
   }
 }

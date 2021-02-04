@@ -6,6 +6,7 @@ import 'package:shop_ke/core/models/app_models/cart.dart';
 import 'package:shop_ke/core/models/data_models/product.dart';
 import 'package:shop_ke/ui/shared/buttons/app_button.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_ke/ui/views/general/confirm_order_view.dart';
 
 class CartCard extends StatefulWidget {
   final Widget child;
@@ -30,8 +31,7 @@ class _CartCardState extends State<CartCard> {
   List<Product> _inventory;
 
   void setInventory(BuildContext context) async {
-    String productsJson = await DefaultAssetBundle.of(context)
-        .loadString('assets/dummy_data/inventory.json');
+    String productsJson = await DefaultAssetBundle.of(context).loadString('assets/dummy_data/inventory.json');
     final parsed = json.decode(productsJson).cast<Map<String, dynamic>>();
     _inventory = parsed.map<Product>((json) => Product.fromMap(json)).toList();
     print('inventory length: ${_inventory.length}');
@@ -85,11 +85,10 @@ class _CartCardState extends State<CartCard> {
             padding: const EdgeInsets.only(bottom: 8.0, top: 8.0),
             child: AppButton(
               text: cart.noItems > 0
-                  ? 'CHECKOUT ${cart.noItems} ITEM(S) FOR KES ${cart.productsTotal.toStringAsFixed(2)}'
+                  ? 'CHECKOUT ${cart.noItems} ITEM(S) FOR KES ${cart.productsTotalRoundedOff}'
                   : 'CART EMPTY',
               buttonType: ButtonType.Primary,
-              onPressed: () =>
-                  cart.addProduct(context, _inventory[cart.noItems]),
+              onPressed: () => Navigator.of(context).pushNamed(ConfirmOrderView.routeName),
             ),
           ),
         ],

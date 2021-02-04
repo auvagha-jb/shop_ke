@@ -7,6 +7,7 @@ import 'package:shop_ke/core/services/firebase_services/email_authentication_ser
 import 'package:shop_ke/core/view_models/app_view_models/app_drawer_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/authentication_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/confirm_order_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/profile_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/search_products_view_model.dart';
@@ -43,6 +44,7 @@ void setupLocator() {
   locator.registerFactory(() => DrawerViewModel());
   locator.registerFactory(() => HomeViewModel());
   locator.registerFactory(() => SearchProductViewModel());
+  locator.registerFactory(() => ConfirmOrderViewModel());
   locator.registerFactory(() => AuthenticationViewModel());
   locator.registerFactory(() => ProfileViewModel());
   locator.registerFactory(() => CameraViewModel());

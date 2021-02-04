@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_ke/core/models/app_models/color_theme.dart';
 import 'package:shop_ke/core/models/data_models/customer.dart';
 import 'package:shop_ke/core/models/app_models/location_coordinate.dart';
@@ -35,6 +36,18 @@ class Store {
     physicalAddress = map['physicalAddress'];
     industry = map['industry'];
     county = map['county'];
+  }
+
+  Store.fromSharedPreferences(SharedPreferences prefs) {
+    Store.fromMap({
+      'storeId': prefs.getString('storeId'),
+      'userId': prefs.getString('userId'),
+      'name': prefs.getString('name'),
+      'logo': prefs.getString('logo'),
+      'physicalAddress': prefs.getString('physicalAddress'),
+      'industry': prefs.getString('industry'),
+      'county': prefs.getString('county')
+    });
   }
 
   Map<String, dynamic> toMap() {

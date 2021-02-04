@@ -99,13 +99,12 @@ class SharedPreferencesService {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       response = prefs.getString('userId');
       if (response == null) {
-        throw new Exception(
-            'Something went wrong. Please log out and sign again');
+        throw new Exception('Something went wrong. Please log out and sign again');
       }
       status = true;
     } catch (e) {
-      print(e);
-      response = generalExceptionResponse;
+      print('[SharedPreferencesService.getCustomerId] $e');
+      throw e;
     }
 
     return ServiceResponse(status: status, response: response);
@@ -122,15 +121,7 @@ class SharedPreferencesService {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      customer = Customer.fromMap({
-        'userId': prefs.getString('userId'),
-        'firstName': prefs.getString('firstName'),
-        'lastName': prefs.getString('lastName'),
-        'countryCode': prefs.getString('countryCode'),
-        'phoneNumber': prefs.getString('phoneNumber'),
-        'email': prefs.getString('email'),
-        'isShopOwner': prefs.getBool('isShopOwner'),
-      });
+      customer = Customer.fromSharedPreferences(prefs);
 
       if (customer == null) {
         throw new Exception('Something went wrong. Please log out and sign in');
@@ -151,15 +142,7 @@ class SharedPreferencesService {
 
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      Store store = Store.fromMap({
-        'storeId': prefs.getString('storeId'),
-        'userId': prefs.getString('userId'),
-        'name': prefs.getString('name'),
-        'logo': prefs.getString('logo'),
-        'physicalAddress': prefs.getString('physicalAddress'),
-        'industry': prefs.getString('industry'),
-        'county': prefs.getString('county')
-      });
+      Store store = Store.fromSharedPreferences(prefs);
 
       if (store == null) {
         throw new Exception("Could not find store details. Please log out and sign in");
@@ -167,7 +150,6 @@ class SharedPreferencesService {
         response = store;
         status = true;
       }
-
     } catch (e) {
       print('[SharedPreferences.getStore] $e');
       response = "Could not fetch store details";
@@ -191,5 +173,29 @@ class SharedPreferencesService {
     }
 
     return ServiceResponse(status: status, response: response);
+  }
+
+  Future<Map<String, dynamic>> getByKeys(List<String> keyList) async {
+    Map<String, dynamic> response = {};
+    bool status = false;
+
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      for (String key in keyList) {
+        response[key] = prefs.getString(key);
+      }
+
+      status = response.length == keyList.length;
+
+      if (!status) {
+        throw ("Ensure the keys match the sharedPreferences");
+      }
+    } catch (e) {
+      print("[SharedPreferencesService.getByKeys] $e");
+      throw (e);
+    }
+
+    return response;
   }
 }

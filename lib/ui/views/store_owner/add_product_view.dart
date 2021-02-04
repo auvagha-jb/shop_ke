@@ -110,7 +110,7 @@ class _AddProductViewState extends State<AddProductView> {
                             ),
                             validator: (value) =>
                                 model.validate.defaultValidation(value),
-                            onChanged: (value) => _product.price = double.parse(value),
+                            onChanged: (value) => _product.price = value,
                           ),
 
                           SizedBox(height: FormHelper.formFieldSpacing),
