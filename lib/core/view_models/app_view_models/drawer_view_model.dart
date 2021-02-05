@@ -22,14 +22,19 @@ class DrawerViewModel extends BaseViewModel {
 
   static final _appDrawerItems = [
     DrawerItem(
-      icon: Icon(Icons.account_circle_outlined),
-      title: 'My Profile',
-      onPressed: () => _navigationService.navigateTo(ProfileStartupView.routeName),
+      icon: Icon(Icons.home_outlined),
+      title: 'Home',
+      onPressed: () => _navigationService.navigateTo(HomeView.routeName),
     ),
     DrawerItem(
       icon: Icon(Icons.format_list_bulleted_outlined),
       title: 'My Orders',
       onPressed: () => _navigationService.navigateTo(MyOrdersView.routeName),
+    ),
+    DrawerItem(
+      icon: Icon(Icons.account_circle_outlined),
+      title: 'My Profile',
+      onPressed: () => _navigationService.navigateTo(ProfileStartupView.routeName),
     ),
     DrawerItem(
       icon: Icon(Icons.exit_to_app),

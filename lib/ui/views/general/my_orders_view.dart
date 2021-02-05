@@ -22,7 +22,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
     return BaseView<MyOrdersViewModel>(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
-          appBar: ShoppingAppBar(),
+          appBar: ShoppingAppBar(title: Text('My Orders')),
           drawer: AppDrawer(),
           body: FutureBuilder(
             future: model.getAllOrdersByUser(),

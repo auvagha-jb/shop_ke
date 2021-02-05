@@ -23,7 +23,7 @@ class _SearchProductsViewState extends State<SearchProductsView> {
     return BaseView<SearchProductViewModel>(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
-          appBar: ShoppingAppBar(),
+          appBar: ShoppingAppBar(title: Text('Search Results')),
           drawer: AppDrawer(),
           body: widget.products.length > 0
               ? ProductsGridView(widget.products)

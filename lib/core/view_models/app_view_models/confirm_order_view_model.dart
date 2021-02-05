@@ -21,7 +21,7 @@ class ConfirmOrderViewModel extends BaseViewModel {
       Order order = Order(userId: serviceResponse.response);
       order.orderTotal = cart.productsTotal;
 
-      await _ordersTable.insertOrder(order, cart.productsList);
+      await _ordersTable.insertOrder(order, cart.products);
 
       DialogResponse dialogResponse = await _dialogService.showDialog(
         title: 'Order Placed',

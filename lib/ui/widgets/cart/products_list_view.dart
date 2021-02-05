@@ -7,7 +7,7 @@ class ProductsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-    final productsList = cart.productsList;
+    final productsList = cart.products;
     final deleteText = Text(
       'Delete',
       textAlign: TextAlign.center,

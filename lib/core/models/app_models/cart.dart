@@ -5,29 +5,29 @@ import 'package:shop_ke/ui/widgets/cart/undo_delete_button.dart';
 
 /*
  * This class:
- * * Manages adding and removing of items from the cart
- * * Manages the items in the cart
- * * Manages the bill total
+ * - Manages adding and removing of items from the cart
+ * - Manages the items in the cart
+ * - Manages the bill total
  */
 class Cart with ChangeNotifier {
-  double productsTotal = 0;
-
-  int _noItems = 0;
+  double _productsTotal = 0;
   List<Product> _products = [];
-
-  List<Product> get productsList => [..._products];
-
-  String get productsTotalRoundedOff => productsTotal.toStringAsFixed(2);
+  int _noItems = 0;
 
   //Fail safe to prevent negative number of items
   set noItems(int no) => _noItems = no > -1 ? no : 0;
+
+  List<Product> get products => [..._products];
+  String get productsTotalRoundedOff => productsTotal.toStringAsFixed(2);
+
+  double get productsTotal => _productsTotal;
+
+  int get noItems => _noItems;
 
   //setTotalSummed() {
   //double sum = 0;
   //print('Sum: ${(_products.map((product) => sum += product.subtotal).toString())}');
   //}
-
-  int get noItems => _noItems;
 
   void incrementNoItems() {
     noItems++;
@@ -51,21 +51,21 @@ class Cart with ChangeNotifier {
   }
 
   void increaseProductsTotal(double amount) {
-    productsTotal += amount;
+    _productsTotal += amount;
     notifyListeners();
   }
 
   void decreaseProductsTotal(double amount) {
-    productsTotal -= amount;
+    _productsTotal -= amount;
     notifyListeners();
   }
 
   //Optional parameter is for adding parameter to a specific index after an undo operation
   void addProduct(BuildContext context, Product product, {int index = 0}) {
-    print('Length of shopping list: ${productsList.length}');
+    print('Length of shopping list: ${products.length}');
 
     //If the shopping list has at least one item, check if the product exists
-    final existingProductAndIndex = getProductIfExists(product.productId, productsList.length);
+    final existingProductAndIndex = getProductIfExists(product.productId, products.length);
 
     //Action to take if item exists
     if (existingProductAndIndex != null) {
@@ -117,14 +117,19 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
+  void moveToTop(int currentIndex, Product product) {
+    _products.removeAt(currentIndex);
+    _products.insert(0, product);
+  }
+
   //If product exists, it returns the product and its index. Else returns null
   dynamic getProductIfExists(String id, int shoppingListItems) {
     try {
-      final int index = shoppingListItems > 0 ? productsList.indexWhere((prod) => prod.productId == id) : null;
+      final int index = shoppingListItems > 0 ? products.indexWhere((prod) => prod.productId == id) : null;
 
       return {
         'index': index,
-        'product': productsList[index],
+        'product': products[index],
       };
     } catch (e) {
       return null;
@@ -154,12 +159,10 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void moveToTop(int currentIndex, Product product) {
-    _products.removeAt(currentIndex);
-    _products.insert(0, product);
-  }
-
   void removeAllItems() {
-    productsList.clear();
+    _products.clear();
+    _productsTotal = 0;
+    _noItems = 0;
+    notifyListeners();
   }
 }

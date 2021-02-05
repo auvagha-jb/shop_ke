@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_ke/core/services/app_services/time_service.dart';
+import 'package:shop_ke/core/services/app_services/date_time_service.dart';
 
 class Order {
   String orderId;
@@ -7,7 +7,7 @@ class Order {
   String orderStatus;
   String createdAt;
   double _orderTotal;
-  TimeService _timeService = new TimeService();
+  DateTimeService _timeService = new DateTimeService();
 
   static const String Pending = "Pending";
   static const String Cancelled = "Cancelled";
@@ -24,7 +24,7 @@ class Order {
   Order.fromMap(Map<String, dynamic> map) {
     orderId = map['orderId'];
     userId = map['userId'];
-    createdAt = _timeService.getTime(map['createdAt']);
+    createdAt = _timeService.getDate(map['createdAt']);
     orderStatus = map['orderStatus'];
     orderTotal = map['orderTotal'];
   }

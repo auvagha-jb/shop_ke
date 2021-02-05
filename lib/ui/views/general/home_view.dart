@@ -23,7 +23,7 @@ class _HomeViewState extends State<HomeView> {
     return BaseView<HomeViewModel>(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
-          appBar: ShoppingAppBar(),
+          appBar: ShoppingAppBar(title: Text('Home')),
           drawer: AppDrawer(),
           body: FutureBuilder(
             future: model.getAllProducts(),

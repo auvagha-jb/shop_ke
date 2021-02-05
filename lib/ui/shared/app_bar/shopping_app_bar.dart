@@ -8,6 +8,10 @@ import 'package:shop_ke/ui/widgets/cart/cart_card_header.dart';
 import 'package:shop_ke/ui/widgets/cart/products_list_view.dart';
 
 class ShoppingAppBar extends StatefulWidget implements PreferredSizeWidget {
+  final Widget title;
+
+  const ShoppingAppBar({Key key, @required this.title}) : super(key: key);
+
   @override
   _ShoppingAppBarState createState() => _ShoppingAppBarState();
 
@@ -27,7 +31,7 @@ class _ShoppingAppBarState extends State<ShoppingAppBar> {
         //Else display the screen title
         title: !model.isSearchBarActive
             //Search bar == idle
-            ? Text('Home')
+            ? widget.title
 
             // Search bar == active
             : Padding(

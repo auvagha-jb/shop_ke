@@ -23,7 +23,7 @@ class ConfirmOrderView extends StatelessWidget {
             //If the cart has products present,
             //then display the confirm order button
             //else hide the floating action button
-            cart.productsList.length > 0
+            cart.products.length > 0
                 ? AppButton(
                     buttonType: ButtonType.Secondary,
                     text: 'CONFIRM ORDER OF KES ${cart.productsTotalRoundedOff}',
