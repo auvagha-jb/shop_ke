@@ -18,6 +18,7 @@ class MyOrdersViewModel extends BaseViewModel {
       String userId = serviceResponse.response;
       orders = await _ordersTable.getOrdersByUser(userId);
     } catch (e) {
+      print('{getAllOrdersByUser} ${e.toString()}');
       _snackbarService.showSnackbar(message: e.toString());
     }
     return orders;

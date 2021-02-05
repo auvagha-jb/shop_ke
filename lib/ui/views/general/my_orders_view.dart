@@ -5,6 +5,7 @@ import 'package:shop_ke/ui/shared/app_bar/shopping_app_bar.dart';
 import 'package:shop_ke/ui/shared/drawers/app_drawer.dart';
 import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
+import 'package:shop_ke/ui/widgets/my_orders/orders_list_view.dart';
 
 class MyOrdersView extends StatefulWidget {
   static const routeName = '/my-orders';
@@ -27,7 +28,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
             future: model.getAllOrdersByUser(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
-                print(snapshot.error);
+                print('Snapshot error ${snapshot.error}');
                 return LoadingView(
                   title: snapshot.error,
                   hasProgressIndicator: false,
@@ -35,10 +36,7 @@ class _MyOrdersViewState extends State<MyOrdersView> {
               } else if (snapshot.hasData) {
                 List<Order> orders = snapshot.data;
                 if (orders.length > 0) {
-                  return LoadingView(
-                    title: 'Fetched successfully',
-                    hasProgressIndicator: false,
-                  );
+                  return OrdersListView(orders);
                 } else {
                   return LoadingView(
                     title: 'No order history',
