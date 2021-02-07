@@ -1,0 +1,1 @@
+enum DataSource { Database, Model }

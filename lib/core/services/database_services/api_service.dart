@@ -12,7 +12,7 @@ class ApiService {
   String _localhost;
   String _baseUrl;
   final Client _client = new http.Client();
-  final _timeoutDuration = Duration(seconds: 20);
+  final _timeoutDuration = Duration(seconds: 60);
 
   ApiService() {
 //    _remoteHost = 'http://johngachihi.com/shop_ke/';
