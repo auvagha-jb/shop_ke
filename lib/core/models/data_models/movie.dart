@@ -9,7 +9,7 @@ class Movie {
   Movie.fromMap(Map<String, dynamic> map, DataSource dataSource) {
     movieId = map['Movie_Id'];
     name = _getName(map['Name'], dataSource);
-    genres = _getGenres(map['Genres'], dataSource);
+    genres = _getGenres(map['Genres']);
   }
 
   String _getName(String name, DataSource dataSource) {
@@ -27,19 +27,18 @@ class Movie {
     return name;
   }
 
-  List<String> _getGenres(String genreString, DataSource dataSource) {
-    List<String> genreList = [];
-    switch (dataSource) {
-      case DataSource.Database:
-        genreList = _getGenresFromDatabase(genreString);
+  List<String> _getGenres(var genres) {
+    switch (genres.runtimeType) {
+      case String:
+        genres = _getGenresFromDatabase(genres);
         break;
-      case DataSource.Model: //remains unchanged
+      case List: //remains unchanged
         break;
       default:
         throw new Exception('[getGenres] Data source not specified');
         break;
     }
-    return genreList;
+    return genres;
   }
 
   List<String> _getGenresFromDatabase(String genres) {

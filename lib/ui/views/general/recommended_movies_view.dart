@@ -41,6 +41,7 @@ class _RecommendedMoviesViewState extends State<RecommendedMoviesView> {
                 } else {
                   return LoadingView(
                     title: 'No Movies like ${widget.movieTitle} were found',
+                    description: 'This is because it does not exist in our library yet',
                     hasProgressIndicator: false,
                   );
                 }

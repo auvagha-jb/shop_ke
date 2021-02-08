@@ -35,7 +35,6 @@ class _MoviesViewState extends State<MoviesView> {
                 );
               } else if (snapshot.hasData) {
                 List<Movie> movies = snapshot.data;
-                model.getMoviesLike(movies[0].name);
                 if (movies.length > 0) {
                   return MoviesGridView(movies);
                 } else {
