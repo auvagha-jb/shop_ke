@@ -8,6 +8,7 @@ import 'package:shop_ke/ui/views/general/confirm_order_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
 import 'package:shop_ke/ui/views/general/movies_view.dart';
 import 'package:shop_ke/ui/views/general/my_orders_view.dart';
+import 'package:shop_ke/ui/views/general/recommended_movies_view.dart';
 import 'package:shop_ke/ui/views/general/search_products_view.dart';
 import 'package:shop_ke/ui/views/general/startup_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
@@ -55,6 +56,10 @@ class AppRouter {
 
       case MoviesView.routeName:
         return MaterialPageRoute(builder: (_) => MoviesView());
+
+      case RecommendedMoviesView.routeName:
+        String movieTitle = settings.arguments;
+        return MaterialPageRoute(builder: (_) => RecommendedMoviesView(movieTitle: movieTitle));
 
       //Owner Routes
       case OwnerHomeView.routeName:

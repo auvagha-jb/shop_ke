@@ -7,25 +7,26 @@ import 'package:shop_ke/ui/shared/widgets/loading_view.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
 import 'package:shop_ke/ui/widgets/movies_grid/movies_grid_view.dart';
 
-class MoviesView extends StatefulWidget {
-  static const routeName = '/movies';
+class RecommendedMoviesView extends StatefulWidget {
+  static const routeName = '/recommended-movies';
+  final String movieTitle;
 
-  const MoviesView({Key key}) : super(key: key);
+  const RecommendedMoviesView({Key key, @required this.movieTitle}) : super(key: key);
 
   @override
-  _MoviesViewState createState() => _MoviesViewState();
+  _RecommendedMoviesViewState createState() => _RecommendedMoviesViewState();
 }
 
-class _MoviesViewState extends State<MoviesView> {
+class _RecommendedMoviesViewState extends State<RecommendedMoviesView> {
   @override
   Widget build(BuildContext context) {
     return BaseView<MoviesViewModel>(
       builder: (context, model, child) => SafeArea(
         child: Scaffold(
-          appBar: ShoppingAppBar(title: Text('Movie Shop')),
+          appBar: ShoppingAppBar(title: Text('Related to ${widget.movieTitle}')),
           drawer: AppDrawer(),
           body: FutureBuilder(
-            future: model.getAllMovies(),
+            future: model.getMoviesLike(widget.movieTitle),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasError) {
                 print(snapshot.error);
@@ -35,12 +36,11 @@ class _MoviesViewState extends State<MoviesView> {
                 );
               } else if (snapshot.hasData) {
                 List<Movie> movies = snapshot.data;
-                model.getMoviesLike(movies[0].name);
                 if (movies.length > 0) {
                   return MoviesGridView(movies);
                 } else {
                   return LoadingView(
-                    title: 'No Movies were found',
+                    title: 'No Movies like ${widget.movieTitle} were found',
                     hasProgressIndicator: false,
                   );
                 }

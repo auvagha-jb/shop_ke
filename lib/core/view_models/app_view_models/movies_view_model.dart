@@ -43,4 +43,10 @@ class MoviesViewModel extends BaseViewModel {
       },
     );
   }
+
+  Future<List<Movie>> getMoviesLike(String movieTitle) async {
+    List<Movie> movies = [];
+    movies = await _moviesTable.getMovieRecommendations(movieTitle);
+    return movies;
+  }
 }

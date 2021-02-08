@@ -1,7 +1,7 @@
 import 'package:shop_ke/core/enums/data_source.dart';
 
 class Movie {
-  int movieId;
+  String movieId;
   String name;
   List<String> genres;
   String year;
@@ -17,7 +17,7 @@ class Movie {
       case DataSource.Database:
         name = _removeYearFromMovieTitle(name);
         break;
-      case DataSource.Model:
+      case DataSource.Model: //remains unchanged
         break;
 
       default:
@@ -33,8 +33,7 @@ class Movie {
       case DataSource.Database:
         genreList = _getGenresFromDatabase(genreString);
         break;
-      case DataSource.Model:
-        genreList = _getGenresFromModel(genreString);
+      case DataSource.Model: //remains unchanged
         break;
       default:
         throw new Exception('[getGenres] Data source not specified');
@@ -45,13 +44,6 @@ class Movie {
 
   List<String> _getGenresFromDatabase(String genres) {
     final genreList = genres.split('|');
-    return genreList;
-  }
-
-  List<String> _getGenresFromModel(String genres) {
-    genres = genres.replaceAll('[', '');
-    genres = genres.replaceAll(']', '');
-    final genreList = genres.split(',');
     return genreList;
   }
 

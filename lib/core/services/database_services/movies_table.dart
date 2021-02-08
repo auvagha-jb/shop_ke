@@ -17,6 +17,20 @@ class MoviesTable extends ApiService {
     return movies;
   }
 
+  Future<List<Movie>> _getRecommendedMovies(String endpoint, {DataSource dataSource = DataSource.Model}) async {
+    final response = await client.get(endpoint);
+//    print('response.recomm ${response.body}');
+    final List<dynamic> moviesList = jsonDecode(response.body);
+    List<Movie> movies = [];
+
+    if (moviesList.length > 0) {
+      for (var movie in moviesList) {
+        movies.add(Movie.fromMap(movie, dataSource));
+      }
+    }
+    return movies;
+  }
+
   Future<List<Movie>> getTopMovies() async {
     final endpoint = route('movie/');
     final List<Movie> movies = await this._getMovies(endpoint);
@@ -37,8 +51,10 @@ class MoviesTable extends ApiService {
   }
 
   Future<List<Movie>> getMovieRecommendations(String movieTitle) async {
-    final endpoint = 'https://bioscope-api.herokuapp.com/movie?title=$movieTitle';
-    final List<Movie> movies = await this._getMovies(endpoint, dataSource: DataSource.Model);
+//    final endpoint = 'https://bioscope-api.herokuapp.com/movie?title=$movieTitle';
+    movieTitle = Uri.encodeComponent(movieTitle);
+    final endpoint = 'http://10.0.2.2:5000/movie?title=$movieTitle';
+    final List<Movie> movies = await this._getRecommendedMovies(endpoint, dataSource: DataSource.Model);
     return movies;
   }
 }

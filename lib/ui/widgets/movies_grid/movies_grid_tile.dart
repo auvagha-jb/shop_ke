@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_ke/core/models/data_models/movie.dart';
 import 'package:shop_ke/core/view_models/app_view_models/movies_view_model.dart';
 import 'package:shop_ke/ui/views/general/base_view.dart';
+import 'package:shop_ke/ui/views/general/recommended_movies_view.dart';
 
 class MoviesGridTile extends StatelessWidget {
   final Movie movie;
@@ -40,9 +41,11 @@ class MoviesGridTile extends StatelessWidget {
 //                          decoration: TextDecoration.lineThrough),
 //                    ),
                       trailing: FlatButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(RecommendedMoviesView.routeName, arguments: movie.name);
+                        },
                         icon: Icon(Icons.add_circle_outline),
-                        label: Text('More'),
+                        label: Text('More Like this'),
                       ),
                     ),
                   ),
