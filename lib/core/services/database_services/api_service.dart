@@ -14,6 +14,8 @@ class ApiService {
   final Client _client = new http.Client();
   final _timeoutDuration = Duration(seconds: 60);
 
+  Client get client => _client;
+
   ApiService() {
 //    _remoteHost = 'http://johngachihi.com/shop_ke/';
     _localhost = 'http://10.0.2.2:6000/';
@@ -39,11 +41,13 @@ class ApiService {
     try {
       print('POST Request');
 
-      Response response = await _client.post(
-        endpoint,
-        headers: _jsonHeaders,
-        body: jsonEncode(map),
-      ).timeout(_timeoutDuration);
+      Response response = await _client
+          .post(
+            endpoint,
+            headers: _jsonHeaders,
+            body: jsonEncode(map),
+          )
+          .timeout(_timeoutDuration);
 
       print('ApiService.post() ${response.body}');
 
@@ -55,7 +59,6 @@ class ApiService {
       }
 
       print('Map to be inserted: $map');
-
     } catch (e) {
       print('[ApiService.insert()] $e');
       serviceResponse = ServiceResponse(status: false, response: e);
@@ -74,21 +77,19 @@ class ApiService {
 
       final Response response = await _client.get(endpoint).timeout(_timeoutDuration);
 
-      //Converts the json response to an object
-      final ServiceResponse serviceResponse =
-          ServiceResponse.fromJson(response.body);
+      //Converts the json response to an map
+      final ServiceResponse serviceResponse = ServiceResponse.fromJson(response.body);
 
       if (!serviceResponse.status) {
         return [];
       }
 
       resultSet = serviceResponse.response;
-
     } catch (e) {
       print('[_get] $e');
 
-      if(e is TimeoutException) {
-        throw('Server timed out. Check your internet connection and try again');
+      if (e is TimeoutException) {
+        throw ('Server timed out. Check your internet connection and try again');
       }
     }
 
@@ -100,7 +101,6 @@ class ApiService {
     if (resultSet.length < 1) {
       return null;
     }
-
     return resultSet.first;
   }
 

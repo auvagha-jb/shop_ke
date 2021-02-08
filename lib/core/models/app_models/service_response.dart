@@ -24,7 +24,7 @@ class ServiceResponse {
         insertId = map['insertId'];
       }
 
-      print('serviceResponse: $map');
+//      print('serviceResponse: $map');
     } catch (e) {
       print('[ServiceResponse.fromJson] $e');
     }

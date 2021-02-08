@@ -7,6 +7,7 @@ import 'package:shop_ke/core/view_models/app_view_models/base_view_model.dart';
 import 'package:shop_ke/locator.dart';
 import 'package:shop_ke/ui/views/authentication/login_view.dart';
 import 'package:shop_ke/ui/views/general/home_view.dart';
+import 'package:shop_ke/ui/views/general/movies_view.dart';
 import 'package:shop_ke/ui/views/general/my_orders_view.dart';
 import 'package:shop_ke/ui/views/general/profile_view.dart';
 import 'package:shop_ke/ui/views/general/welcome_view.dart';
@@ -35,6 +36,11 @@ class DrawerViewModel extends BaseViewModel {
       icon: Icon(Icons.account_circle_outlined),
       title: 'My Profile',
       onPressed: () => _navigationService.navigateTo(ProfileStartupView.routeName),
+    ),
+    DrawerItem(
+      icon: Icon(Icons.movie_creation_outlined),
+      title: 'Movie Shop',
+      onPressed: () => _navigationService.navigateTo(MoviesView.routeName),
     ),
     DrawerItem(
       icon: Icon(Icons.exit_to_app),

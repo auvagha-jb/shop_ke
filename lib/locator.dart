@@ -9,6 +9,7 @@ import 'package:shop_ke/core/view_models/app_view_models/authentication_view_mod
 import 'package:shop_ke/core/view_models/app_view_models/camera_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/confirm_order_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/home_view_model.dart';
+import 'package:shop_ke/core/view_models/app_view_models/movies_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/my_orders_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/profile_view_model.dart';
 import 'package:shop_ke/core/view_models/app_view_models/search_products_view_model.dart';
@@ -44,6 +45,7 @@ void setupLocator() {
   locator.registerFactory(() => ShoppingAppbarViewModel());
   locator.registerFactory(() => DrawerViewModel());
   locator.registerFactory(() => HomeViewModel());
+  locator.registerFactory(() => MoviesViewModel());
   locator.registerFactory(() => SearchProductViewModel());
   locator.registerFactory(() => ConfirmOrderViewModel());
   locator.registerFactory(() => MyOrdersViewModel());
